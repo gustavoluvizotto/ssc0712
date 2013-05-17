@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     RangerProxy rp(&robot, 1);
     Position2dProxy pp(&robot, 0);
     long double COS[181], SIN[181];
- 
+
     robot.Read();
     for (int i = 0; i < 181; i++) {
         COS[i] = cos(i * M_PI / 180.0);
@@ -41,15 +41,31 @@ int main(int argc, char **argv) {
 
     for (;;) {
         double speed = VEL;
-        double x[181], y[181];
-        int init = 0;
+        double x[181], y[181], x_antes[181], y_antes[181];
+        int i;
+        int init;
+
+        cin >> init;
 
         robot.Read();
-        cin >> init;
-        for (int i=0; i<181; i++) {
-            x[i] = rp[i]*cos(i*(M_PI/180.0));
-            y[i] = rp[i]*sin(i*(M_PI/180.0));
-            cout << x[i] << "\t" << y[i] << endl;
+        for (i = 0; i < 181; i++) {
+            x_antes[i] = rp[i] * cos(i * (M_PI / 180.0));
+            y_antes[i] = rp[i] * sin(i * (M_PI / 180.0));
+        }
+
+        robot.Read();
+        for (i = 0; i < 181; i++) {
+            x[i] = rp[i] * cos(i * (M_PI / 180.0));
+            y[i] = rp[i] * sin(i * (M_PI / 180.0));
+        }
+        
+        double theta;
+        double hyp;
+        for (i = 0; i < 181; i++) {
+            if (abs(x[i] - x_antes[i]) > 0.1) {          // houve movimento
+                hyp = sqrt(pow(x[i],2) + pow(y[i],2));
+                theta = acos(x[i]/hyp); // turn no robo
+            }    
         }
     }
 
