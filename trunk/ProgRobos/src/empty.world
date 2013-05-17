@@ -1,7 +1,3 @@
-# simple.world - basic world file example
-# Authors: Richard Vaughan
-# $Id$
-
 include "pioneer.inc"
 include "map.inc"
 include "sick.inc"
@@ -27,7 +23,7 @@ window
 # load an environment bitmap
 floorplan
 ( 
-  name "cave"
+  name "empty"
   size [200.000 200.000 0.800]
   pose [0 0 0 0]
   bitmap "empty.png"
@@ -42,12 +38,12 @@ define silly position (
   gripper_return 1
 )
 
-#silly( 	
-#  name "block1" 
-#  pose [-4.152 0.820 0 0] 
-#  color "green"  
-#  bitmap "block.png"
-#)
+silly( 	
+  name "block1" 
+  pose [-4.152 0.820 0 0] 
+  color "green"  
+  bitmap "block.png"
+)
 
 #silly( 	
 #  name "block2" 
