@@ -10,7 +10,7 @@
 #endif
 #define CV_NO_BACKWARD_COMPATIBILITY
 #ifndef _EiC
-#include "opencv/cv.hpp"
+//#include "opencv/cv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #endif
@@ -25,8 +25,8 @@
 #include <opencv2/core/internal.hpp>
 
 // parâmetros
-#define MAX_X 400
-#define MAX_Y 200
+#define MAX_X 1000
+#define MAX_Y 500
 const double VEL = 0.3; // velocidade do robô
 const int fd = 0; // feixe da direita
 const int fe = 180; // feixe da esquerda
@@ -43,12 +43,13 @@ int main(int argc, char **argv) {
     Position2dProxy pp(&robot, 0);
     double COS[181]; //tabela de cossenos para evitar calcular toda hora
     double SIN[181]; //mesma coisa para o seno
-    int i, init;
+    int i;
+//    int init;
     bool_t livre;
     double X, Y;
     //    double x[181], y[181], x_antes[181], y_antes[181];
-    double theta;
-    double hyp;
+//    double theta;
+//    double hyp;
 
     // OpenCV Variables
     char wndname[30] = "Sensor1";
@@ -91,6 +92,7 @@ int main(int argc, char **argv) {
         //scan for free 0.5m in front of robot
         robot.Read();
         livre = true;
+        cvZero(image);
         for (i = 0; i < 181; i++) {
             if (rp[i] < 0.5)
                 livre = false;
@@ -106,9 +108,9 @@ int main(int argc, char **argv) {
 
         // if free, moves, otherwise turns
         if (livre)
-            pp.SetSpeed(0.3, 0.0);
+            pp.SetSpeed(0.08, 0.0);
         else
-            pp.SetSpeed(0.0, 1.0);
+            pp.SetSpeed(0.0, 0.08);
         cvWaitKey(10);
     }
 
