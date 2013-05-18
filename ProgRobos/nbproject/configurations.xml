@@ -36,6 +36,13 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>-std=c++0x -Wextra</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <asmTool>
+          <warningLevel>2</warningLevel>
+        </asmTool>
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
