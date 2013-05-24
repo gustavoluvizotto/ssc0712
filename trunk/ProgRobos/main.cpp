@@ -10,7 +10,7 @@
 #endif
 #define CV_NO_BACKWARD_COMPATIBILITY
 #ifndef _EiC
-//#include "opencv/cv.hpp"
+#include "opencv/cv.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #endif
