@@ -1,0 +1,37 @@
+--------------------------------------------------------------------------------
+Casos de Uso:
+    - Perseguição
+    - Evitar colisão
+    - Perder o rastro
+    - Navegação
+    - 
+--------------------------------------------------------------------------------
+Descrição abstrata dos CDU:
+CDU1: Perseguição
+
+CDU2: Evitar colisão
+
+CDU3: Perder o rastro
+
+CDU4: Navegação
+
+--------------------------------------------------------------------------------
+Conceitos importantes que podem virar classes:
+    - Perseguicao
+    - EvitarColisao
+    - PerderRastro
+    - Navegacao
+
+--------------------------------------------------------------------------------
+Possíveis métodos e atributos das classes:
+Classe Estado:
+
+Classe Perseguicao:
+
+Classe EvitarColisao:
+
+Classe PerdeuRastro:
+
+Classe Navegacao:
+
+--------------------------------------------------------------------------------

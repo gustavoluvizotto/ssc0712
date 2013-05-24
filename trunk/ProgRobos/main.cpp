@@ -31,13 +31,12 @@ const int fd = 0; // feixe da direita
 const int fe = 180; // feixe da esquerda
 const int ff = 90; // feixe da frente (meio)
 
-using namespace PlayerCc;
 using namespace std;
 
 int main(int argc, char **argv) {
     //assert(argc == 2);
 
-
+    /*
     double COS[181]; //tabela de cossenos para evitar calcular toda hora
     double SIN[181]; //mesma coisa para o seno
     int i;
@@ -66,7 +65,7 @@ int main(int argc, char **argv) {
     }
 
     for (;;) {
-        /*cin >> init;
+        cin >> init;
         robot.Read();
         for (i = 0; i < 181; i++) {
             x_antes[i] = rp[i] * COS[i];
@@ -83,7 +82,7 @@ int main(int argc, char **argv) {
                 hyp = sqrt(pow(x[i], 2) + pow(y[i], 2));
                 theta = acos(x[i] / hyp); // turn no robo
             }
-        } */
+        } 
 
         //scan for free 0.5m in front of robot
         robot.Read();
@@ -109,6 +108,6 @@ int main(int argc, char **argv) {
             pp.SetSpeed(0.0, 0.08);
         cvWaitKey(10);
     }
-
+    */
     return 0;
 }
