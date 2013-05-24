@@ -35,7 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/PerdeuRastro.o \
+	${OBJECTDIR}/Estado.o \
+	${OBJECTDIR}/Robo.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/Navegacao.o \
+	${OBJECTDIR}/Perseguicao.o \
+	${OBJECTDIR}/EvitarColisao.o
 
 
 # C Compiler Flags
@@ -62,10 +68,40 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/PerdeuRastro.o: PerdeuRastro.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/PerdeuRastro.o PerdeuRastro.cpp
+
+${OBJECTDIR}/Estado.o: Estado.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/Estado.o Estado.cpp
+
+${OBJECTDIR}/Robo.o: Robo.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/Robo.o Robo.cpp
+
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/Navegacao.o: Navegacao.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/Navegacao.o Navegacao.cpp
+
+${OBJECTDIR}/Perseguicao.o: Perseguicao.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/Perseguicao.o Perseguicao.cpp
+
+${OBJECTDIR}/EvitarColisao.o: EvitarColisao.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Wextra -MMD -MP -MF $@.d -o ${OBJECTDIR}/EvitarColisao.o EvitarColisao.cpp
 
 # Subprojects
 .build-subprojects:

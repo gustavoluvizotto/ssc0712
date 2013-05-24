@@ -17,7 +17,6 @@
 
 #include <iostream>
 #include <cmath>
-#include <libplayerc++/playerc++.h>
 #include <cstdlib>
 #include <cassert>
 #include <cstring>
@@ -38,9 +37,7 @@ using namespace std;
 int main(int argc, char **argv) {
     //assert(argc == 2);
 
-    PlayerClient robot("localhost");
-    RangerProxy rp(&robot, 1);
-    Position2dProxy pp(&robot, 0);
+
     double COS[181]; //tabela de cossenos para evitar calcular toda hora
     double SIN[181]; //mesma coisa para o seno
     int i;
@@ -76,7 +73,6 @@ int main(int argc, char **argv) {
             y_antes[i] = rp[i] * SIN[i];
         }
 
-        robot.Read();
         for (i = 0; i < 181; i++) {
             x[i] = rp[i] * COS[i];
             y[i] = rp[i] * SIN[i];
