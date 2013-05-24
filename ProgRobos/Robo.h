@@ -1,7 +1,7 @@
 /* 
  * File:   Robo.h
- * Author: gustavo
- *
+ * Author: Gustavo Luvizotto Cesar      - 6783544
+ *         Leonardo Lourenço Crespilho  - 5124310 
  * Created on May 24, 2013, 6:02 PM
  */
 
