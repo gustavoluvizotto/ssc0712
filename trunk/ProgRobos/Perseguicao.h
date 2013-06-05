@@ -15,11 +15,9 @@
 class Perseguicao : public Estado {
 public:
     Perseguicao();
-    Perseguicao(const Perseguicao& orig);
     virtual ~Perseguicao();
-    void execute(Robo* robo) {
-        //implemento aqui
-    }
+    void execute(Robo* robo){}
+    
 private:
 
 };

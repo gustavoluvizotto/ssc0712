@@ -23,6 +23,8 @@
 #include <cstdio>
 #include <opencv2/core/internal.hpp>
 
+#include "Robo.h"
+
 // parâmetros
 #define MAX_X 1000
 #define MAX_Y 500
@@ -109,5 +111,8 @@ int main(int argc, char **argv) {
         cvWaitKey(10);
     }
     */
+    
+    Robo* robo = new Robo("localhost");
+    //robo->start();
     return 0;
 }

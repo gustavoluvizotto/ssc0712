@@ -41,7 +41,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/Navegacao.o \
 	${OBJECTDIR}/Perseguicao.o \
-	${OBJECTDIR}/EvitarColisao.o
+	${OBJECTDIR}/EvitarColisao.o \
+	${OBJECTDIR}/Andar.o
 
 
 # C Compiler Flags
@@ -102,6 +103,11 @@ ${OBJECTDIR}/EvitarColisao.o: EvitarColisao.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/EvitarColisao.o EvitarColisao.cpp
+
+${OBJECTDIR}/Andar.o: Andar.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Andar.o Andar.cpp
 
 # Subprojects
 .build-subprojects:

@@ -11,8 +11,5 @@
 Perseguicao::Perseguicao() {
 }
 
-Perseguicao::Perseguicao(const Perseguicao& orig) {
-}
-
 Perseguicao::~Perseguicao() {
 }

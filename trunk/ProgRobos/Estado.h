@@ -7,17 +7,13 @@
 
 #ifndef ESTADO_H
 #define	ESTADO_H
-
 #include "Robo.h"
 
 class Estado {
 public:
     Estado();
-    Estado(const Estado& orig);
     virtual ~Estado();
-    virtual void execute(Robo *robo)=0;
-private:
-
+    virtual void execute(Robo* robo) = 0;  
 };
 
 #endif	/* ESTADO_H */

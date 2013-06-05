@@ -10,12 +10,25 @@ Casos de Uso:
 --------------------------------------------------------------------------------
 Descrição abstrata dos CDU:
 CDU1: Perseguição
+    O robo deve perseguir o professor de modo a evitar obstáculos durante o 
+trajeto. A perseguição deve manter algum histórico de por onde o prof. estava
+para que, caso perca seu rastro, possa estimar onde possivelmente possa estar.
 
 CDU2: Evitar colisão
+    O robo deve parar e girar até que seu sensor laser indique que não há perigo
+de colisão. A direção que será feita a virada e como o robo se comportará ainda
+não sabemos.
 
 CDU3: Perder o rastro
+    Ao perder o rastro do prof., o robo deverá buscar em sua base de informações
+as duas últimas posições do prof. para poder estimar a tendencia de seu 
+movimento. Após isso, deve traçar uma trajetória e navegar até o ponto onde 
+possivelmente ele esteja.
 
-CDU4: Navegação
+CDU4: Navegação (?)
+    O robo deve percorrer a velocidade que lhe for pedido e curvar quanto for 
+necessário além de ter um controle PID para alcançar o ponto objetivo que está
+marcado.
 
 --------------------------------------------------------------------------------
 Conceitos importantes que podem virar classes:
@@ -23,7 +36,7 @@ Conceitos importantes que podem virar classes:
     - EvitarColisao
     - PerderRastro
     - Navegacao
-
+    
 --------------------------------------------------------------------------------
 Possíveis métodos e atributos das classes:
 Classe Estado:

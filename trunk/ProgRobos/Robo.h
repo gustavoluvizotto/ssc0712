@@ -9,15 +9,24 @@
 
 #ifndef ROBO_H
 #define	ROBO_H
+//#include "Estado.h"
 
 using namespace PlayerCc;
 
 class Robo {
 public:
-    Robo(char* host);
-    Robo(const Robo& orig);
-    virtual ~Robo();
+    Robo(const char* host);
+    ~Robo();
+    //void trocaEstado(Estado* estadoAtual);
+    //void atualizaEstado();
+    //void start();
+    
+    PlayerClient* robot;
+    RangerProxy* rp;
+    Position2dProxy* pp;
+    
 private:
+    Estado* estadoAtual;
 
 };
 
