@@ -10,9 +10,6 @@
 PerdeuRastro::PerdeuRastro() {
 }
 
-PerdeuRastro::PerdeuRastro(const PerdeuRastro& orig) {
-}
-
 PerdeuRastro::~PerdeuRastro() {
 }
 

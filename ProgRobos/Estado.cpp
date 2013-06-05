@@ -10,8 +10,5 @@
 Estado::Estado() {
 }
 
-Estado::Estado(const Estado& orig) {
-}
-
 Estado::~Estado() {
 }

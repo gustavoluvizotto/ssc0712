@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Andar.h</itemPath>
       <itemPath>Estado.h</itemPath>
       <itemPath>EvitarColisao.h</itemPath>
       <itemPath>Navegacao.h</itemPath>
@@ -19,6 +20,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Andar.cpp</itemPath>
       <itemPath>Estado.cpp</itemPath>
       <itemPath>EvitarColisao.cpp</itemPath>
       <itemPath>Navegacao.cpp</itemPath>
@@ -61,6 +63,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Andar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Andar.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Estado.h" ex="false" tool="3" flavor2="0">
@@ -68,6 +74,8 @@
       <item path="EvitarColisao.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EvitarColisao.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ideias" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Navegacao.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -107,6 +115,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Andar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Andar.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Estado.h" ex="false" tool="3" flavor2="0">
@@ -114,6 +126,8 @@
       <item path="EvitarColisao.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="EvitarColisao.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Ideias" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Navegacao.cpp" ex="false" tool="1" flavor2="0">
       </item>

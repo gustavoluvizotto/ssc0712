@@ -7,15 +7,27 @@
 
 #include "Robo.h"
 
-Robo::Robo(char* host) {
-    PlayerClient robot(host);
-    RangerProxy rp(&robot, 1);
-    Position2dProxy pp(&robot, 0);
+/* inicializando o robo */
+Robo::Robo(const char* host) {
+    robot = new PlayerClient(host);
+    rp = new RangerProxy(robot, 1);
+    pp = new Position2dProxy(robot, 0);
 }
 
-Robo::Robo(const Robo& orig) {
+/*
+void Robo::trocaEstado(Estado* estado) {
+    delete estadoAtual;
+    estadoAtual = estado;
 }
 
-Robo::~Robo() {
+void Robo::atualizaEstado() {
+    estadoAtual->execute(this);
 }
 
+void Robo::start() {
+    robot->Read();
+    trocaEstado(new Andar());
+    while (true) 
+        atualizaEstado();
+    
+}*/
