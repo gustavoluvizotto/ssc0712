@@ -7,11 +7,8 @@ class Robot;
 class SGlobalExample : public State<Robot> {
 private:
 
-    SGlobalExample() {
-    }
-
-    virtual ~SGlobalExample() {
-    }
+    SGlobalExample() {}
+    virtual ~SGlobalExample() {}
 
 public:
 
@@ -25,64 +22,37 @@ public:
     virtual void Exit(Robot* miner);
 };
 
-class S1Example : public State<Robot> {
+class S_Andando : public State<Robot> {
 private:
 
-    S1Example() {
-    }
-
-    virtual ~S1Example() {
-    }
+    S_Andando() {}
+    virtual ~S_Andando() {}
 
 public:
 
-    static S1Example* Instance() {
-        static S1Example instance;
-        return &instance;
-    }
-
-    virtual void Enter(Robot* miner);
-    virtual void Execute(Robot* miner);
-    virtual void Exit(Robot* miner);
-};
-
-class S2Example : public State<Robot> {
-private:
-
-    S2Example() {
-    }
-
-    virtual ~S2Example() {
-    }
-
-public:
-
-    static S2Example* Instance() {
-        static S2Example instance;
+    static S_Andando* Instance() {
+        static S_Andando instance;
         return &instance;
     }
 
     virtual void Enter(Robot*);
     virtual void Execute(Robot*);
-    virtual void Exit(Robot*);
+    virtual void Exit(Robot*);    
 };
 
-class Andando : public State<Robot> {
+class S_Desvia : public State<Robot> {
 private:
 
-    Andando() {
-    }
-
-    virtual ~Andando() {
-    }
+    S_Desvia() {}
+    virtual ~S_Desvia() {}
 
 public:
 
-    static Andando* Instance() {
-        static Andando instance;
+    static S_Desvia* Instance() {
+        static S_Desvia instance;
         return &instance;
     }
-
+    
     virtual void Enter(Robot*);
     virtual void Execute(Robot*);
     virtual void Exit(Robot*);
