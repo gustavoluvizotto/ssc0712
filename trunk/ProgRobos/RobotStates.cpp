@@ -23,6 +23,9 @@ void S_Andando::Enter(Robot* pRobot) {
 }
 
 void S_Andando::Execute(Robot* pRobot) {
+    if (pRobot->vaiBater())
+        pRobot->GetFSM()->ChangeToState(S_Desvia::Instance());
+    pRobot->anda();
 }
 
 void S_Andando::Exit(Robot* pRobot) {
@@ -33,7 +36,8 @@ void S_Desvia::Enter(Robot* pRobot) {
 }
 
 void S_Desvia::Execute(Robot* pRobot) {
-    
+    pRobot->gira();
+    pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 
 void S_Desvia::Exit(Robot* pRobot) {

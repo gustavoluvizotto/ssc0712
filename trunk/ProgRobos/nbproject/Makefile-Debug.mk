@@ -35,8 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/RobotStates.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/Andar.o \
+	${OBJECTDIR}/RobotStates.o
 
 
 # C Compiler Flags
@@ -63,15 +64,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/RobotStates.o: RobotStates.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/Andar.o: Andar.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/Andar.o Andar.cpp
+
+${OBJECTDIR}/RobotStates.o: RobotStates.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 
 # Subprojects
 .build-subprojects:

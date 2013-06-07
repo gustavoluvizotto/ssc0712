@@ -52,8 +52,6 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -70,6 +68,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Andar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Andar.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
@@ -89,8 +91,6 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>

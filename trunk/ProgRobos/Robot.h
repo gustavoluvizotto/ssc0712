@@ -53,15 +53,21 @@ public:
     bool isZeroVariavelExemplo() {
         return variavelExemplo <= 0;
     }
-    
         
     bool vaiBater() {
-        for (int i = 0; i < 180; i++)
-            if (robot.)
+        for (int i = 0; i < 180; i++) {
+            if (this->rp[i] < 0.3)
+                return true;
+            return false;
+        }
     }
     
     void anda() {
-        
+        this->pp(0.5, 0);
+    }
+    
+    void gira() {
+        this->pp(0, 30.0);
     }
 };
 
