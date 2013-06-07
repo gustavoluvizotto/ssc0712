@@ -7,7 +7,7 @@
 
 /*Criada apenas pra testar funcionamento do robo
  */
-/*
+
 #ifndef ANDAR_H
 #define	ANDAR_H
 
@@ -26,5 +26,3 @@ private:
 };
 
 #endif	// ANDAR_H 
-
-*/

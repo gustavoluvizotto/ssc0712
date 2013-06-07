@@ -23,7 +23,7 @@
 #include <cstdio>
 #include <opencv2/core/internal.hpp>
 
-#include "Robo.h"
+#include "Robot.h"
 
 // parâmetros
 #define MAX_X 1000
@@ -110,9 +110,18 @@ int main(int argc, char **argv) {
             pp.SetSpeed(0.0, 0.08);
         cvWaitKey(10);
     }
-    */
-    
-    Robo* robo = new Robo("localhost");
-    //robo->start();
+     */
+
+    //    Robo* robo = new Robo("localhost");
+    //    robo->start();
+
+    Robot* robot = new Robot();
+   
+    for (int i = 0; i < 5; i++) {
+        robot->Update();
+        cout << endl;
+    }
+
+
     return 0;
 }

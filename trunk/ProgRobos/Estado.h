@@ -17,4 +17,3 @@ public:
 };
 
 #endif	/* ESTADO_H */
-

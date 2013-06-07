@@ -17,9 +17,9 @@ class Robo {
 public:
     Robo(const char* host);
     ~Robo();
-    //void trocaEstado(Estado* estadoAtual);
-    //void atualizaEstado();
-    //void start();
+    void trocaEstado(Estado* estadoAtual);
+    void atualizaEstado();
+    void start();
     
     PlayerClient* robot;
     RangerProxy* rp;
