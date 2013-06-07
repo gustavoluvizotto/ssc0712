@@ -9,7 +9,7 @@
 
 #ifndef ROBO_H
 #define	ROBO_H
-//#include "Estado.h"
+class Estado;
 
 using namespace PlayerCc;
 
