@@ -4,20 +4,26 @@
 #include "StateMachine.h"
 #include "RobotStates.h"
 
+#include <libplayerc++/playerc++.h>
+
+using namespace PlayerCc;
+
 class Robot {
 private:
     StateMachine<Robot>* m_pStateMachine;
-
     //variáveis do Robô...
     int variavelExemplo;
-
+    PlayerClient robot("localhost");
+    RangerProxy rp(&robot, 1);
+    Position2dProxy pp(&robot, 0);
+    
 public:
 
     Robot() {
         SetVariavelExemplo(3);
         m_pStateMachine = new StateMachine<Robot>(this);
         m_pStateMachine->SetGlobalState(SGlobalExample::Instance());
-        m_pStateMachine->SetCurrentState(S1Example::Instance());
+        m_pStateMachine->SetCurrentState(S_Andando::Instance());
     }
 
     virtual ~Robot() {
@@ -46,6 +52,16 @@ public:
     
     bool isZeroVariavelExemplo() {
         return variavelExemplo <= 0;
+    }
+    
+        
+    bool vaiBater() {
+        for (int i = 0; i < 180; i++)
+            if (robot.)
+    }
+    
+    void anda() {
+        
     }
 };
 
