@@ -6,6 +6,7 @@
  */
 
 #include "Robo.h"
+#include "Estado.h"
 
 /* inicializando o robo */
 Robo::Robo(const char* host) {
@@ -14,7 +15,7 @@ Robo::Robo(const char* host) {
     pp = new Position2dProxy(robot, 0);
 }
 
-/*
+
 void Robo::trocaEstado(Estado* estado) {
     delete estadoAtual;
     estadoAtual = estado;
@@ -29,5 +30,4 @@ void Robo::start() {
     trocaEstado(new Andar());
     while (true) 
         atualizaEstado();
-    
-}*/
+}

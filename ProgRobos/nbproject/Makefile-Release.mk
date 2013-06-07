@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/PerdeuRastro.o \
 	${OBJECTDIR}/Perseguicao.o \
 	${OBJECTDIR}/Robo.o \
+	${OBJECTDIR}/RobotStates.o \
 	${OBJECTDIR}/main.o
 
 
@@ -103,6 +104,11 @@ ${OBJECTDIR}/Robo.o: Robo.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Robo.o Robo.cpp
+
+${OBJECTDIR}/RobotStates.o: RobotStates.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
