@@ -54,7 +54,7 @@ public:
     bool vaiBater() {
         for (int i = 0; i < 180; i++) {
             if (m_pRp->GetRange(i))
-            if ((*m_pRp)[i] < 0.3) //mesmo que: m_pRp->GetRange(i))
+            if ((*m_pRp)[i] < 0.9) //mesmo que: m_pRp->GetRange(i))
                 return true;
         }
         return false;

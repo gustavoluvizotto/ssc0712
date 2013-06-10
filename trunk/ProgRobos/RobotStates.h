@@ -46,19 +46,19 @@ public:
     virtual void Exit(Robot*);
 };
 
-class S_Desvia : public State<Robot> {
+class S_Desviando : public State<Robot> {
 private:
 
-    S_Desvia() {
+    S_Desviando() {
     }
 
-    virtual ~S_Desvia() {
+    virtual ~S_Desviando() {
     }
 
 public:
 
-    static S_Desvia* Instance() {
-        static S_Desvia instance;
+    static S_Desviando* Instance() {
+        static S_Desviando instance;
         return &instance;
     }
 

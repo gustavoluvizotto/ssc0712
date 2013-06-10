@@ -4,8 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Andar.h</itemPath>
-      <itemPath>Estado.h</itemPath>
       <itemPath>Robot.h</itemPath>
       <itemPath>RobotStates.h</itemPath>
       <itemPath>State.h</itemPath>
@@ -19,7 +17,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Andar.cpp</itemPath>
       <itemPath>RobotStates.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -59,10 +56,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="Andar.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Andar.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
@@ -99,12 +92,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Andar.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Andar.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Estado.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">

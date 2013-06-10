@@ -22,23 +22,28 @@ void SGlobalExample::Exit(Robot* pRobot) {
 void S_Andando::Enter(Robot* pRobot) {
 }
 
+/*se vai bater, desvia, senão anda */
 void S_Andando::Execute(Robot* pRobot) {
     if (pRobot->vaiBater())
-        pRobot->GetFSM()->ChangeToState(S_Desvia::Instance());
-    pRobot->anda();
+        pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
+    else
+        pRobot->anda();
 }
 
 void S_Andando::Exit(Robot* pRobot) {
 }
 
 /*----------------------------------------------------------------------------*/
-void S_Desvia::Enter(Robot* pRobot) {
+
+void S_Desviando::Enter(Robot* pRobot) {
 }
 
-void S_Desvia::Execute(Robot* pRobot) {
-    pRobot->gira();
+/* Desvia enquanto estiver para bater. Depois anda */
+void S_Desviando::Execute(Robot* pRobot) {
+    while (pRobot->vaiBater())
+        pRobot->gira();
     pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 
-void S_Desvia::Exit(Robot* pRobot) {
+void S_Desviando::Exit(Robot* pRobot) {
 }
