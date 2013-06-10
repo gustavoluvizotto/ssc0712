@@ -11,7 +11,6 @@ using namespace PlayerCc;
 class Robot {
 private:
     StateMachine<Robot>* m_pStateMachine;
-    int variavelExemplo;
     PlayerClient* m_pRobot;
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
