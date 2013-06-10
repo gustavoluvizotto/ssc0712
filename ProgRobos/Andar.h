@@ -11,18 +11,19 @@
 #ifndef ANDAR_H
 #define	ANDAR_H
 
-#include "Estado.h"
+#include "State.h"
+#include "Robot.h"
 
-class Andar : Estado{
+class Andar : public State<Robot> {
 public:
     Andar();
     virtual ~Andar();
-    bool vaiBater(Robo* robo);
-    void execute(Robo* robo);
-    void anda(Robo* robo);
-    void desvia(Robo* robo);
+    bool vaiBater(Robot* pRobot);
+    void execute(Robot* pRobot);
+    void anda(Robot* pRobot);
+    void desvia(Robot* pRobot);
 private:
 
 };
 
-#endif	// ANDAR_H 
+#endif	// ANDAR_H

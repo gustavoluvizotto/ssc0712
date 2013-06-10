@@ -6,7 +6,7 @@
  */
 
 #include "Andar.h"
-#include "Robo.h"
+#include "Robot.h"
 
 Andar::Andar() {
 }
@@ -14,25 +14,24 @@ Andar::Andar() {
 Andar::~Andar() {
 }
 
-void Andar::execute(Robo* robo) {
-    if (vaiBater(robo)) 
-        desvia(robo);
+void Andar::execute(Robot* pRobot) {
+    if (vaiBater(pRobot))
+        desvia(pRobot);
     else
-        anda(robo);
+        anda(pRobot);
 }
 
-void Andar::desvia(Robo* robo) {
-    robo->pp->SetSpeed(0.0,30.0);
+void Andar::desvia(Robot* pRobot) {
+    pRobot->SetSpeed(0.0, 0.5);
 }
 
-void Andar::anda(Robo* robo) {
-    robo->pp->SetSpeed(0.5, 0.0);
+void Andar::anda(Robot* pRobot) {
+    pRobot->SetSpeed(0.5, 0.0);
 }
 
-bool Andar::vaiBater(Robo* robo) {
+bool Andar::vaiBater(Robot* pRobot) {
     for (int i = 0; i < 180; i++) {
-//        if (robo->rp[i] < 0.3)
-        if (1 < 0.3)
+        if (pRobot->GetRange(i) < 0.3)
             return true;
     }
     return false;

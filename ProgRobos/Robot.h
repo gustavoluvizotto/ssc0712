@@ -11,63 +11,61 @@ using namespace PlayerCc;
 class Robot {
 private:
     StateMachine<Robot>* m_pStateMachine;
-    //variáveis do Robô...
     int variavelExemplo;
-    PlayerClient robot("localhost");
-    RangerProxy rp(&robot, 1);
-    Position2dProxy pp(&robot, 0);
-    
+    PlayerClient* m_pRobot;
+    Position2dProxy* m_pPp;
+    RangerProxy* m_pRp;
+
 public:
 
     Robot() {
-        SetVariavelExemplo(3);
         m_pStateMachine = new StateMachine<Robot>(this);
         m_pStateMachine->SetGlobalState(SGlobalExample::Instance());
         m_pStateMachine->SetCurrentState(S_Andando::Instance());
+        m_pRobot = new PlayerClient("localhost");
+        m_pPp = new Position2dProxy(m_pRobot, 0);
+        m_pRp = new RangerProxy(m_pRobot, 1);
+        m_pPp->SetMotorEnable(true);
     }
 
     virtual ~Robot() {
         delete m_pStateMachine;
     }
 
-    int GetVariavelExemplo() const {
-        return variavelExemplo;
-    }
-
-    void SetVariavelExemplo(const int val) {
-        variavelExemplo = val;
-    }
-    
-    void DecreaseVariavelExemplo() {
-        variavelExemplo--;
-    }
-
-    StateMachine<Robot>* GetFSM() {
+    StateMachine<Robot>* GetFSM() const {
         return m_pStateMachine;
     }
 
-    void Update() {
+    // Update na FSM, e talvez em outras variáveis do Robô, como Read() no sensor
+
+    void Update() const {
+        m_pRobot->Read();
         m_pStateMachine->Update();
     }
-    
-    bool isZeroVariavelExemplo() {
-        return variavelExemplo <= 0;
+
+    void SetSpeed(const double XSpeed, const double YawSpeed) const {
+        m_pPp->SetSpeed(XSpeed, YawSpeed);
     }
-        
+    
+    double GetRange(uint32_t Index) const {
+        return m_pRp->GetRange(Index);
+    }
+
     bool vaiBater() {
         for (int i = 0; i < 180; i++) {
-            if (this->rp[i] < 0.3)
+            if (m_pRp->GetRange(i))
+            if ((*m_pRp)[i] < 0.3) //mesmo que: m_pRp->GetRange(i))
                 return true;
-            return false;
         }
+        return false;
     }
-    
+
     void anda() {
-        this->pp(0.5, 0);
+        m_pPp->SetSpeed(0.5, 0);
     }
-    
+
     void gira() {
-        this->pp(0, 30.0);
+        m_pPp->SetSpeed(0.0, 0.5);
     }
 };
 
