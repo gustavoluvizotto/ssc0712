@@ -117,9 +117,9 @@ int main(int argc, char **argv) {
 
     Robot* robot = new Robot();
    
-    for (int i = 0; i < 5; i++) {
+    for (;;) {
         robot->Update();
-        cout << endl;
+//        cout << endl;
     }
 
 

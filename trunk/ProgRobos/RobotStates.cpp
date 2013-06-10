@@ -40,9 +40,8 @@ void S_Desviando::Enter(Robot* pRobot) {
 
 /* Desvia enquanto estiver para bater. Depois anda */
 void S_Desviando::Execute(Robot* pRobot) {
-    while (pRobot->vaiBater())
-        pRobot->gira();
-    pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
+    if (pRobot->vaiBater()) pRobot->gira();
+    else pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 
 void S_Desviando::Exit(Robot* pRobot) {
