@@ -6,11 +6,6 @@
                    projectFiles="true">
       <itemPath>Andar.h</itemPath>
       <itemPath>Estado.h</itemPath>
-      <itemPath>EvitarColisao.h</itemPath>
-      <itemPath>Navegacao.h</itemPath>
-      <itemPath>PerdeuRastro.h</itemPath>
-      <itemPath>Perseguicao.h</itemPath>
-      <itemPath>Robo.h</itemPath>
       <itemPath>Robot.h</itemPath>
       <itemPath>RobotStates.h</itemPath>
       <itemPath>State.h</itemPath>
@@ -25,12 +20,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Andar.cpp</itemPath>
-      <itemPath>Estado.cpp</itemPath>
-      <itemPath>EvitarColisao.cpp</itemPath>
-      <itemPath>Navegacao.cpp</itemPath>
-      <itemPath>PerdeuRastro.cpp</itemPath>
-      <itemPath>Perseguicao.cpp</itemPath>
-      <itemPath>Robo.cpp</itemPath>
       <itemPath>RobotStates.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -52,6 +41,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -91,6 +82,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -110,31 +103,9 @@
       </item>
       <item path="Andar.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Estado.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="Estado.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EvitarColisao.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="EvitarColisao.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Navegacao.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Navegacao.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="PerdeuRastro.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="PerdeuRastro.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Perseguicao.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Perseguicao.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Robo.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Robo.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
       </item>

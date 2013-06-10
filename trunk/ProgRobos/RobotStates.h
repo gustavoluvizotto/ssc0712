@@ -7,8 +7,11 @@ class Robot;
 class SGlobalExample : public State<Robot> {
 private:
 
-    SGlobalExample() {}
-    virtual ~SGlobalExample() {}
+    SGlobalExample() {
+    }
+
+    virtual ~SGlobalExample() {
+    }
 
 public:
 
@@ -25,8 +28,11 @@ public:
 class S_Andando : public State<Robot> {
 private:
 
-    S_Andando() {}
-    virtual ~S_Andando() {}
+    S_Andando() {
+    }
+
+    virtual ~S_Andando() {
+    }
 
 public:
 
@@ -37,14 +43,17 @@ public:
 
     virtual void Enter(Robot*);
     virtual void Execute(Robot*);
-    virtual void Exit(Robot*);    
+    virtual void Exit(Robot*);
 };
 
 class S_Desvia : public State<Robot> {
 private:
 
-    S_Desvia() {}
-    virtual ~S_Desvia() {}
+    S_Desvia() {
+    }
+
+    virtual ~S_Desvia() {
+    }
 
 public:
 
@@ -52,7 +61,7 @@ public:
         static S_Desvia instance;
         return &instance;
     }
-    
+
     virtual void Enter(Robot*);
     virtual void Execute(Robot*);
     virtual void Exit(Robot*);
