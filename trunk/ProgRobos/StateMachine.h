@@ -5,7 +5,8 @@
 #include <cassert>
 #include <cstddef>
 
-template <class T> class StateMachine {
+template <class T>
+class StateMachine {
 private:
 
     T* m_pOwner;
