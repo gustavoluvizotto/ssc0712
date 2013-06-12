@@ -45,7 +45,7 @@ public:
     void SetSpeed(const double XSpeed, const double YawSpeed) const {
         m_pPp->SetSpeed(XSpeed, YawSpeed);
     }
-    
+
     double GetRange(uint32_t Index) const {
         return m_pRp->GetRange(Index);
     }

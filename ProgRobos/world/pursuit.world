@@ -23,10 +23,10 @@ window
 # load an environment bitmap
 floorplan
 (
-  name "persuit"
+  name "pursuit"
   size [200.000 200.000 0.800]
   pose [0 0 0 0]
-  bitmap "persuit.png"
+  bitmap "pursuit.png"
 )
 
 # a silly object to look at
