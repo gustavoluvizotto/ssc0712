@@ -51,7 +51,8 @@ Classe Navegacao:
 
 --------------------------------------------------------------------------------
 
-Novas idéias:
+deprecated
+Novas idéias: 
     Para implementar o seguidor de pernas, tomar alguns feixes de laser (depois
 verificar um numero bom), e para cada conjunto de 3 pontos (3 feixes), 
 calcular o ângulo que fazem em relação ao ponto do meio. Se 180<theta<90, entao
@@ -62,3 +63,10 @@ ou melhor, se estao com praticamente o mesmo angulo com erro e desvio padrao
 de 0.15 rad. Depois disso. Calcular a o raio da circunferencia que é formada e 
 salvar, alem dos pontos extremos dos feixes que a determinam. Temos então uma 
 circunferencia mapeada que faremos o robo seguir. Ver artigo de referencia!!
+
+Outra ideia:
+    Coletar 30 feixes frontais 75 < theta < 105. Detectar o objeto ali, fazer 
+20 medições para ter estatistica sobre aquele objeto, e entao segui-lo durante
+o percurso. A cada desvio dos feixes 105 e 75, girar o robo com angulo fi para 
+que o robo fique de frente para o objeto novamente. Salvar na memória a última
+posição que o robo se encontra.

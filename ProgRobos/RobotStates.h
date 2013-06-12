@@ -2,7 +2,7 @@
 #define	ROBOTSTATES_H
 
 #include "State.h"
-#include "PointAndVector.h"
+
 class Robot;
 
 class SGlobalExample : public State<Robot> {
