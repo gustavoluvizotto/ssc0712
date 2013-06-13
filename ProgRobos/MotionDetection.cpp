@@ -22,6 +22,7 @@ MotionDetection::MotionDetection() {
             this->o_pMatrix[i][j] = 0.0;
         }
     }
+    this->disapear = false;
 }
 
 MotionDetection::~MotionDetection() {
@@ -33,9 +34,9 @@ void MotionDetection::startOccupationMatrix(RangerProxy* rp) {
     Point<double> P;
     for (int i = 0; i < THETA_MAX + 1; i++) {
         if ((*rp)[i] <= 3.0) {
-            P.polarToCartesian((*rp), i);
-            int indexx = (int) P.getX() / BOXX;
-            int indexy = (int) P.getY() / BOXY;
+            P.polarToCartesian(rp->GetRange(i), i);
+            int indexx = (int) (P.getX() / BOXX);
+            int indexy = (int) (P.getY() / BOXY);
             if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH)))
                 this->o_cMatrix[indexx][indexy] = 5; // the frontal object to follow
             if ((*rp)[i] < 3)
@@ -46,17 +47,27 @@ void MotionDetection::startOccupationMatrix(RangerProxy* rp) {
 
 int MotionDetection::getAngleToTurn(RangerProxy* rp) {
     int** diff;
-    this->o_pMatrix = this->o_cMatrix;
+
+    this->saveOccupationMatrix();
     this->startOccupationMatrix(RangerProxy * rp);
 
     diff = this->o_cMatrix - this->o_pMatrix;
     for (int i = 0; i < N_BOX; i++) {
         for (int j = 0; j < 2 * N_BOX; j++) {
-            if (diff[i][j] < -4)       // there is a movement
+            if (diff[i][j] < -4) // there is a movement
                 return (BOXX - j);
         }
     }
     return 0.0; // there isn't movement
+}
+
+void MotionDetection::saveOccupationMatrix() {
+    this->o_pMatrix = this->o_cMatrix;
+}
+
+void MotionDetection::saveLastSeenPosition() {
+    if (this->disapear)
+        this->lastSeenMatrix = this->o_cMatrix;
 }
 
 //void MotionDetection::calculateMinAndMax(RangerProxy* rp, int thetai, int thetaf) {

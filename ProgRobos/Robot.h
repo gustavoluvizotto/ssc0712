@@ -33,7 +33,11 @@ public:
     virtual ~Robot() {
         delete m_pStateMachine;
     }
-
+    
+    RangerProxy getRangerProxy() {
+        return this->m_pRp;
+    }
+    
     StateMachine<Robot>* GetFSM() const {
         return m_pStateMachine;
     }
@@ -53,21 +57,22 @@ public:
         return m_pRp->GetRange(Index);
     }
 
-    bool vaiBater() {
+    bool willHit() {
         for (int i = 0; i < 180; i++) {
-            if (m_pRp->GetRange(i))
-            if ((*m_pRp)[i] < 0.9) //mesmo que: m_pRp->GetRange(i))
+            if (this->m_pRp->GetRange(i) < 0.5) {
+                //if ((*m_pRp)[i] < 0.5) //mesmo que: m_pRp->GetRange(i))
                 return true;
+            }
         }
         return false;
     }
 
-    void anda() {
-        m_pPp->SetSpeed(0.5, 0);
+    void walk(double speed) {
+        this->m_pPp->SetSpeed(speed, 0);
     }
 
-    void gira() {
-        m_pPp->SetSpeed(0.0, 0.5);
+    void turn(int angle) {
+        m_pPp->SetSpeed(0.0, angle);
     }
 };
 

@@ -28,15 +28,11 @@ public:
 
 class S_Andando : public State<Robot> {
 private:
-
-    S_Andando() {
-    }
-
-    virtual ~S_Andando() {
-    }
-
+    MotionDetection m_pMD;
 public:
-
+    S_Andando();
+    virtual ~S_Andando();
+    
     static S_Andando* Instance() {
         static S_Andando instance;
         return &instance;

@@ -1,5 +1,6 @@
 #include "RobotStates.h"
 #include "Robot.h"
+#include "MotionDetection.h"
 #include <iostream>
 using namespace std;
 
@@ -18,19 +19,30 @@ void SGlobalExample::Exit(Robot* pRobot) {
 }
 
 /*----------------------------------------------------------------------------*/
+S_Andando::S_Andando() {
+    this->m_pMD = new MotionDetection();
+}
 
 void S_Andando::Enter(Robot* pRobot) {
+    if (m_pMD == NULL)
+        m_pMD->startOccupationMatrix(pRobot->getRangerProxy());
+    else
+        m_pMD->reachLastSeenPosition();
 }
 
 /*se vai bater, desvia, senão anda */
 void S_Andando::Execute(Robot* pRobot) {
-    if (pRobot->vaiBater())
+    if (pRobot->willHit()) {
+        m_pMD->saveLastSeenPosition();
         pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
-    else
-        pRobot->anda();
+    } else {
+        int angle = m_pMD->getAngleToTurn(pRobot->getRangerProxy());
+        pRobot->turn(angle);
+        pRobot->walk(0.7);
+    }
 }
 
-void S_Andando::Exit(Robot* pRobot) {
+void S_Andando::Exit(Robot* pRobot) {   // used for?
 }
 
 /*----------------------------------------------------------------------------*/
@@ -40,7 +52,7 @@ void S_Desviando::Enter(Robot* pRobot) {
 
 /* Desvia enquanto estiver para bater. Depois anda */
 void S_Desviando::Execute(Robot* pRobot) {
-    if (pRobot->vaiBater()) pRobot->gira();
+    if (pRobot->willHit()) pRobot->turn(10.0);
     else pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 
