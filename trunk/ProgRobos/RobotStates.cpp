@@ -23,6 +23,11 @@ S_Andando::S_Andando() {
     this->m_pMD = new MotionDetection();
 }
 
+/* Ao entrar nesse estado, o robo faz o mapeamento da regiao, caso seja a 
+   primeira vez que esteja executando (condição inicial), ou busca pela 
+   ultima posição onde se encontrava, carregando para a matriz de ocupação
+   atual.
+*/
 void S_Andando::Enter(Robot* pRobot) {
     if (m_pMD == NULL)
         m_pMD->startOccupationMatrix(pRobot->getRangerProxy());
@@ -30,11 +35,18 @@ void S_Andando::Enter(Robot* pRobot) {
         m_pMD->reachLastSeenPosition();
 }
 
-/*se vai bater, desvia, senão anda */
+/* Ao executar esse estado, o robo deve verificar se vai bater, para que 
+   possa salvar a ultima posição observada e então mudar de estado. Senão,
+   irá ver o ângulo que deve girar para se posicionar frontalmente com o 
+   objeto a ser seguido (o prof.).
+*/
 void S_Andando::Execute(Robot* pRobot) {
+    if (m_pMD->itDisapear()) {
+        pRobot->GetFSM()->ChangeToState(S_LostTrack::Instance());
+    }
     if (pRobot->willHit()) {
         m_pMD->saveLastSeenPosition();
-        pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
+        this->Exit(pRobot);
     } else {
         int angle = m_pMD->getAngleToTurn(pRobot->getRangerProxy());
         pRobot->turn(angle);
@@ -42,7 +54,15 @@ void S_Andando::Execute(Robot* pRobot) {
     }
 }
 
-void S_Andando::Exit(Robot* pRobot) {   // used for?
+/* Saindo do estado andando e indo para o estado de desviar. Na verdade, o 
+   estado de desviar deve ser global para que o robo sempre desvie dos 
+   obstáculos. Essa verificação, entretanto, está sendo feita na execução
+   deste mesmo estado (classe). Cabe a classe desviando para que ela desvie
+   para uma posição que o robô não perca o tracking do objeto perseguido. 
+   (é uma boa idéia???)...
+*/
+void S_Andando::Exit(Robot* pRobot) {
+    pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
 }
 
 /*----------------------------------------------------------------------------*/
@@ -57,4 +77,13 @@ void S_Desviando::Execute(Robot* pRobot) {
 }
 
 void S_Desviando::Exit(Robot* pRobot) {
+}
+
+/*----------------------------------------------------------------------------*/
+
+void S_LostTrack::Enter(Robot* pRobot){
+}
+void S_LostTrack::Execute(Robot* pRobot){
+}
+void S_LostTrack::Exit(Robot* pRobot){
 }
