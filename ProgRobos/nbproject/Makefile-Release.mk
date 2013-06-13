@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/MotionDetection.o \
 	${OBJECTDIR}/RobotStates.o
 
 
@@ -67,6 +68,11 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/MotionDetection.o: MotionDetection.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp
 
 ${OBJECTDIR}/RobotStates.o: RobotStates.cpp 
 	${MKDIR} -p ${OBJECTDIR}

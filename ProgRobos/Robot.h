@@ -1,9 +1,12 @@
 #ifndef ROBOT_H
 #define	ROBOT_H
 
+#define THETA_MAX 180   // hokuyo is?
+#define LENGTH 3.0      // the max length of a data
+
 #include "StateMachine.h"
 #include "RobotStates.h"
-
+#include "PointAndVector.h"
 #include <libplayerc++/playerc++.h>
 
 using namespace PlayerCc;

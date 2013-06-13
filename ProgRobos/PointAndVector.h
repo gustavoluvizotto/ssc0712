@@ -9,6 +9,7 @@
 #define	POINT_H
 
 #include <math.h>
+#include <vector>
 
 template <typename g_Type>
 class Point {
