@@ -23,6 +23,7 @@ MotionDetection::MotionDetection() {
         }
     }
     this->disapear = false;
+    this->lastSeenMatrix = NULL;
 }
 
 MotionDetection::~MotionDetection() {
@@ -32,14 +33,17 @@ MotionDetection::~MotionDetection() {
 
 void MotionDetection::startOccupationMatrix(RangerProxy* rp) {
     Point<double> P;
-    for (int i = 0; i < THETA_MAX + 1; i++) {
-        if ((*rp)[i] <= 3.0) {
+    for (int i = 0; i < THETA_MAX + 1; i++) { // para todos os angulos
+        if (rp->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(rp->GetRange(i), i);
-            int indexx = (int) (P.getX() / BOXX);
+            int indexx = (int) (P.getX() / BOXX); 
             int indexy = (int) (P.getY() / BOXY);
+            /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
+               digo que valem 5 (para informar que é o objeto a ser seguido).
+            */
             if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH)))
                 this->o_cMatrix[indexx][indexy] = 5; // the frontal object to follow
-            if ((*rp)[i] < 3)
+            if (rp->GetRange(i) < 3)
                 this->o_cMatrix[indexx][indexy] = -1; // obstacle of ambient
         }
     }
@@ -66,33 +70,11 @@ void MotionDetection::saveOccupationMatrix() {
 }
 
 void MotionDetection::saveLastSeenPosition() {
-    if (this->disapear)
+    if (this->itDisapear())
         this->lastSeenMatrix = this->o_cMatrix;
 }
 
-//void MotionDetection::calculateMinAndMax(RangerProxy* rp, int thetai, int thetaf) {
-//    int thetamax = thetai;
-//    int thetamin = thetai;
-//    for (int i = thetai + 1; i <= thetaf; i++) {
-//        if ((*rp)[i] > max)
-//            thetamax = i;
-//        if ((*rp)[i] < min)
-//            thetamin = i;
-//    }
-//    Pmax.polarToCartesian((*rp)[thetamax], thetamax);
-//    Pmin.polarToCartesian((*rp)[thetamin], thetamin);
-//}
-//Point<double> MotionDetection::getPmax() {
-//    return this->Pmax;
-//}
-//Point<double> MotionDetection::getPmin() {
-//    return this->Pmin;
-//}
-//void MotionDetection::setPmax(double x, double y) {
-//    this->Pmax.setX(x);
-//    this->Pmax.setY(y);
-//}
-//void MotionDetection::setPmin(double x, double y) {
-//    this->Pmin.setX(x);
-//    this->Pmin.setY(y);
-//}
+void MotionDetection::reachLastSeenPosition() {
+    this->o_cMatrix = this->lastSeenMatrix;
+}
+
