@@ -27,18 +27,12 @@ public:
     void saveOccupationMatrix();
     void saveLastSeenPosition();
     void reachLastSeenPosition();
+    bool itDisapear();
 
-//    void calculateMinAndMax(RangerProxy* rp, int thetai, int thetaf);
-//    Point<double> getPmin();
-//    void setPmin(double x, double y);
-//    Point<double> getPmax();
-//    void setPmax(double x, double y);
 private:
-    Point<double> Pmin, Pmax;
     int** o_cMatrix;       // current occupation Matrix
     int** o_pMatrix;       // previous occupation Matrix
     int** lastSeenMatrix;
-    bool disapear;
 };
 
 #endif	/* MOTIONDETECTION_H */
