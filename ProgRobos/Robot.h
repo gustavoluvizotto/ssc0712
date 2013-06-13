@@ -6,7 +6,7 @@
 
 #include "StateMachine.h"
 #include "RobotStates.h"
-#include "PointAndVector.h"
+#include "Point.h"
 #include <libplayerc++/playerc++.h>
 
 using namespace PlayerCc;

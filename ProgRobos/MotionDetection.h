@@ -13,7 +13,7 @@
 #define N_BOX 20        // number of boxes in an axis
 
 #include "Robot.h"
-#include "PointAndVector.h"
+#include "Point.h"
 
 using namespace PlayerCc;
 using namespace std;
