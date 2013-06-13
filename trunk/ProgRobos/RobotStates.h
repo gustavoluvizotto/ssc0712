@@ -6,29 +6,23 @@
 class Robot;
 
 class SGlobalExample : public State<Robot> {
-private:
-
-    SGlobalExample() {
-    }
-
-    virtual ~SGlobalExample() {
-    }
-
 public:
+    SGlobalExample();
+    virtual ~SGlobalExample();
 
     static SGlobalExample* Instance() {
         static SGlobalExample instance;
         return &instance;
     }
 
-    virtual void Enter(Robot* miner);
-    virtual void Execute(Robot* miner);
-    virtual void Exit(Robot* miner);
+    virtual void Enter(Robot* pRobot);
+    virtual void Execute(Robot* pRobot);
+    virtual void Exit(Robot* pRobot);
+
+private:
 };
 
 class S_Andando : public State<Robot> {
-private:
-    MotionDetection m_pMD;
 public:
     S_Andando();
     virtual ~S_Andando();
@@ -38,30 +32,46 @@ public:
         return &instance;
     }
 
-    virtual void Enter(Robot*);
-    virtual void Execute(Robot*);
-    virtual void Exit(Robot*);
+    virtual void Enter(Robot* pRobot);
+    virtual void Execute(Robot* pRobot);
+    virtual void Exit(Robot* pRobot);
+    
+private:
+    MotionDetection m_pMD;
 };
 
 class S_Desviando : public State<Robot> {
-private:
-
-    S_Desviando() {
-    }
-
-    virtual ~S_Desviando() {
-    }
-
-public:
+public
+    S_Desviando();
+    virtual ~S_Desviando();
 
     static S_Desviando* Instance() {
         static S_Desviando instance;
         return &instance;
     }
 
-    virtual void Enter(Robot*);
-    virtual void Execute(Robot*);
-    virtual void Exit(Robot*);
+    virtual void Enter(Robot* pRobot);
+    virtual void Execute(Robot* pRobot);
+    virtual void Exit(Robot* pRobot);
+
+private:
+};
+
+class S_LostTrack : public State<Robot> {
+public:
+    S_LostTrack();
+    virtual ~S_LostTrack();
+
+    static S_LostTrack* Instance() {
+        static S_LostTrack instance;
+        return &instance;
+    }
+
+    virtual void Enter(Robot* pRobot);
+    virtual void Execute(Robot* pRobot);
+    virtual void Exit(Robot* pRobot);
+    
+private:
 };
 
 #endif	/* ROBOTSTATES_H */
