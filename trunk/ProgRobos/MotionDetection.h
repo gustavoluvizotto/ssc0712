@@ -23,7 +23,10 @@ public:
     MotionDetection();
     virtual ~MotionDetection();
     void startOccupationMatrix(RangerProxy* rp);
-    int getAngleToTurn(RangerProxy* rp);
+    int getAngleToTurn(RangerProxy* rp);        // called all time
+    void saveOccupationMatrix();
+    void saveLastSeenPosition();
+    void reachLastSeenPosition();
 
 //    void calculateMinAndMax(RangerProxy* rp, int thetai, int thetaf);
 //    Point<double> getPmin();
@@ -34,6 +37,8 @@ private:
     Point<double> Pmin, Pmax;
     int** o_cMatrix;       // current occupation Matrix
     int** o_pMatrix;       // previous occupation Matrix
+    int** lastSeenMatrix;
+    bool disapear;
 };
 
 #endif	/* MOTIONDETECTION_H */
