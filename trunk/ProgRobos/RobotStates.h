@@ -40,7 +40,6 @@ public:
     virtual void Exit(Robot* pRobot);
     
 private:
-    MotionDetection m_pMD;
 };
 
 class S_Desviando : public State<Robot> {
