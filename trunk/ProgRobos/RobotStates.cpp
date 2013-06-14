@@ -29,9 +29,10 @@ S_Andando::S_Andando() {
    atual.
 */
 void S_Andando::Enter(Robot* pRobot) {
-    if (m_pMD == NULL)
-        m_pMD->startOccupationMatrix(pRobot->getRangerProxy());
-    else
+    if (m_pMD == NULL) {
+        for (int i = 0; i <= 5; i++) // start in the occupation for 5 times
+          m_pMD->startOccupationMatrix(pRobot->getRangerProxy());
+    } else
         m_pMD->reachLastSeenPosition();
 }
 
