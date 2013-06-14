@@ -8,14 +8,6 @@
 	"buffers":
 	[
 		{
-			"file": "Ideias",
-			"settings":
-			{
-				"buffer_size": 2605,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "main.cpp",
 			"settings":
 			{
@@ -24,18 +16,26 @@
 			}
 		},
 		{
-			"file": "Makefile",
+			"file": "MotionDetection.cpp",
 			"settings":
 			{
-				"buffer_size": 3484,
+				"buffer_size": 2371,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "PointAndVector.h",
+			"file": "MotionDetection.h",
 			"settings":
 			{
-				"buffer_size": 1838,
+				"buffer_size": 874,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Point.h",
+			"settings":
+			{
+				"buffer_size": 809,
 				"line_ending": "Unix"
 			}
 		},
@@ -43,7 +43,7 @@
 			"file": "Robot.h",
 			"settings":
 			{
-				"buffer_size": 1605,
+				"buffer_size": 1856,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "RobotStates.cpp",
 			"settings":
 			{
-				"buffer_size": 1206,
+				"buffer_size": 2792,
 				"line_ending": "Unix"
 			}
 		},
@@ -59,7 +59,7 @@
 			"file": "RobotStates.h",
 			"settings":
 			{
-				"buffer_size": 1151,
+				"buffer_size": 1661,
 				"line_ending": "Unix"
 			}
 		},
@@ -104,6 +104,20 @@
 	},
 	"file_history":
 	[
+		"/mnt/windows/Users/GUSTAVO/Dropbox/eng comp/NetBeansProjects/wallfollow/wf_teste.cc",
+		"/mnt/windows/Users/GUSTAVO/Dropbox/eng comp/NetBeansProjects/wallfollow/src/wallfollowing_teste.world",
+		"/mnt/windows/Users/GUSTAVO/Dropbox/eng comp/NetBeansProjects/wallfollow/src/wallfollowing_teste.cfg",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/unused/Vector.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/testecpp/main.cpp",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/StateMachine.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/State.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/RobotStates.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/RobotStates.cpp",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/Robot.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/PointAndVector.h",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/Makefile",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/main.cpp",
+		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/ProgRobos/ProgRobos/Ideias",
 		"/mnt/windows/Documents and Settings/GUSTAVO/Dropbox/eng comp/NetBeansProjects/CG/Trabalho2CG/Vector.h",
 		"/home/gustavo/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
 		"/home/gustavo/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
@@ -112,7 +126,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -126,6 +140,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ff1",
+			"turnrate1",
+			"speed1",
+			"pp1",
+			"rp1",
+			"robot2",
+			"robot1"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -143,39 +164,11 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Ideias",
-					"settings":
-					{
-						"buffer_size": 2605,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "main.cpp",
 					"settings":
 					{
@@ -197,17 +190,17 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1530.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "Makefile",
+					"buffer": 1,
+					"file": "MotionDetection.cpp",
 					"settings":
 					{
-						"buffer_size": 3484,
+						"buffer_size": 2371,
 						"regions":
 						{
 						},
@@ -220,7 +213,37 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "MotionDetection.h",
+					"settings":
+					{
+						"buffer_size": 874,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -230,18 +253,18 @@
 				},
 				{
 					"buffer": 3,
-					"file": "PointAndVector.h",
+					"file": "Point.h",
 					"settings":
 					{
-						"buffer_size": 1838,
+						"buffer_size": 809,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								952,
-								952
+								226,
+								226
 							]
 						],
 						"settings":
@@ -251,7 +274,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 90.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -261,7 +284,7 @@
 					"file": "Robot.h",
 					"settings":
 					{
-						"buffer_size": 1605,
+						"buffer_size": 1856,
 						"regions":
 						{
 						},
@@ -279,7 +302,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 90.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -289,20 +312,22 @@
 					"file": "RobotStates.cpp",
 					"settings":
 					{
-						"buffer_size": 1206,
+						"buffer_size": 2792,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								196,
+								196
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -315,15 +340,15 @@
 					"file": "RobotStates.h",
 					"settings":
 					{
-						"buffer_size": 1151,
+						"buffer_size": 1661,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								843,
+								843
 							]
 						],
 						"settings":
@@ -333,7 +358,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 600.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -387,7 +412,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 495.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

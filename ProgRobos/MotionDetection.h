@@ -15,19 +15,23 @@
 #include "Robot.h"
 #include "Point.h"
 
-using namespace PlayerCc;
 using namespace std;
+using namespace PlayerCc;
 
 class MotionDetection {
 public:
     MotionDetection();
     virtual ~MotionDetection();
-    void startOccupationMatrix(RangerProxy* rp);
+    void startOccupationMatrix(RangerProxy* rp);// initial condition  
     int getAngleToTurn(RangerProxy* rp);        // called all time
     void saveOccupationMatrix();
     void saveLastSeenPosition();
     void reachLastSeenPosition();
     bool itDisapear();
+    void doOccupationMatrix(RangerProxy* rp);   // when following
+    void zeros(int** M);
+    int** operator +(int** M1, int** M2);   // operators to do maths with
+    int** operator -(int** M1, int** M2);   // matrix
 
 private:
     int** o_cMatrix;       // current occupation Matrix

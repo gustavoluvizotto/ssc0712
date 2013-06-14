@@ -2,6 +2,7 @@
 #define	ROBOTSTATES_H
 
 #include "State.h"
+#include "MotionDetection.h"
 
 class Robot;
 
@@ -22,6 +23,8 @@ public:
 private:
 };
 
+/*----------------------------------------------------------------------------*/
+
 class S_Andando : public State<Robot> {
 public:
     S_Andando();
@@ -41,7 +44,7 @@ private:
 };
 
 class S_Desviando : public State<Robot> {
-public
+public:
     S_Desviando();
     virtual ~S_Desviando();
 
@@ -56,6 +59,8 @@ public
 
 private:
 };
+
+/*----------------------------------------------------------------------------*/
 
 class S_LostTrack : public State<Robot> {
 public:
