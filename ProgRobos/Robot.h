@@ -17,6 +17,7 @@ private:
     PlayerClient* m_pRobot;
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
+    MotionDetection* m_pMD;
 
 public:
 
@@ -28,6 +29,7 @@ public:
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
+        m_pMD = new MotionDetection();
     }
 
     virtual ~Robot() {
@@ -36,6 +38,10 @@ public:
     
     RangerProxy getRangerProxy() {
         return this->m_pRp;
+    }
+    
+    void ReadSensors() {
+        m_pRobot->Read();
     }
     
     StateMachine<Robot>* GetFSM() const {
@@ -60,19 +66,14 @@ public:
     bool willHit() {
         for (int i = 0; i < 180; i++) {
             if (this->m_pRp->GetRange(i) < 0.5) {
-                //if ((*m_pRp)[i] < 0.5) //mesmo que: m_pRp->GetRange(i))
                 return true;
             }
         }
         return false;
     }
 
-    void walk(double speed) {
-        this->m_pPp->SetSpeed(speed, 0);
-    }
-
-    void turn(int angle) {
-        m_pPp->SetSpeed(0.0, angle);
+    void walkTurn(double speed, double angle) {
+        this->m_pPp->SetSpeed(speed, angle);
     }
 };
 

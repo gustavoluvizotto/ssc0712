@@ -3,6 +3,22 @@
 	{
 		"selected_items":
 		[
+			[
+				"o_",
+				"o_cMatrix"
+			],
+			[
+				"new",
+				"newMatrix"
+			],
+			[
+				"N",
+				"N_BOX"
+			],
+			[
+				"m",
+				"o_cMatrix"
+			]
 		]
 	},
 	"buffers":
@@ -19,7 +35,7 @@
 			"file": "MotionDetection.cpp",
 			"settings":
 			{
-				"buffer_size": 2371,
+				"buffer_size": 5866,
 				"line_ending": "Unix"
 			}
 		},
@@ -27,7 +43,7 @@
 			"file": "MotionDetection.h",
 			"settings":
 			{
-				"buffer_size": 874,
+				"buffer_size": 1115,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +67,7 @@
 			"file": "RobotStates.cpp",
 			"settings":
 			{
-				"buffer_size": 2792,
+				"buffer_size": 2874,
 				"line_ending": "Unix"
 			}
 		},
@@ -164,7 +180,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -200,15 +216,15 @@
 					"file": "MotionDetection.cpp",
 					"settings":
 					{
-						"buffer_size": 2371,
+						"buffer_size": 5866,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5866,
+								5866
 							]
 						],
 						"settings":
@@ -228,15 +244,15 @@
 					"file": "MotionDetection.h",
 					"settings":
 					{
-						"buffer_size": 874,
+						"buffer_size": 1115,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								698,
+								698
 							]
 						],
 						"settings":
@@ -246,7 +262,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 39.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -263,8 +279,8 @@
 						"selection":
 						[
 							[
-								226,
-								226
+								158,
+								158
 							]
 						],
 						"settings":
@@ -274,7 +290,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.y": 156.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -302,7 +318,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 90.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -312,15 +328,15 @@
 					"file": "RobotStates.cpp",
 					"settings":
 					{
-						"buffer_size": 2792,
+						"buffer_size": 2874,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								196,
-								196
+								1643,
+								1643
 							]
 						],
 						"settings":
@@ -330,7 +346,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 312.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

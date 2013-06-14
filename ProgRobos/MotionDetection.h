@@ -32,7 +32,7 @@ public:
     void zeros(int** M);
     int** operator +(int** M1, int** M2);   // operators to do maths with
     int** operator -(int** M1, int** M2);   // matrix
-
+    int** operator =(int** M1, int** M2);
 private:
     int** o_cMatrix;       // current occupation Matrix
     int** o_pMatrix;       // previous occupation Matrix
