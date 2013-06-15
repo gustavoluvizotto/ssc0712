@@ -1,6 +1,5 @@
 #include "RobotStates.h"
 #include "Robot.h"
-#include "MotionDetection.h"
 #include <iostream>
 using namespace std;
 
@@ -26,8 +25,8 @@ void SGlobalExample::Exit(Robot* pRobot) {
    atual.
  */
 void S_Andando::Enter(Robot* pRobot) {
-    if ()
-        m_pMD->reachLastSeenPosition();
+    if (pRobot->GetMD()->isNotNullLastSeenMatrix())
+        pRobot->GetMD()->reachLastSeenPosition();
 }
 
 /* Ao executar esse estado, o robo deve verificar se vai bater, para que 
@@ -36,16 +35,15 @@ void S_Andando::Enter(Robot* pRobot) {
    objeto a ser seguido (o prof.).
  */
 void S_Andando::Execute(Robot* pRobot) {
-    if (m_pMD->itDisapear()) {
+    if (pRobot->GetMD()->itDisapear()) {
         //m_pMD->saveLastSeenPosition();
         pRobot->GetFSM()->ChangeToState(S_LostTrack::Instance());
     }
     if (pRobot->willHit()) {
-        m_pMD->saveLastSeenPosition();
+        pRobot->GetMD()->saveLastSeenPosition();
         this->Exit(pRobot);
     } else {
-        int angle = m_pMD->getAngleToTurn(pRobot->getRangerProxy());
-        pRobot->walkTurn(0.1);
+        pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn());
     }
 }
 
@@ -67,7 +65,7 @@ void S_Desviando::Enter(Robot* pRobot) {
 
 /* Desvia enquanto estiver para bater. Depois anda */
 void S_Desviando::Execute(Robot* pRobot) {
-    if (pRobot->willHit()) pRobot->turn(10.0);
+    if (pRobot->willHit()) pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn());
     else pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 

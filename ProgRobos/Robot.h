@@ -6,6 +6,7 @@
 
 #include "StateMachine.h"
 #include "RobotStates.h"
+#include "MotionDetection.h"
 #include "Point.h"
 #include <libplayerc++/playerc++.h>
 
@@ -17,7 +18,7 @@ private:
     PlayerClient* m_pRobot;
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
-    MotionDetection* m_pMD;
+    MotionDetection* m_pMD;//ponteiro pra classe MotionDetection
 
 public:
 
@@ -29,15 +30,11 @@ public:
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
-        m_pMD = new MotionDetection();
+        m_pMD = new MotionDetection(this);
     }
 
     virtual ~Robot() {
         delete m_pStateMachine;
-    }
-    
-    RangerProxy getRangerProxy() {
-        return this->m_pRp;
     }
     
     void ReadSensors() {
@@ -74,6 +71,10 @@ public:
 
     void walkTurn(double speed, double angle) {
         this->m_pPp->SetSpeed(speed, angle);
+    }
+    
+    MotionDetection* GetMD() {
+        return m_pMD;
     }
 };
 

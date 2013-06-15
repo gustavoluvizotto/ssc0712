@@ -7,9 +7,15 @@
 class Robot;
 
 class SGlobalExample : public State<Robot> {
+private:
+
+    SGlobalExample() {
+    }
+
+    virtual ~SGlobalExample() {
+    }
+
 public:
-    SGlobalExample();
-    virtual ~SGlobalExample();
 
     static SGlobalExample* Instance() {
         static SGlobalExample instance;
@@ -19,17 +25,21 @@ public:
     virtual void Enter(Robot* pRobot);
     virtual void Execute(Robot* pRobot);
     virtual void Exit(Robot* pRobot);
-
-private:
 };
 
 /*----------------------------------------------------------------------------*/
 
 class S_Andando : public State<Robot> {
+private:
+
+    S_Andando() {
+    }
+
+    virtual ~S_Andando() {
+    }
+
 public:
-    S_Andando();
-    virtual ~S_Andando();
-    
+
     static S_Andando* Instance() {
         static S_Andando instance;
         return &instance;
@@ -38,14 +48,18 @@ public:
     virtual void Enter(Robot* pRobot);
     virtual void Execute(Robot* pRobot);
     virtual void Exit(Robot* pRobot);
-    
-private:
 };
 
 class S_Desviando : public State<Robot> {
+private:
+
+    S_Desviando() {
+    }
+
+    virtual ~S_Desviando() {
+    }
+
 public:
-    S_Desviando();
-    virtual ~S_Desviando();
 
     static S_Desviando* Instance() {
         static S_Desviando instance;
@@ -55,16 +69,20 @@ public:
     virtual void Enter(Robot* pRobot);
     virtual void Execute(Robot* pRobot);
     virtual void Exit(Robot* pRobot);
-
-private:
 };
 
 /*----------------------------------------------------------------------------*/
 
 class S_LostTrack : public State<Robot> {
+private:
+
+    S_LostTrack() {
+    }
+
+    virtual ~S_LostTrack() {
+    }
+
 public:
-    S_LostTrack();
-    virtual ~S_LostTrack();
 
     static S_LostTrack* Instance() {
         static S_LostTrack instance;
@@ -74,8 +92,6 @@ public:
     virtual void Enter(Robot* pRobot);
     virtual void Execute(Robot* pRobot);
     virtual void Exit(Robot* pRobot);
-    
-private:
 };
 
 #endif	/* ROBOTSTATES_H */

@@ -6,8 +6,10 @@
  */
 
 #include "MotionDetection.h"
+#include "Robot.h"
 
-MotionDetection::MotionDetection(Robot* pRobot) {
+MotionDetection::MotionDetection(Robot* owner) {
+    m_pOwner = owner;
     this->o_cMatrix = new int* [N_BOX];
     this->o_pMatrix = new int* [N_BOX];
 
@@ -24,8 +26,8 @@ MotionDetection::MotionDetection(Robot* pRobot) {
     }
     this->lastSeenMatrix = NULL;
     for (int i = 0; i <= 5; i++) { // start in the occupation for 5 times
-        startOccupationMatrix(pRobot->getRangerProxy());
-        pRobot->ReadSensors();
+        startOccupationMatrix();
+        m_pOwner->ReadSensors();
     }
 }
 
@@ -34,11 +36,11 @@ MotionDetection::~MotionDetection() {
     delete this->o_pMatrix;
 }
 
-void MotionDetection::startOccupationMatrix(RangerProxy* rp) {
+void MotionDetection::startOccupationMatrix() {
     Point<double> P;
     for (int i = 0; i < THETA_MAX + 1; i++) { // para todos os angulos
-        if (rp->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
-            P.polarToCartesian(rp->GetRange(i), i);
+        if (m_pOwner->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
+            P.polarToCartesian(m_pOwner->GetRange(i), i);
             int indexx = (int) (P.getX() / BOXX);
             int indexy = (int) (P.getY() / BOXY);
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
@@ -46,28 +48,26 @@ void MotionDetection::startOccupationMatrix(RangerProxy* rp) {
              */
             if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH)))
                 o_cMatrix[indexx][indexy] = 5; // the frontal object to follow
-            if (rp->GetRange(i) < 3)
+            if (m_pOwner->GetRange(i) < 3)
                 o_cMatrix[indexx][indexy] = -1; // obstacle of ambient
         }
     }
 }
 
-void MotionDetection::doOccupationMatrix(RangerProxy* rp) {
-    int** newMatrix;
+void MotionDetection::doOccupationMatrix() {
     Point<double> P;
-
-    newMatrix = new int* [N_BOX];
+    int** newMatrix = new int* [N_BOX];
     for (int i = 0; i < N_BOX; i++)
-        newMatrix = new int [2 * N_BOX];
+        newMatrix[i] = new int [2 * N_BOX];
 
     saveOccupationMatrix(); // saving actual informations
 
     for (int i = 0; i < THETA_MAX + 1; i++) { // para todos os angulos
-        if (rp->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
-            P.polarToCartesian(rp->GetRange(i), i);
+        if (m_pOwner->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
+            P.polarToCartesian(m_pOwner->GetRange(i), i);
             int indexx = (int) (P.getX() / BOXX);
             int indexy = (int) (P.getY() / BOXY);
-            if (rp->GetRange(i) < 3) // new tracking... all itens detected are obstacle
+            if (m_pOwner->GetRange(i) < 3) // new tracking... all itens detected are obstacle
                 newMatrix[indexx][indexy] = -1; // obstacle of ambient
         }
     }
@@ -104,14 +104,16 @@ void MotionDetection::zeros(int** M) {
             M[i][j] = 0;
 }
 
-int MotionDetection::getAngleToTurn(RangerProxy* rp) {
-    int** diff;
+int MotionDetection::getAngleToTurn() {
+    int** diff = new int* [N_BOX];
+    for (int i = 0; i < N_BOX; i++)
+        diff[i] = new int [2 * N_BOX];
 
     this->saveOccupationMatrix();
-    this->doOccupationMatrix(RangerProxy * rp);
+    this->doOccupationMatrix();
 
     // apply difference to see how much robot need to turn
-    diff = o_cMatrix - o_pMatrix;
+    diff = subMatrix(o_cMatrix, o_pMatrix);
 
     for (int i = 0; i < N_BOX; i++) {
         for (int j = 0; j < 2 * N_BOX; j++) {
@@ -152,7 +154,7 @@ bool MotionDetection::itDisapear() {
     } else return false;
 }
 
-int** MotionDetection::operator +(int** M1, int** M2) {
+int** MotionDetection::sumMatrix(int** M1, int** M2) {
     if (M1 != NULL && M2 != NULL) {
         int** result;
         result = new int* [N_BOX];
@@ -165,10 +167,10 @@ int** MotionDetection::operator +(int** M1, int** M2) {
             }
         }
         return result;
-    } else return -1;
+    } else return NULL;
 }
 
-int** MotionDetection::operator -(int** M1, int** M2) {
+int** MotionDetection::subMatrix(int** M1, int** M2) {
     if (M1 != NULL && M2 != NULL) {
         int** result;
         result = new int* [N_BOX];
@@ -181,10 +183,10 @@ int** MotionDetection::operator -(int** M1, int** M2) {
             }
         }
         return result;
-    } else return -1;
+    } else return NULL;
 }
 
-int** MotionDetection::operator =(int** M1, int** M2) {
+int** MotionDetection::cloneMatrix(int** M1, int** M2) {
     if (M1 != NULL && M2 != NULL) {
         for (int i = 0; i < N_BOX; i++) {
             for (int j = 0; j < 2 * N_BOX; j++) {
@@ -192,5 +194,9 @@ int** MotionDetection::operator =(int** M1, int** M2) {
             }
         }
         return M1;
-    } else return -1;
+    } else return NULL;
+}
+
+bool MotionDetection::isNotNullLastSeenMatrix() {
+    return lastSeenMatrix != NULL;
 }

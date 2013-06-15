@@ -24,6 +24,7 @@
 #include <opencv2/core/internal.hpp>
 
 #include "Robot.h"
+#include "Matrix.h"
 
 // parâmetros
 #define MAX_X 1000
@@ -115,13 +116,20 @@ int main(int argc, char **argv) {
     //    Robo* robo = new Robo("localhost");
     //    robo->start();
 
+    
+    
+    
+    Matrix<double> m;
+    return 0;
+    
+    
+    
     Robot* robot = new Robot();
    
     for (;;) {
         robot->Update();
 //        cout << endl;
     }
-
 
     return 0;
 }
