@@ -12,31 +12,33 @@
 #define BOXY 0.15f      // delta_y
 #define N_BOX 20        // number of boxes in an axis
 
-#include "Robot.h"
 #include "Point.h"
 
+class Robot;
+
 using namespace std;
-using namespace PlayerCc;
 
 class MotionDetection {
 public:
-    MotionDetection();
+    MotionDetection(Robot* owner);
     virtual ~MotionDetection();
-    void startOccupationMatrix(RangerProxy* rp);// initial condition  
-    int getAngleToTurn(RangerProxy* rp);        // called all time
+    void startOccupationMatrix();// initial condition  
+    int getAngleToTurn();        // called all time
     void saveOccupationMatrix();
     void saveLastSeenPosition();
     void reachLastSeenPosition();
     bool itDisapear();
-    void doOccupationMatrix(RangerProxy* rp);   // when following
+    void doOccupationMatrix();   // when following
     void zeros(int** M);
-    int** operator +(int** M1, int** M2);   // operators to do maths with
-    int** operator -(int** M1, int** M2);   // matrix
-    int** operator =(int** M1, int** M2);
+    int** sumMatrix(int** M1, int** M2);   // operators to do maths with
+    int** subMatrix(int** M1, int** M2);   // matrix
+    int** cloneMatrix(int** M1, int** M2);
+    bool isNotNullLastSeenMatrix();
 private:
     int** o_cMatrix;       // current occupation Matrix
     int** o_pMatrix;       // previous occupation Matrix
     int** lastSeenMatrix;
+    Robot* m_pOwner;
 };
 
 #endif	/* MOTIONDETECTION_H */

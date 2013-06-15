@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Matrix.h</itemPath>
       <itemPath>MotionDetection.h</itemPath>
       <itemPath>Point.h</itemPath>
       <itemPath>Robot.h</itemPath>
@@ -41,6 +42,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -58,6 +61,8 @@
         </linkerTool>
       </compileType>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MotionDetection.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -82,6 +87,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -98,6 +105,8 @@
         </asmTool>
       </compileType>
       <item path="Ideias" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="MotionDetection.cpp" ex="false" tool="1" flavor2="0">
       </item>
