@@ -10,6 +10,8 @@
 
 MotionDetection::MotionDetection(Robot* owner) {
     m_pOwner = owner;
+    new_o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
+    new_o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
     this->o_cMatrix = new int* [N_BOX];
     this->o_pMatrix = new int* [N_BOX];
 
@@ -46,10 +48,14 @@ void MotionDetection::startOccupationMatrix() {
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
-            if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH)))
+            if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH))) {
+                new_o_cMatrix(indexx, indexy) = 5;
                 o_cMatrix[indexx][indexy] = 5; // the frontal object to follow
-            if (m_pOwner->GetRange(i) < 3)
+            }
+            if (m_pOwner->GetRange(i) < 3) {
+                new_o_cMatrix(indexx, indexy) = -1;
                 o_cMatrix[indexx][indexy] = -1; // obstacle of ambient
+            }
         }
     }
 }
@@ -72,28 +78,41 @@ void MotionDetection::doOccupationMatrix() {
         }
     }
 
+    new_o_cMatrix.Clean(); //mesma coisa que o "zeros" do seu código
     zeros(o_cMatrix); // clean the current matrix
     // mapping new itens with respect of previous matrix 
     for (int i = 0; i < N_BOX; i++) {
         for (int j = 0; j < 2 * N_BOX; j++) {
             // obstacle turn to available
-            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == 0)
+            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == 0) {
+                new_o_cMatrix(i, j) = 0;
                 o_cMatrix[i][j] = 0;
+            }
             // obstacle turn to intended object or this object is hidden now?
-            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == -1)
+            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == -1) {
+                new_o_cMatrix(i, j) = -1;
                 o_cMatrix[i][j] = -1; // not cheatting. 5 or -1?
+            }
             // available space turn to available
-            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == 0)
+            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == 0) {
+                new_o_cMatrix(i, j) = 0;
                 o_cMatrix[i][j] = 0;
+            }
             // available space turn to obstacle
-            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == -1)
+            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == -1) {
+                new_o_cMatrix(i, j) = -1;
                 o_cMatrix[i][j] = -1;
+            }
             // intended object turn to available 
-            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == 0)
+            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == 0) {
+                new_o_cMatrix(i, j) = 0;
                 o_cMatrix[i][j] = 0;
+            }
             // intended object turn to obstacle? maybe
-            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == -1)
+            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == -1) {
+                new_o_cMatrix(i, j) = 5;
                 o_cMatrix[i][j] = 5;
+            }
         }
     }
 }
@@ -113,6 +132,7 @@ int MotionDetection::getAngleToTurn() {
     this->doOccupationMatrix();
 
     // apply difference to see how much robot need to turn
+    Matrix new_diff = new_o_cMatrix - new_o_pMatrix;
     diff = subMatrix(o_cMatrix, o_pMatrix);
 
     for (int i = 0; i < N_BOX; i++) {
@@ -126,15 +146,18 @@ int MotionDetection::getAngleToTurn() {
 }
 
 void MotionDetection::saveOccupationMatrix() {
+    new_o_pMatrix = new_o_cMatrix;
     this->o_pMatrix = this->o_cMatrix;
 }
 
 void MotionDetection::saveLastSeenPosition() {
     //if (this->itDisapear())
+    new_lastSeenMatrix = new_o_cMatrix;
     this->lastSeenMatrix = this->o_cMatrix;
 }
 
 void MotionDetection::reachLastSeenPosition() {
+    new_o_cMatrix = new_lastSeenMatrix;
     this->o_cMatrix = this->lastSeenMatrix;
 }
 

@@ -145,7 +145,24 @@ int main(int argc, char** argv) {
     cout << "Matrix::Inv(A).Print()" << endl;
     Matrix::Inv(A).Print();
     cout << endl;
-
+    
+    cout << "A.Clean().Print()" << endl;
+    A.Clean().Print();
+    cout << endl;
+    
+    cout << "A.Print()  (veja que houve a alteração inline da matriz A, quer dizer, ela foi alterada!)" << endl;
+    A.Print();
+    cout << endl;
+    
+    cout << "A.Set(3).Print()" << endl;
+    A.Set(3).Print();
+    cout << endl;
+    
+    cout << "A.Print() (veja que a alteração também foi inline.)" << endl;
+    A.Print();
+    cout << endl;
+    
+    
     return (EXIT_SUCCESS);
 }
 
