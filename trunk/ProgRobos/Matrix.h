@@ -92,37 +92,73 @@ public:
         return *this;
     }
 
-    /* add a value (elements wise) */
-    Matrix& Add(const double v) {
+    /**
+     * Retorna a mesma matriz, só que com seus elementos acrescidos de val
+     * @param val valor a ser adicionado aos elementos da matriz.
+     * @return a mesma matriz, só que com seus elementos acrescidos de val
+     */
+    Matrix& Add(const double val) {
         assert(m_pMatrix);
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
-                m_pMatrix[r][c] += v;
+                m_pMatrix[r][c] += val;
         return *this;
     }
 
-    /* subtract a value (elements wise) */
-    Matrix& Subtract(const double v) {
-        return Add(-v);
+    /**
+     * Retorna a mesma matriz, só que com seus elementos subtraídos de val
+     * @param val valor a ser subtraído aos elementos da matriz.
+     * @return a mesma matriz, só que com seus elementos subtraídos de val
+     */
+    Matrix& Subtract(const double val) {
+        return Add(-val);
     }
 
-    /* multiply a value (elements wise) */
-    Matrix& Multiply(const double v) {
+    /**
+     * Retorna a mesma matriz, só que com todos os seus elementos multiplicados por val
+     * @param val número que multiplicará todos os elementos da matriz
+     * @return a mesma matriz com seus elementos multiplicados por val
+     */
+    Matrix& Multiply(const double val) {
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
-                m_pMatrix[r][c] *= v;
+                m_pMatrix[r][c] *= val;
         return *this;
     }
 
-    /* divide by a value (elements wise) */
-    Matrix& Divide(const double v) {
+    /**
+     * Retorna a mesma matriz, só que com todos os seus elementos divididos por val
+     * @param val
+     * @return a mesma matriz, com todos os seus elementos divididos por val
+     */
+    Matrix& Divide(const double val) {
         for (int r = 0; r < rows; r++)
             for (int c = 0; c < cols; c++)
-                m_pMatrix[r][c] /= v;
+                m_pMatrix[r][c] /= val;
         return *this;
     }
 
-    /* adição de 2 matrizes, retornando uma terceira matriz */
+    /**
+     * Seta todos os elementos da matriz com o valor val passado como parâmetro
+     * @param val double escolhido para preencher a matriz
+     * @return a mesma matriz, só que com todos os seus elementos preechidos com val
+     */
+    Matrix& Set(const double val) {
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                m_pMatrix[r][c] = val;
+        return *this;
+    }
+
+    /**
+     * Seta todos os elementos da matriz com zero (0).
+     * @return a mesma matriz, só que com todos os seus elementos zerados.
+     */
+    Matrix& Clean() {
+        return Set(0);
+    }
+
+    /* adição de 2 matrizes, retornando uma nova matriz */
     friend Matrix operator+(const Matrix& a, const Matrix& b) {
         assert(a.rows == b.rows && a.cols == b.cols);
         Matrix res(a.rows, a.cols);
@@ -132,19 +168,19 @@ public:
         return res;
     }
 
-    /* adição de Matrix com escalar, retornando uma terceira matriz */
+    /* adição de Matrix com escalar, retornando uma nova matriz */
     friend Matrix operator+(const Matrix& a, const double val) {
         Matrix res(a);
         res.Add(val);
         return res;
     }
 
-    /* adição de escalar com Matrix, retornando uma terceira matrix */
+    /* adição de escalar com Matrix, retornando uma nova matrix */
     friend Matrix operator+(const double val, const Matrix& a) {
         return a + val;
     }
 
-    /* subtração de 2 matrizes, retornando uma terceira matriz */
+    /* subtração de 2 matrizes, retornando uma nova matriz */
     friend Matrix operator-(const Matrix& a, const Matrix& b) {
         assert(a.rows == b.rows && a.cols == b.cols);
         Matrix res = a;
@@ -154,26 +190,26 @@ public:
         return res;
     }
 
-    /* subtração de matrizes e escalar, retornando uma terceira matriz */
+    /* subtração de matrizes e escalar, retornando uma nova matriz */
     friend Matrix operator-(const Matrix& a, const double val) {
         Matrix res = a;
         res.Subtract(val);
         return res;
     }
 
-    /* operador "menos" unário */
+    /* operador "menos" unário. Retorna uma nova matriz. */
     friend Matrix operator-(const Matrix& a) {
         Matrix res(a);
         res.Multiply(-1);
         return res;
     }
 
-    /* subtração de escalar e matrizes, retornando uma terceira matriz */
+    /* subtração de escalar e matrizes, retornando uma nova matriz */
     friend Matrix operator-(const double val, const Matrix& a) {
         return -(a - val);
     }
 
-    /* operador multiplicação. Retorna uma Matrix nova */
+    /* operador multiplicação. Retorna uma nova Matrix */
     friend Matrix operator*(const Matrix& a, const Matrix& b) {
         assert(a.cols == b.rows);
         Matrix res(a.rows, b.cols);
@@ -185,7 +221,7 @@ public:
         return res;
     }
 
-    /* multiplicação de matriz por escalar. Retorna uma Matrix nova */
+    /* multiplicação de matriz por escalar. Retorna uma nova Matrix */
     friend Matrix operator*(const Matrix& a, const double b) {
         Matrix res = a;
         res.Multiply(b);

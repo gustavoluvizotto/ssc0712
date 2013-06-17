@@ -13,6 +13,7 @@
 #define N_BOX 20        // number of boxes in an axis
 
 #include "Point.h"
+#include "Matrix.h"
 
 class Robot;
 
@@ -39,7 +40,9 @@ private:
     int** o_pMatrix;       // previous occupation Matrix
     int** lastSeenMatrix;
     Robot* m_pOwner;
+    Matrix new_o_cMatrix;
+    Matrix new_o_pMatrix;
+    Matrix new_lastSeenMatrix;
 };
 
 #endif	/* MOTIONDETECTION_H */
-
