@@ -115,12 +115,6 @@ int main(int argc, char **argv) {
 
     //    Robo* robo = new Robo("localhost");
     //    robo->start();
-
-    
-    
-    
-    Matrix<double> m;
-    return 0;
     
     
     
