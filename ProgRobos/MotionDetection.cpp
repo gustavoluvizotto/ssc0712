@@ -9,33 +9,37 @@
 #include "Robot.h"
 
 MotionDetection::MotionDetection(Robot* owner) {
-    m_pOwner = owner;
-    new_o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
-    new_o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
-    this->o_cMatrix = new int* [N_BOX];
-    this->o_pMatrix = new int* [N_BOX];
+    if (owner != NULL) {
+        m_pOwner = owner;
+        o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
+        o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
+        //        this->o_cMatrix = new int* [N_BOX];
+        //        this->o_pMatrix = new int* [N_BOX];
+        //
+        //        for (int i = 0; i < N_BOX; i++) {
+        //            this->o_cMatrix[i] = new int [2 * N_BOX];
+        //            this->o_pMatrix[i] = new int [2 * N_BOX];
+        //        }
+        //
+        //        for (int i = 0; i < N_BOX; i++) {
+        //            for (int j = 0; j < 2 * N_BOX; j++) {
+        //                this->o_cMatrix[i][j] = 0.0;
+        //                this->o_pMatrix[i][j] = 0.0;
+        //            }
+        //        }
+        // this->lastSeenMatrix = NULL;
 
-    for (int i = 0; i < N_BOX; i++) {
-        this->o_cMatrix[i] = new int [2 * N_BOX];
-        this->o_pMatrix[i] = new int [2 * N_BOX];
-    }
-
-    for (int i = 0; i < N_BOX; i++) {
-        for (int j = 0; j < 2 * N_BOX; j++) {
-            this->o_cMatrix[i][j] = 0.0;
-            this->o_pMatrix[i][j] = 0.0;
+        o_cMatrix.Clean();
+        for (int i = 0; i <= 5; i++) { // start in the occupation for 5 times
+            m_pOwner->ReadSensors();
+            startOccupationMatrix();
         }
-    }
-    this->lastSeenMatrix = NULL;
-    for (int i = 0; i <= 5; i++) { // start in the occupation for 5 times
-        startOccupationMatrix();
-        m_pOwner->ReadSensors();
     }
 }
 
 MotionDetection::~MotionDetection() {
-    delete this->o_cMatrix;
-    delete this->o_pMatrix;
+    //    delete this->o_cMatrix;
+    //    delete this->o_pMatrix;
 }
 
 void MotionDetection::startOccupationMatrix() {
@@ -49,12 +53,12 @@ void MotionDetection::startOccupationMatrix() {
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
             if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH))) {
-                new_o_cMatrix(indexx, indexy) = 5;
-                o_cMatrix[indexx][indexy] = 5; // the frontal object to follow
+                o_cMatrix(indexx, indexy) = 5; // the frontal object to follow
+                //                o_cMatrix[indexx][indexy] = 5;
             }
             if (m_pOwner->GetRange(i) < 3) {
-                new_o_cMatrix(indexx, indexy) = -1;
-                o_cMatrix[indexx][indexy] = -1; // obstacle of ambient
+                o_cMatrix(indexx, indexy) = -1; // obstacle of ambient
+                //                o_cMatrix[indexx][indexy] = -1; 
             }
         }
     }
@@ -62,9 +66,11 @@ void MotionDetection::startOccupationMatrix() {
 
 void MotionDetection::doOccupationMatrix() {
     Point<double> P;
-    int** newMatrix = new int* [N_BOX];
-    for (int i = 0; i < N_BOX; i++)
-        newMatrix[i] = new int [2 * N_BOX];
+    Matrix newMatrix;
+    newMatrix = Matrix(N_BOX, 2 * N_BOX);
+    //    int** newMatrix = new int* [N_BOX];
+    //    for (int i = 0; i < N_BOX; i++)
+    //        newMatrix[i] = new int [2 * N_BOX];
 
     saveOccupationMatrix(); // saving actual informations
 
@@ -74,70 +80,70 @@ void MotionDetection::doOccupationMatrix() {
             int indexx = (int) (P.getX() / BOXX);
             int indexy = (int) (P.getY() / BOXY);
             if (m_pOwner->GetRange(i) < 3) // new tracking... all itens detected are obstacle
-                newMatrix[indexx][indexy] = -1; // obstacle of ambient
+                newMatrix(indexx, indexy) = -1; // obstacle of ambient
         }
     }
 
-    new_o_cMatrix.Clean(); //mesma coisa que o "zeros" do seu código
-    zeros(o_cMatrix); // clean the current matrix
+    o_cMatrix.Clean(); //mesma coisa que o "zeros" do seu código
+    //    zeros(o_cMatrix); // clean the current matrix
     // mapping new itens with respect of previous matrix 
     for (int i = 0; i < N_BOX; i++) {
         for (int j = 0; j < 2 * N_BOX; j++) {
             // obstacle turn to available
-            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == 0) {
-                new_o_cMatrix(i, j) = 0;
-                o_cMatrix[i][j] = 0;
+            if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == 0) {
+                o_cMatrix(i, j) = 0;
+                //                o_cMatrix[i][j] = 0;
             }
             // obstacle turn to intended object or this object is hidden now?
-            if (o_pMatrix[i][j] == -1 && newMatrix[i][j] == -1) {
-                new_o_cMatrix(i, j) = -1;
-                o_cMatrix[i][j] = -1; // not cheatting. 5 or -1?
+            if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == -1) {
+                o_cMatrix(i, j) = -1;
+                //                o_cMatrix[i][j] = -1; // not cheatting. 5 or -1?
             }
             // available space turn to available
-            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == 0) {
-                new_o_cMatrix(i, j) = 0;
-                o_cMatrix[i][j] = 0;
+            if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == 0) {
+                o_cMatrix(i, j) = 0;
+                //                o_cMatrix[i][j] = 0;
             }
             // available space turn to obstacle
-            if (o_pMatrix[i][j] == 0 && newMatrix[i][j] == -1) {
-                new_o_cMatrix(i, j) = -1;
-                o_cMatrix[i][j] = -1;
+            if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == -1) {
+                o_cMatrix(i, j) = -1;
+                //                o_cMatrix[i][j] = -1;
             }
             // intended object turn to available 
-            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == 0) {
-                new_o_cMatrix(i, j) = 0;
-                o_cMatrix[i][j] = 0;
+            if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == 0) {
+                o_cMatrix(i, j) = 0;
+                //                o_cMatrix[i][j] = 0;
             }
             // intended object turn to obstacle? maybe
-            if (o_pMatrix[i][j] == 5 && newMatrix[i][j] == -1) {
-                new_o_cMatrix(i, j) = 5;
-                o_cMatrix[i][j] = 5;
+            if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == -1) {
+                o_cMatrix(i, j) = 5;
+                //                o_cMatrix[i][j] = 5;
             }
         }
     }
 }
 
-void MotionDetection::zeros(int** M) {
-    for (int i = 0; i < N_BOX; i++)
-        for (int j = 0; j < 2 * N_BOX; j++)
-            M[i][j] = 0;
-}
+//void MotionDetection::zeros(int** M) {
+//    for (int i = 0; i < N_BOX; i++)
+//        for (int j = 0; j < 2 * N_BOX; j++)
+//            M[i][j] = 0;
+//}
 
 int MotionDetection::getAngleToTurn() {
-    int** diff = new int* [N_BOX];
-    for (int i = 0; i < N_BOX; i++)
-        diff[i] = new int [2 * N_BOX];
+    //    int** diff = new int* [N_BOX];
+    //    for (int i = 0; i < N_BOX; i++)
+    //        diff[i] = new int [2 * N_BOX];
 
     this->saveOccupationMatrix();
     this->doOccupationMatrix();
 
     // apply difference to see how much robot need to turn
-    Matrix new_diff = new_o_cMatrix - new_o_pMatrix;
-    diff = subMatrix(o_cMatrix, o_pMatrix);
+    Matrix diff = o_cMatrix - o_pMatrix;
+    //diff = subMatrix(o_cMatrix, o_pMatrix);
 
     for (int i = 0; i < N_BOX; i++) {
         for (int j = 0; j < 2 * N_BOX; j++) {
-            if (diff[i][j] < -4) // there is a movement
+            if (diff(i, j) < -4) // there is a movement
                 return (BOXX - j);
         }
     }
@@ -146,19 +152,19 @@ int MotionDetection::getAngleToTurn() {
 }
 
 void MotionDetection::saveOccupationMatrix() {
-    new_o_pMatrix = new_o_cMatrix;
-    this->o_pMatrix = this->o_cMatrix;
+    o_pMatrix = o_cMatrix;
+    //    this->o_pMatrix = this->o_cMatrix;
 }
 
 void MotionDetection::saveLastSeenPosition() {
     //if (this->itDisapear())
-    new_lastSeenMatrix = new_o_cMatrix;
-    this->lastSeenMatrix = this->o_cMatrix;
+    lastSeenMatrix = o_cMatrix;
+    //    this->lastSeenMatrix = this->o_cMatrix;
 }
 
 void MotionDetection::reachLastSeenPosition() {
-    new_o_cMatrix = new_lastSeenMatrix;
-    this->o_cMatrix = this->lastSeenMatrix;
+    o_cMatrix = lastSeenMatrix;
+    //    this->o_cMatrix = this->lastSeenMatrix;
 }
 
 /* Verifico se na matriz não tenho mais elementos > 5
@@ -166,60 +172,61 @@ void MotionDetection::reachLastSeenPosition() {
    foi perdido. Retorna true para isso.
  */
 bool MotionDetection::itDisapear() {
-    if (this->o_cMatrix != NULL) {
+//    if (this->o_cMatrix != NULL) {
         for (int i = 0; i < N_BOX; i++) {
             for (int j = 0; j < 2 * N_BOX; j++) {
-                if (o_cMatrix[i][j] > 3)
+                if (o_cMatrix(i, j) > 3)
                     return false;
             }
         }
         return true;
-    } else return false;
+   // } else return false;
 }
 
-int** MotionDetection::sumMatrix(int** M1, int** M2) {
-    if (M1 != NULL && M2 != NULL) {
-        int** result;
-        result = new int* [N_BOX];
-        for (int i = 0; i < N_BOX; i++)
-            result[i] = new int [2 * N_BOX];
-
-        for (int i = 0; i < N_BOX; i++) {
-            for (int j = 0; j < 2 * N_BOX; j++) {
-                result[i][j] = M1[i][j] + M2[i][j];
-            }
-        }
-        return result;
-    } else return NULL;
-}
-
-int** MotionDetection::subMatrix(int** M1, int** M2) {
-    if (M1 != NULL && M2 != NULL) {
-        int** result;
-        result = new int* [N_BOX];
-        for (int i = 0; i < N_BOX; i++)
-            result[i] = new int [2 * N_BOX];
-
-        for (int i = 0; i < N_BOX; i++) {
-            for (int j = 0; j < 2 * N_BOX; j++) {
-                result[i][j] = M1[i][j] - M2[i][j];
-            }
-        }
-        return result;
-    } else return NULL;
-}
-
-int** MotionDetection::cloneMatrix(int** M1, int** M2) {
-    if (M1 != NULL && M2 != NULL) {
-        for (int i = 0; i < N_BOX; i++) {
-            for (int j = 0; j < 2 * N_BOX; j++) {
-                M1[i][j] = M2[i][j];
-            }
-        }
-        return M1;
-    } else return NULL;
-}
+//int** MotionDetection::sumMatrix(int** M1, int** M2) {
+//    if (M1 != NULL && M2 != NULL) {
+//        int** result;
+//        result = new int* [N_BOX];
+//        for (int i = 0; i < N_BOX; i++)
+//            result[i] = new int [2 * N_BOX];
+//
+//        for (int i = 0; i < N_BOX; i++) {
+//            for (int j = 0; j < 2 * N_BOX; j++) {
+//                result[i][j] = M1[i][j] + M2[i][j];
+//            }
+//        }
+//        return result;
+//    } else return NULL;
+//}
+//
+//int** MotionDetection::subMatrix(int** M1, int** M2) {
+//    if (M1 != NULL && M2 != NULL) {
+//        int** result;
+//        result = new int* [N_BOX];
+//        for (int i = 0; i < N_BOX; i++)
+//            result[i] = new int [2 * N_BOX];
+//
+//        for (int i = 0; i < N_BOX; i++) {
+//            for (int j = 0; j < 2 * N_BOX; j++) {
+//                result[i][j] = M1[i][j] - M2[i][j];
+//            }
+//        }
+//        return result;
+//    } else return NULL;
+//}
+//
+//int** MotionDetection::cloneMatrix(int** M1, int** M2) {
+//    if (M1 != NULL && M2 != NULL) {
+//        for (int i = 0; i < N_BOX; i++) {
+//            for (int j = 0; j < 2 * N_BOX; j++) {
+//                M1[i][j] = M2[i][j];
+//            }
+//        }
+//        return M1;
+//    } else return NULL;
+//}
 
 bool MotionDetection::isNotNullLastSeenMatrix() {
-    return lastSeenMatrix != NULL;
+//    return lastSeenMatrix != NULL;
+    return false;       // precisamos refazer isso.
 }

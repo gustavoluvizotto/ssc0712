@@ -61,8 +61,8 @@ public:
 
     /* index operator. Usage: myMatrixObj[row,col]; index are one-based. */
     double& operator()(const int r, const int c) {
-        assert(m_pMatrix != NULL && r > 0 && r <= rows && c > 0 && c <= cols);
-        return m_pMatrix[r - 1][c - 1];
+        assert(m_pMatrix != NULL); //&& r > 0 && r <= rows && c > 0 && c <= cols);
+        return m_pMatrix[r][c];
     }
 
     /* index operator. Usage: myMatrixObj.get(row,col). Index are one-based.
@@ -132,10 +132,12 @@ public:
      * @return a mesma matriz, com todos os seus elementos divididos por val
      */
     Matrix& Divide(const double val) {
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
-                m_pMatrix[r][c] /= val;
-        return *this;
+        if (val != 0) {
+            for (int r = 0; r < rows; r++)
+                for (int c = 0; c < cols; c++)
+                    m_pMatrix[r][c] /= val;
+            return *this;
+        }
     }
 
     /**
@@ -408,7 +410,7 @@ public:
      * @return uma nova matriz randômica
      */
     static Matrix Rand(const int rows, const int cols) {
-        assert(rows >= 1 && cols >= 1 && "# de linhas ou colunas tem que ser positovo");
+        assert(rows >= 1 && cols >= 1 && "# de linhas ou colunas tem que ser positivo");
         Matrix res = Matrix(rows, cols);
         struct timeval tv;
         gettimeofday(&tv, NULL);

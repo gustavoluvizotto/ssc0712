@@ -35,7 +35,7 @@
 			"file": "MotionDetection.cpp",
 			"settings":
 			{
-				"buffer_size": 5866,
+				"buffer_size": 6311,
 				"line_ending": "Unix"
 			}
 		},
@@ -43,7 +43,7 @@
 			"file": "MotionDetection.h",
 			"settings":
 			{
-				"buffer_size": 1115,
+				"buffer_size": 1156,
 				"line_ending": "Unix"
 			}
 		},
@@ -59,7 +59,7 @@
 			"file": "Robot.h",
 			"settings":
 			{
-				"buffer_size": 1856,
+				"buffer_size": 1862,
 				"line_ending": "Unix"
 			}
 		},
@@ -67,7 +67,7 @@
 			"file": "RobotStates.cpp",
 			"settings":
 			{
-				"buffer_size": 2874,
+				"buffer_size": 2662,
 				"line_ending": "Unix"
 			}
 		},
@@ -75,7 +75,7 @@
 			"file": "RobotStates.h",
 			"settings":
 			{
-				"buffer_size": 1661,
+				"buffer_size": 1664,
 				"line_ending": "Unix"
 			}
 		},
@@ -156,6 +156,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"o_cMatrix[i]",
 			"ff1",
 			"turnrate1",
 			"speed1",
@@ -180,7 +181,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -216,15 +217,15 @@
 					"file": "MotionDetection.cpp",
 					"settings":
 					{
-						"buffer_size": 5866,
+						"buffer_size": 6311,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5866,
-								5866
+								406,
+								406
 							]
 						],
 						"settings":
@@ -234,7 +235,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1214.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -244,15 +245,15 @@
 					"file": "MotionDetection.h",
 					"settings":
 					{
-						"buffer_size": 1115,
+						"buffer_size": 1156,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								698,
-								698
+								0,
+								0
 							]
 						],
 						"settings":
@@ -300,7 +301,7 @@
 					"file": "Robot.h",
 					"settings":
 					{
-						"buffer_size": 1856,
+						"buffer_size": 1862,
 						"regions":
 						{
 						},
@@ -328,15 +329,15 @@
 					"file": "RobotStates.cpp",
 					"settings":
 					{
-						"buffer_size": 2874,
+						"buffer_size": 2662,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1643,
-								1643
+								0,
+								0
 							]
 						],
 						"settings":
@@ -356,15 +357,15 @@
 					"file": "RobotStates.h",
 					"settings":
 					{
-						"buffer_size": 1661,
+						"buffer_size": 1664,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								843,
-								843
+								0,
+								0
 							]
 						],
 						"settings":
