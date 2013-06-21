@@ -1,72 +1,13 @@
 Author: Gustavo Luvizotto Cesar      - 6783544
         Leonardo Lourenço Crespilho  - 5124310 
---------------------------------------------------------------------------------
-Casos de Uso:
-    - Perseguição
-    - Evitar colisão
-    - Perder o rastro
-    - Navegação
-    - 
---------------------------------------------------------------------------------
-Descrição abstrata dos CDU:
-CDU1: Perseguição
-    O robo deve perseguir o professor de modo a evitar obstáculos durante o 
-trajeto. A perseguição deve manter algum histórico de por onde o prof. estava
-para que, caso perca seu rastro, possa estimar onde possivelmente possa estar.
 
-CDU2: Evitar colisão
-    O robo deve parar e girar até que seu sensor laser indique que não há perigo
-de colisão. A direção que será feita a virada e como o robo se comportará ainda
-não sabemos.
-
-CDU3: Perder o rastro
-    Ao perder o rastro do prof., o robo deverá buscar em sua base de informações
-as duas últimas posições do prof. para poder estimar a tendencia de seu 
-movimento. Após isso, deve traçar uma trajetória e navegar até o ponto onde 
-possivelmente ele esteja.
-
-CDU4: Navegação (?)
-    O robo deve percorrer a velocidade que lhe for pedido e curvar quanto for 
-necessário além de ter um controle PID para alcançar o ponto objetivo que está
-marcado.
-
---------------------------------------------------------------------------------
-Conceitos importantes que podem virar classes:
-    - Perseguicao
-    - EvitarColisao
-    - PerderRastro
-    - Navegacao
-    
---------------------------------------------------------------------------------
-Possíveis métodos e atributos das classes:
-Classe Estado:
-
-Classe Perseguicao:
-
-Classe EvitarColisao:
-
-Classe PerdeuRastro:
-
-Classe Navegacao:
-
---------------------------------------------------------------------------------
-
-deprecated
-Novas idéias: 
-    Para implementar o seguidor de pernas, tomar alguns feixes de laser (depois
-verificar um numero bom), e para cada conjunto de 3 pontos (3 feixes), 
-calcular o ângulo que fazem em relação ao ponto do meio. Se 180<theta<90, entao
-se aproxima de uma circunferencia (verificar limites para melhor caso de uma
-perna). Ir varrendo para os conjuntos de pontos determinados pelos feixes 
-escolhidos e entao, verificar se os 4 angulos vizinhos obedecem essa mesma regra,
-ou melhor, se estao com praticamente o mesmo angulo com erro e desvio padrao
-de 0.15 rad. Depois disso. Calcular a o raio da circunferencia que é formada e 
-salvar, alem dos pontos extremos dos feixes que a determinam. Temos então uma 
-circunferencia mapeada que faremos o robo seguir. Ver artigo de referencia!!
-
-Outra ideia:
-    Coletar 30 feixes frontais 75 < theta < 105. Detectar o objeto ali, fazer 
+    Coletar feixes frontais 75 < theta < 105. Detectar o objeto ali, fazer 
 20 medições para ter estatistica sobre aquele objeto, e entao segui-lo durante
 o percurso. A cada desvio dos feixes 105 e 75, girar o robo com angulo fi para 
 que o robo fique de frente para o objeto novamente. Salvar na memória a última
 posição que o robo se encontra.
+
+Para usar no hokuyo:
+0 grau -> feixe 85
+180 graus -> feixe 595
+90 graus -> feixe 340

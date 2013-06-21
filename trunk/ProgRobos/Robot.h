@@ -61,7 +61,7 @@ public:
     }
 
     bool willHit() {
-        for (int i = 0; i < 180; i++) {
+        for (int i = 0; i < THETA_MAX; i++) {
             if (this->m_pRp->GetRange(i) < 0.5) {
                 return true;
             }
