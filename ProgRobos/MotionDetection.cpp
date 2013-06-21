@@ -17,8 +17,8 @@ MotionDetection::MotionDetection(Robot* owner) {
         // this->lastSeenMatrix = NULL;         precisamos fazer isso, mas como?
 
         o_cMatrix.Clean();
-        //for (int i = 0; i <= 5; i++) { // start in the occupation for 5 times
-        m_pOwner->ReadSensors();
+        for (int i = 0; i <= 5; i++)  // start in the occupation for 5 times
+                m_pOwner->ReadSensors();
         startOccupationMatrix();
         //}
     }
@@ -29,19 +29,22 @@ MotionDetection::~MotionDetection() {
 
 void MotionDetection::startOccupationMatrix() {
     Point<double> P;
-    for (int i = 0; i < THETA_MAX + 1; i++) { // para todos os angulos
-        if (m_pOwner->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
+    int x, y;
+
+    for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
+        if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
-            int indexx = (int) (P.getX() / BOXX);
-            int indexy = (int) (P.getY() / BOXY);
+            y = 1 + (int) (P.getY() / BOXY);
+            x = N_BOX + (int) (P.getX() / BOXX);
+
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
-            if (indexx <= (N_BOX + (int) (N_BOX / LENGTH)) || indexx >= (N_BOX - (int) (N_BOX / LENGTH))) {
-                o_cMatrix(indexx, indexy) = 5; // the frontal object to follow
+            if (x <= (N_BOX + (int) (N_BOX / LENGTH)) || x >= (N_BOX - (int) (N_BOX / LENGTH))) {
+                o_cMatrix(y, x) = 5; // the frontal object to follow
             } else {
-                if (m_pOwner->GetRange(i) < 3) {
-                    o_cMatrix(indexx, indexy) = -1; // obstacle of ambient
+                if (m_pOwner->GetRange(i) < LENGTH) {
+                    o_cMatrix(y, x) = -1; // obstacle of ambient
                 }
             }
         }
@@ -52,25 +55,26 @@ void MotionDetection::startOccupationMatrix() {
 void MotionDetection::doOccupationMatrix() {
     Point<double> P;
     Matrix newMatrix;
+    int x, y;
     newMatrix = Matrix(N_BOX, 2 * N_BOX);
 
     saveOccupationMatrix(); // saving actual informations
 
-    for (int i = 0; i < THETA_MAX + 1; i++) { // para todos os angulos
-        if (m_pOwner->GetRange(i) <= 3.0) { // para os raios que estejam dentro da caixa imaginaria
+    for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
+        if (m_pOwner->GetRange(i) <=LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
-            int indexx = (int) (P.getX() / BOXX);
-            int indexy = (int) (P.getY() / BOXY);
-            if (m_pOwner->GetRange(i) < 3) // new tracking... all itens detected are obstacle
-                newMatrix(indexx, indexy) = -1; // obstacle of ambient
+            x = N_BOX + (int) (P.getX() / BOXX);
+            y = 1 + (int) (P.getY() / BOXY);
+            if (m_pOwner->GetRange(i) < LENGTH) // new tracking... all itens detected are obstacle
+                newMatrix(y, x) = -1; // obstacle of ambient
         }
     }
 
     o_cMatrix.Clean(); // limpo a matriz
 
     // mapping new itens with respect of previous matrix 
-    for (int i = 0; i < N_BOX; i++) {
-        for (int j = 0; j < 2 * N_BOX; j++) {
+    for (int i = 1; i < N_BOX; i++) {
+        for (int j = 1; j < 2 * N_BOX; j++) {
             // obstacle turn to available
             if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == 0) {
                 o_cMatrix(i, j) = 0;
@@ -97,6 +101,7 @@ void MotionDetection::doOccupationMatrix() {
             }
         }
     }
+    o_cMatrix.Print();
 }
 
 int MotionDetection::getAngleToTurn() {
@@ -106,8 +111,8 @@ int MotionDetection::getAngleToTurn() {
     // apply difference to see how much robot need to turn
     Matrix diff = o_cMatrix - o_pMatrix;
 
-    for (int i = 0; i < N_BOX; i++) {
-        for (int j = 0; j < 2 * N_BOX; j++) {
+    for (int i = 1; i < N_BOX; i++) {
+        for (int j = 1; j < 2 * N_BOX; j++) {
             if (diff(i, j) < -4) // there is a movement
                 return (BOXX - j);
         }
@@ -133,8 +138,8 @@ void MotionDetection::reachLastSeenPosition() {
    foi perdido. Retorna true para isso.
  */
 bool MotionDetection::itDisapear() {
-    for (int i = 0; i < N_BOX; i++) {
-        for (int j = 0; j < 2 * N_BOX; j++) {
+    for (int i = 1; i <= N_BOX; i++) {
+        for (int j = 1; j <= 2 * N_BOX; j++) {
             if (o_cMatrix(i, j) > 3)
                 return false;
         }

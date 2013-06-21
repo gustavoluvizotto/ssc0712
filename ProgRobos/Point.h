@@ -40,8 +40,8 @@ public:
     }
 
     void polarToCartesian(g_Type radius, g_Type angle) { // angle in degree.
-        this->x = radius * cos(angle * M_1_PI / 180.0f);
-        this->y = radius * sin(angle * M_1_PI / 180.0f);
+        this->x = radius * cos(angle * M_PI / 180.0f);
+        this->y = radius * sin(angle * M_PI / 180.0f);
     }
 
     g_Type distance(g_Type x2, g_Type x1) {
