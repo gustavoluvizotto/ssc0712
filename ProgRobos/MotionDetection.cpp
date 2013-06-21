@@ -46,6 +46,7 @@ void MotionDetection::startOccupationMatrix() {
             }
         }
     }
+    o_cMatrix.Print();
 }
 
 void MotionDetection::doOccupationMatrix() {

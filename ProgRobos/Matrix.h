@@ -61,7 +61,6 @@ public:
 
     /* index operator. Usage: myMatrixObj[row,col]; index are one-based. */
     double& operator()(const int r, const int c) {
-        cout << "R e C: " << r << " " << c << endl;
         assert(m_pMatrix != NULL && r > 0 && r <= rows && c > 0 && c <= cols);
         return m_pMatrix[r - 1][c - 1];
     }
@@ -292,7 +291,7 @@ public:
                     cout << " ";
                 }
                 for (c = 0; c < cols - 1; c++) {
-                    cout << m_pMatrix[r][c] << ", ";
+                    cout << m_pMatrix[r][c] << " ";
                 }
                 if (r < rows - 1) {
                     cout << m_pMatrix[r][cols - 1] << ";" << endl;
