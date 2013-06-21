@@ -115,14 +115,13 @@ int main(int argc, char **argv) {
 
     //    Robo* robo = new Robo("localhost");
     //    robo->start();
-    
-    
-    
+
+
+
     Robot* robot = new Robot();
-   
+
     for (;;) {
         robot->Update();
-//        cout << endl;
     }
 
     return 0;
