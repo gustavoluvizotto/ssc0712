@@ -61,8 +61,9 @@ public:
 
     /* index operator. Usage: myMatrixObj[row,col]; index are one-based. */
     double& operator()(const int r, const int c) {
-        assert(m_pMatrix != NULL); //&& r > 0 && r <= rows && c > 0 && c <= cols);
-        return m_pMatrix[r][c];
+        cout << "R e C: " << r << " " << c << endl;
+        assert(m_pMatrix != NULL && r > 0 && r <= rows && c > 0 && c <= cols);
+        return m_pMatrix[r - 1][c - 1];
     }
 
     /* index operator. Usage: myMatrixObj.get(row,col). Index are one-based.
@@ -535,6 +536,10 @@ public:
             }
         }
         return res;
+    }
+
+    bool isNull() {
+        return m_pMatrix == NULL;
     }
 };
 
