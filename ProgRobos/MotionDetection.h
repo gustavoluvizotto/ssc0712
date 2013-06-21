@@ -30,15 +30,8 @@ public:
     void reachLastSeenPosition();
     bool itDisapear();
     void doOccupationMatrix();   // when following
-//    void zeros(int** M);
-//    int** sumMatrix(int** M1, int** M2);   // operators to do maths with
-//    int** subMatrix(int** M1, int** M2);   // matrix
-//    int** cloneMatrix(int** M1, int** M2);
     bool isNotNullLastSeenMatrix();
 private:
-//    int** o_cMatrix;       // current occupation Matrix
-//    int** o_pMatrix;       // previous occupation Matrix
-//    int** lastSeenMatrix;
     Robot* m_pOwner;
     Matrix o_cMatrix;
     Matrix o_pMatrix;
