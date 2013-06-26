@@ -32,6 +32,8 @@ public:
     void doOccupationMatrix();   // when following
     bool isNotNullLastSeenMatrix();
     bool isNearToPreviousObjective(const int r, const int c) const;
+    int getXMin() const;
+    int getXMax() const;
 private:
     int threshold; // garante um número máximo de 5's
     Robot* m_pOwner;

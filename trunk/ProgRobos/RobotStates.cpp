@@ -36,14 +36,14 @@ void S_Andando::Enter(Robot* pRobot) {
  */
 void S_Andando::Execute(Robot* pRobot) {
     if (pRobot->GetMD()->itDisapear()) {
-        //m_pMD->saveLastSeenPosition();
+        pRobot->GetMD()->saveLastSeenPosition();
         pRobot->GetFSM()->ChangeToState(S_LostTrack::Instance());
     }
     if (pRobot->willHit()) {
         pRobot->GetMD()->saveLastSeenPosition();
         pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
     } else {
-        pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn());
+        pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn() / 5);
     }
 }
 
