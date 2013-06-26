@@ -10,6 +10,7 @@
 
 MotionDetection::MotionDetection(Robot* owner) {
     if (owner != NULL) {
+        threshold = 0;
         m_pOwner = owner;
         o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
         o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
@@ -17,8 +18,8 @@ MotionDetection::MotionDetection(Robot* owner) {
         // this->lastSeenMatrix = NULL;         precisamos fazer isso, mas como?
 
         o_cMatrix.Clean();
-        for (int i = 0; i <= 5; i++)  // start in the occupation for 5 times
-                m_pOwner->ReadSensors();
+        for (int i = 0; i <= 5; i++) // start in the occupation for 5 times
+            m_pOwner->ReadSensors();
         startOccupationMatrix();
         //}
     }
@@ -42,6 +43,7 @@ void MotionDetection::startOccupationMatrix() {
              */
             if (x <= (N_BOX + (int) (N_BOX / LENGTH)) || x >= (N_BOX - (int) (N_BOX / LENGTH))) {
                 o_cMatrix(y, x) = 5; // the frontal object to follow
+                threshold++;
             } else {
                 if (m_pOwner->GetRange(i) < LENGTH) {
                     o_cMatrix(y, x) = -1; // obstacle of ambient
@@ -53,55 +55,76 @@ void MotionDetection::startOccupationMatrix() {
 }
 
 void MotionDetection::doOccupationMatrix() {
+    int nfives = 0;
     Point<double> P;
-    Matrix newMatrix;
+    //    Matrix newMatrix = Matrix(N_BOX, 2 * N_BOX);
     int x, y;
-    newMatrix = Matrix(N_BOX, 2 * N_BOX);
 
     saveOccupationMatrix(); // saving actual informations
 
+    o_cMatrix.Clean(); // limpo a matriz
+
     for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
-        if (m_pOwner->GetRange(i) <=LENGTH) { // para os raios que estejam dentro da caixa imaginaria
+        if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
             x = N_BOX + (int) (P.getX() / BOXX);
             y = 1 + (int) (P.getY() / BOXY);
-            if (m_pOwner->GetRange(i) < LENGTH) // new tracking... all itens detected are obstacle
-                newMatrix(y, x) = -1; // obstacle of ambient
-        }
-    }
-
-    o_cMatrix.Clean(); // limpo a matriz
-
-    // mapping new itens with respect of previous matrix 
-    for (int i = 1; i < N_BOX; i++) {
-        for (int j = 1; j < 2 * N_BOX; j++) {
-            // obstacle turn to available
-            if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == 0) {
-                o_cMatrix(i, j) = 0;
-            }
-            // obstacle turn to intended object or this object is hidden now?
-            if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == -1) {
-                o_cMatrix(i, j) = -1; // not cheatting. 5 or -1?
-            }
-            // available space turn to available
-            if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == 0) {
-                o_cMatrix(i, j) = 0;
-            }
-            // available space turn to obstacle
-            if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == -1) {
-                o_cMatrix(i, j) = -1;
-            }
-            // intended object turn to available 
-            if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == 0) {
-                o_cMatrix(i, j) = 0;
-            }
-            // intended object turn to obstacle? maybe
-            if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == -1) {
-                o_cMatrix(i, j) = 5;
+            if (m_pOwner->GetRange(i) < LENGTH && x >= 1 && y >= 1) {// new tracking... all itens detected are obstacle
+                o_cMatrix(y, x) = -1; // obstacle of ambient
+                if (isNearToPreviousObjective(y, x) && nfives <= threshold) {
+                    o_cMatrix(y, x) = 5;
+                    nfives++;
+                }
             }
         }
     }
+
+    /*
+        // mapping new itens with respect of previous matrix 
+        for (int i = 1; i < N_BOX; i++) {
+            for (int j = 1; j < 2 * N_BOX; j++) {
+                // obstacle turn to available
+                if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == 0) {
+                    o_cMatrix(i, j) = 0;
+                }
+                // obstacle turn to intended object or this object is hidden now?
+                if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == -1) {
+                    o_cMatrix(i, j) = -1; // not cheatting. 5 or -1?
+                }
+                // available space turn to available
+                if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == 0) {
+                    o_cMatrix(i, j) = 0;
+                }
+                // available space turn to obstacle
+                if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == -1) {
+                    o_cMatrix(i, j) = -1;
+                }
+                // intended object turn to available 
+                if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == 0) {
+                    o_cMatrix(i, j) = 0;
+                }
+                // intended object turn to obstacle? maybe
+                if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == -1) {
+                    o_cMatrix(i, j) = 5;
+                }
+            }
+        }
+     */
+
+    //    o_cMatrix = newMatrix;
     o_cMatrix.Print();
+}
+
+//percorre procurando se tem algum 5 ao redor de i,j
+
+bool MotionDetection::isNearToPreviousObjective(const int r, const int c) const {
+    for (int k = -1; k <= 1; k++)
+        for (int l = -1; l <= 1; l++) {
+            if (r + k >= 1 && c + l >= 1) // nao acesso indices nao definidos
+                if (o_pMatrix.get(r + k, c + l) == 5)
+                    return true;
+        }
+    return false;
 }
 
 int MotionDetection::getAngleToTurn() {

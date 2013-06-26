@@ -41,7 +41,7 @@ void S_Andando::Execute(Robot* pRobot) {
     }
     if (pRobot->willHit()) {
         pRobot->GetMD()->saveLastSeenPosition();
-        this->Exit(pRobot);
+        pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
     } else {
         pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn());
     }
@@ -55,7 +55,6 @@ void S_Andando::Execute(Robot* pRobot) {
    (é uma boa idéia???)...
  */
 void S_Andando::Exit(Robot* pRobot) {
-    pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
 }
 
 /*----------------------------------------------------------------------------*/

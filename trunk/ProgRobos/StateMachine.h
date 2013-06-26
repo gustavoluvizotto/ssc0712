@@ -4,6 +4,7 @@
 #include "State.h"
 #include <cassert>
 #include <cstddef>
+#include <iostream>
 
 template <class T>
 class StateMachine {
