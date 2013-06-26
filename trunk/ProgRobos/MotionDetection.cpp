@@ -7,17 +7,17 @@
 
 #include "MotionDetection.h"
 #include "Robot.h"
+#include <cmath>
 
 MotionDetection::MotionDetection(Robot* owner) {
     if (owner != NULL) {
         threshold = 0;
         m_pOwner = owner;
-        o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
-        o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
+        o_cMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
+        o_pMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
 
-        o_cMatrix.Clean();
-        for (int i = 0; i <= 5; i++) // start in the occupation for 5 times
-            m_pOwner->ReadSensors();
+        for (int i = 0; i <= 5; i++)
+            m_pOwner->ReadSensors(); //cria um delay. Bug do PlayerCC
         startOccupationMatrix();
     }
 }
@@ -32,8 +32,12 @@ void MotionDetection::startOccupationMatrix() {
     for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
-            y = 1 + (int) (P.getY() / BOXY);
-            x = N_BOX + (int) (P.getX() / BOXX);
+            y = ceil(P.getY() / BOXY);
+            if (y > N_BOX) y = N_BOX;
+            if (y == 0) y = 1;
+            x = N_BOX + ceil(P.getX() / BOXX);
+            if (x > N_BOX) x = N_BOX;
+            if (x == 0) x = 1;
 
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
@@ -133,7 +137,7 @@ int MotionDetection::getAngleToTurn() {
     for (int i = 1; i < N_BOX; i++) {
         for (int j = 1; j < 2 * N_BOX; j++) {
             if (diff(i, j) < -4) // there is a movement
-                return (BOXX - j)/10.0; //Guba, dividi por 10 pra girar mais devagar, mas nem testei.
+                return (BOXX - j) / 10.0; //Guba, dividi por 10 pra girar mais devagar, mas nem testei.
         }
     }
 
@@ -166,6 +170,10 @@ bool MotionDetection::itDisapear() {
     return true;
 }
 
+/**
+ * 
+ * @return true se a matriz já foi alocada. false caso contrário.
+ */
 bool MotionDetection::isNotNullLastSeenMatrix() {
-    return lastSeenMatrix.isMatrixAllocated();
+    return lastSeenMatrix.isAllocated();
 }

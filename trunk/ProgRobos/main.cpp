@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
             x_antes[i] = rp[i] * COS[i];
             y_antes[i] = rp[i] * SIN[i];
         }
-
+        robot.Read();
         for (i = 0; i < 181; i++) {
             x[i] = rp[i] * COS[i];
             y[i] = rp[i] * SIN[i];

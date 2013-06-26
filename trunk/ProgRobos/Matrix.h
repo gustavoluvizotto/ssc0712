@@ -536,7 +536,12 @@ public:
         return res;
     }
 
-    bool isMatrixAllocated() { //se a "matriz" está nula/alocada.
+    /**
+     * 
+     * @return true, se a matriz estiver alocada (se m_pMatrix não for NULL),
+     * e false caso contrário.
+     */
+    bool isAllocated() {
         return m_pMatrix != NULL;
     }
 };

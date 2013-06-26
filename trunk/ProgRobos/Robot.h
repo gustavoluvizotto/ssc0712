@@ -1,8 +1,8 @@
 #ifndef ROBOT_H
 #define	ROBOT_H
 
-#define THETA_MAX 180   // hokuyo is?
-#define LENGTH 3.0      // the max length of a data
+#define THETA_MAX 181   // 181, definido no sick.inc. hokuyo is?
+#define LENGTH 3.0      // the max length of a data = 3m
 
 #include "StateMachine.h"
 #include "RobotStates.h"
