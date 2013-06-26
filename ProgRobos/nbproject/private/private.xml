@@ -4,7 +4,104 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="20">
+        <file>
+            <url>MotionDetection.h</url>
+            <bookmark id="18">
+                <name/>
+                <line>42</line>
+                <key/>
+            </bookmark>
+            <bookmark id="19">
+                <name/>
+                <line>43</line>
+                <key/>
+            </bookmark>
+            <bookmark id="20">
+                <name/>
+                <line>44</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>MotionDetection.cpp</url>
+            <bookmark id="3">
+                <name/>
+                <line>12</line>
+                <key/>
+            </bookmark>
+            <bookmark id="2">
+                <name/>
+                <line>13</line>
+                <key/>
+            </bookmark>
+            <bookmark id="4">
+                <name/>
+                <line>51</line>
+                <key/>
+            </bookmark>
+            <bookmark id="5">
+                <name/>
+                <line>55</line>
+                <key/>
+            </bookmark>
+            <bookmark id="6">
+                <name/>
+                <line>80</line>
+                <key/>
+            </bookmark>
+            <bookmark id="7">
+                <name/>
+                <line>87</line>
+                <key/>
+            </bookmark>
+            <bookmark id="8">
+                <name/>
+                <line>92</line>
+                <key/>
+            </bookmark>
+            <bookmark id="9">
+                <name/>
+                <line>97</line>
+                <key/>
+            </bookmark>
+            <bookmark id="10">
+                <name/>
+                <line>102</line>
+                <key/>
+            </bookmark>
+            <bookmark id="11">
+                <name/>
+                <line>107</line>
+                <key/>
+            </bookmark>
+            <bookmark id="12">
+                <name/>
+                <line>112</line>
+                <key/>
+            </bookmark>
+            <bookmark id="13">
+                <name/>
+                <line>134</line>
+                <key/>
+            </bookmark>
+            <bookmark id="14">
+                <name/>
+                <line>147</line>
+                <key/>
+            </bookmark>
+            <bookmark id="15">
+                <name/>
+                <line>147</line>
+                <key/>
+            </bookmark>
+            <bookmark id="16">
+                <name/>
+                <line>147</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/mnt/windows/Users/GUSTAVO/Dropbox/eng%20comp/NetBeansProjects/ProgRobos/ProgRobos/RobotStates.cpp</file>
         <file>file:/mnt/windows/Users/GUSTAVO/Dropbox/eng%20comp/NetBeansProjects/ProgRobos/ProgRobos/Robot.h</file>
