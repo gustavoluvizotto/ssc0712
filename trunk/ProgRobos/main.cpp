@@ -5,6 +5,7 @@
  * Created on May 17, 2013, 2:46 PM
  */
 
+
 #ifdef _CH_
 #pragma package <opencv>
 #endif
@@ -124,5 +125,6 @@ int main(int argc, char **argv) {
         robot->Update();
     }
 
+    delete robot;
     return 0;
 }

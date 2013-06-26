@@ -18,7 +18,7 @@ private:
     PlayerClient* m_pRobot;
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
-    MotionDetection* m_pMD;//ponteiro pra classe MotionDetection
+    MotionDetection* m_pMD; //ponteiro pra classe MotionDetection
 
 public:
 
@@ -34,13 +34,17 @@ public:
     }
 
     virtual ~Robot() {
-        delete m_pStateMachine;
+        if (m_pMD) delete m_pMD;
+        if (m_pRp) delete m_pRp;
+        if (m_pPp) delete m_pPp;
+        if (m_pRobot) delete m_pRobot;
+        if (m_pStateMachine) delete m_pStateMachine;
     }
-    
+
     void ReadSensors() {
         m_pRobot->Read();
     }
-    
+
     StateMachine<Robot>* GetFSM() const {
         return m_pStateMachine;
     }
@@ -72,7 +76,7 @@ public:
     void walkTurn(double speed, double angle) {
         this->m_pPp->SetSpeed(speed, angle);
     }
-    
+
     MotionDetection* GetMD() {
         return m_pMD;
     }

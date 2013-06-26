@@ -35,8 +35,8 @@ public:
 private:
     int threshold; // garante um número máximo de 5's
     Robot* m_pOwner;
-    Matrix o_cMatrix;
-    Matrix o_pMatrix;
+    Matrix o_cMatrix;   //current Matrix
+    Matrix o_pMatrix;   //previous Matrix
     Matrix lastSeenMatrix;
 };
 

@@ -15,13 +15,10 @@ MotionDetection::MotionDetection(Robot* owner) {
         o_cMatrix = Matrix(N_BOX, 2 * N_BOX);
         o_pMatrix = Matrix(N_BOX, 2 * N_BOX);
 
-        // this->lastSeenMatrix = NULL;         precisamos fazer isso, mas como?
-
         o_cMatrix.Clean();
         for (int i = 0; i <= 5; i++) // start in the occupation for 5 times
             m_pOwner->ReadSensors();
         startOccupationMatrix();
-        //}
     }
 }
 
@@ -111,7 +108,6 @@ void MotionDetection::doOccupationMatrix() {
         }
      */
 
-    //    o_cMatrix = newMatrix;
     o_cMatrix.Print();
 }
 
@@ -137,7 +133,7 @@ int MotionDetection::getAngleToTurn() {
     for (int i = 1; i < N_BOX; i++) {
         for (int j = 1; j < 2 * N_BOX; j++) {
             if (diff(i, j) < -4) // there is a movement
-                return (BOXX - j);
+                return (BOXX - j)/10.0; //Guba, dividi por 10 pra girar mais devagar, mas nem testei.
         }
     }
 
@@ -171,6 +167,5 @@ bool MotionDetection::itDisapear() {
 }
 
 bool MotionDetection::isNotNullLastSeenMatrix() {
-    //return lastSeenMatrix != NULL; // precisamos refazer isso.
-    return false;
+    return lastSeenMatrix.isMatrixAllocated();
 }
