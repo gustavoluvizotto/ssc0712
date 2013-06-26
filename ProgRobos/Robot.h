@@ -1,8 +1,10 @@
 #ifndef ROBOT_H
 #define	ROBOT_H
 
-#define THETA_MAX 181   // 181, definido no sick.inc. hokuyo is?
+#define THETA_MIN 0     // minimo angulo do laser
+#define THETA_MAX 180   // 180, definido no sick.inc
 #define LENGTH 3.0      // the max length of a data = 3m
+#define THETA_MID (THETA_MAX+THETA_MIN)/2
 
 #include "StateMachine.h"
 #include "RobotStates.h"

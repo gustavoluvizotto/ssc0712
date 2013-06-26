@@ -29,22 +29,20 @@ void MotionDetection::startOccupationMatrix() {
     Point<double> P;
     int x, y;
 
-    for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
-        //o_cMatrix.Print();
+    for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
             y = ceil(P.getY() / BOXY);
             if (y > N_BOX) y = N_BOX;
             if (y == 0) y = 1;
             x = N_BOX + ceil(P.getX() / BOXX);
-            if (x > 2*N_BOX) x = 2*N_BOX - 1;
+            if (x > 2 * N_BOX) x = 2 * N_BOX - 1;
             if (x == 0) x = 1;
 
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
-            if (x <= (N_BOX + (int) (N_BOX / LENGTH)) || x >= (N_BOX - (int) (N_BOX / LENGTH))) {
-                cout << "x: " << x << " y: " << y << endl;
+            if (x <= (N_BOX + ceil(N_BOX / LENGTH)) || x >= (N_BOX - ceil(N_BOX / LENGTH))) {
                 o_cMatrix(y, x) = 5; // the frontal object to follow
                 threshold++;
             } else {
@@ -60,24 +58,23 @@ void MotionDetection::startOccupationMatrix() {
 void MotionDetection::doOccupationMatrix() {
     int nfives = 0;
     Point<double> P;
-    //    Matrix newMatrix = Matrix(N_BOX, 2 * N_BOX);
     int x, y;
 
     saveOccupationMatrix(); // saving actual informations
 
     o_cMatrix.Clean(); // limpo a matriz
 
-    for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
+    for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
             y = ceil(P.getY() / BOXY);
             if (y > N_BOX) y = N_BOX;
             if (y == 0) y = 1;
             x = N_BOX + ceil(P.getX() / BOXX);
-            if (x > 2*N_BOX) x = 2*N_BOX - 1;
+            if (x > 2 * N_BOX) x = 2 * N_BOX;
             if (x == 0) x = 1;
-            
-            if (m_pOwner->GetRange(i) < LENGTH && x >= 1 && y >= 1) {// new tracking... all itens detected are obstacle
+
+            if (m_pOwner->GetRange(i) < LENGTH) {// new tracking... all itens detected are obstacle
                 o_cMatrix(y, x) = -1; // obstacle of ambient
                 if (isNearToPreviousObjective(y, x) && nfives <= threshold) {
                     o_cMatrix(y, x) = 5;
@@ -86,44 +83,13 @@ void MotionDetection::doOccupationMatrix() {
             }
         }
     }
-
-    /*
-        // mapping new itens with respect of previous matrix 
-        for (int i = 1; i < N_BOX; i++) {
-            for (int j = 1; j < 2 * N_BOX; j++) {
-                // obstacle turn to available
-                if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == 0) {
-                    o_cMatrix(i, j) = 0;
-                }
-                // obstacle turn to intended object or this object is hidden now?
-                if (o_pMatrix(i, j) == -1 && newMatrix(i, j) == -1) {
-                    o_cMatrix(i, j) = -1; // not cheatting. 5 or -1?
-                }
-                // available space turn to available
-                if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == 0) {
-                    o_cMatrix(i, j) = 0;
-                }
-                // available space turn to obstacle
-                if (o_pMatrix(i, j) == 0 && newMatrix(i, j) == -1) {
-                    o_cMatrix(i, j) = -1;
-                }
-                // intended object turn to available 
-                if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == 0) {
-                    o_cMatrix(i, j) = 0;
-                }
-                // intended object turn to obstacle? maybe
-                if (o_pMatrix(i, j) == 5 && newMatrix(i, j) == -1) {
-                    o_cMatrix(i, j) = 5;
-                }
-            }
-        }
-     */
-
     o_cMatrix.Print();
 }
 
-//percorre procurando se tem algum 5 ao redor de i,j
-
+/**percorre procurando se tem algum 5 ao redor de i,j
+ * @param linha r e coluna c
+ * @return true se está nas redondezas de um 5 e false cc.
+ */
 bool MotionDetection::isNearToPreviousObjective(const int r, const int c) const {
     for (int k = -1; k <= 1; k++)
         for (int l = -1; l <= 1; l++) {
@@ -147,25 +113,26 @@ int MotionDetection::getAngleToTurn() {
 
     jmid = ceil((jmax + jmin) / 2);
 
-    return (- (jmid - N_BOX));
+    return (-(jmid - N_BOX));
 }
 
 int MotionDetection::getXMin() const {
-    int xmin = 2*N_BOX - 1;
+    int xmin = 2 * N_BOX;
 
-    for (int i = 1; i < N_BOX; i++)
-        for (int j = 1; j < 2 * N_BOX; j++) {
+    for (int i = 1; i <= N_BOX; i++)
+        for (int j = 1; j <= 2 * N_BOX; j++) {
             if (o_cMatrix.get(i, j) == 5 && j < xmin)
                 xmin = j;
         }
+    
     return xmin;
 }
 
 int MotionDetection::getXMax() const {
     int xmax = 1;
 
-    for (int i = 1; i < N_BOX; i++)
-        for (int j = 1; j < 2 * N_BOX; j++) {
+    for (int i = 1; i <= N_BOX; i++)
+        for (int j = 1; j <= 2 * N_BOX; j++) {
             if (o_cMatrix.get(i, j) == 5 && j > xmax)
                 xmax = j;
         }
@@ -184,14 +151,15 @@ void MotionDetection::reachLastSeenPosition() {
     o_cMatrix = lastSeenMatrix;
 }
 
-/* Verifico se na matriz não tenho mais elementos > 5
+/**
+ * @return Verifico se na matriz não tenho mais elementos > 5
    se isso ocorre, é porque o objeto a ser perseguido
    foi perdido. Retorna true para isso.
  */
 bool MotionDetection::itDisapear() {
     for (int i = 1; i <= N_BOX; i++) {
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (o_cMatrix(i, j) > 3)
+            if (o_cMatrix(i, j) == 5)
                 return false;
         }
     }
@@ -199,7 +167,6 @@ bool MotionDetection::itDisapear() {
 }
 
 /**
- * 
  * @return true se a matriz já foi alocada. false caso contrário.
  */
 bool MotionDetection::isNotNullLastSeenMatrix() {
