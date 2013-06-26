@@ -8,8 +8,8 @@
 #ifndef MOTIONDETECTION_H
 #define	MOTIONDETECTION_H
 
-#define BOXX 0.15f      // delta_x
-#define BOXY 0.15f      // delta_y
+#define BOXX 0.15f      // delta_x = 15cm
+#define BOXY 0.15f      // delta_y = 15cm
 #define N_BOX 20        // number of boxes in an axis
 
 #include "Point.h"
