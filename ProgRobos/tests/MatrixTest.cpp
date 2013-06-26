@@ -119,13 +119,13 @@ int main(int argc, char** argv) {
     cout << endl;
 
 
-    cout << "A = Matrix::Rand(2,2)" << endl;
-    A = Matrix::Rand(2, 2);
+    cout << "A = Matrix::Rand(3,3)" << endl;
+    A = Matrix::Rand(3, 3);
     A.Print();
     cout << endl;
 
-    cout << "B = Matrix::Rand(2,2)" << endl;
-    Matrix B = Matrix::Rand(2, 2);
+    cout << "B = Matrix::Rand(3,3)" << endl;
+    Matrix B = Matrix::Rand(3, 3);
     B.Print();
     cout << endl;
 
@@ -145,23 +145,26 @@ int main(int argc, char** argv) {
     cout << "Matrix::Inv(A).Print()" << endl;
     Matrix::Inv(A).Print();
     cout << endl;
-    
+
     cout << "A.Clean().Print()" << endl;
     A.Clean().Print();
     cout << endl;
-    
+
     cout << "A.Print()  (veja que houve a alteração inline da matriz A, quer dizer, ela foi alterada!)" << endl;
     A.Print();
     cout << endl;
-    
+
     cout << "A.Set(3).Print()" << endl;
     A.Set(3).Print();
     cout << endl;
-    
+
     cout << "A.Print() (veja que a alteração também foi inline.)" << endl;
     A.Print();
     cout << endl;
-    
+
+    Matrix *L = new Matrix(100, 100);
+    L->Print();
+    delete L;
     
     return (EXIT_SUCCESS);
 }

@@ -132,12 +132,11 @@ public:
      * @return a mesma matriz, com todos os seus elementos divididos por val
      */
     Matrix& Divide(const double val) {
-        if (val != 0) {
-            for (int r = 0; r < rows; r++)
-                for (int c = 0; c < cols; c++)
-                    m_pMatrix[r][c] /= val;
-            return *this;
-        }
+        assert(val != 0);
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                m_pMatrix[r][c] /= val;
+        return *this;
     }
 
     /**
@@ -417,7 +416,7 @@ public:
         srand(tv.tv_usec);
         for (int r = 1; r <= rows; r++)
             for (int c = 1; c <= cols; c++)
-                res(r, c) = rand() % 6 - 2;
+                res(r, c) = rand() % 30 - 15; //números aleatórios em torno de 15, amplitude 15.
         return res;
     }
 
@@ -537,8 +536,8 @@ public:
         return res;
     }
 
-    bool isNull() {
-        return m_pMatrix == NULL;
+    bool isMatrixAllocated() { //se a "matriz" está nula/alocada.
+        return m_pMatrix != NULL;
     }
 };
 
