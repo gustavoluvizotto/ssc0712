@@ -30,19 +30,21 @@ void MotionDetection::startOccupationMatrix() {
     int x, y;
 
     for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
+        //o_cMatrix.Print();
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
             y = ceil(P.getY() / BOXY);
             if (y > N_BOX) y = N_BOX;
             if (y == 0) y = 1;
             x = N_BOX + ceil(P.getX() / BOXX);
-            if (x > N_BOX) x = N_BOX;
+            if (x > 2*N_BOX) x = 2*N_BOX - 1;
             if (x == 0) x = 1;
 
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
             if (x <= (N_BOX + (int) (N_BOX / LENGTH)) || x >= (N_BOX - (int) (N_BOX / LENGTH))) {
+                cout << "x: " << x << " y: " << y << endl;
                 o_cMatrix(y, x) = 5; // the frontal object to follow
                 threshold++;
             } else {
@@ -68,8 +70,13 @@ void MotionDetection::doOccupationMatrix() {
     for (int i = 0; i < THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
-            x = N_BOX + (int) (P.getX() / BOXX);
-            y = 1 + (int) (P.getY() / BOXY);
+            y = ceil(P.getY() / BOXY);
+            if (y > N_BOX) y = N_BOX;
+            if (y == 0) y = 1;
+            x = N_BOX + ceil(P.getX() / BOXX);
+            if (x > 2*N_BOX) x = 2*N_BOX - 1;
+            if (x == 0) x = 1;
+            
             if (m_pOwner->GetRange(i) < LENGTH && x >= 1 && y >= 1) {// new tracking... all itens detected are obstacle
                 o_cMatrix(y, x) = -1; // obstacle of ambient
                 if (isNearToPreviousObjective(y, x) && nfives <= threshold) {
@@ -128,20 +135,41 @@ bool MotionDetection::isNearToPreviousObjective(const int r, const int c) const 
 }
 
 int MotionDetection::getAngleToTurn() {
+    int jmin, jmax;
+    int jmid;
+
     this->saveOccupationMatrix();
+
     this->doOccupationMatrix();
 
-    // apply difference to see how much robot need to turn
-    Matrix diff = o_cMatrix - o_pMatrix;
+    jmin = getXMin();
+    jmax = getXMax();
 
-    for (int i = 1; i < N_BOX; i++) {
+    jmid = ceil((jmax + jmin) / 2);
+
+    return (- (jmid - N_BOX));
+}
+
+int MotionDetection::getXMin() const {
+    int xmin = 2*N_BOX - 1;
+
+    for (int i = 1; i < N_BOX; i++)
         for (int j = 1; j < 2 * N_BOX; j++) {
-            if (diff(i, j) < -4) // there is a movement
-                return (BOXX - j) / 10.0; //Guba, dividi por 10 pra girar mais devagar, mas nem testei.
+            if (o_cMatrix.get(i, j) == 5 && j < xmin)
+                xmin = j;
         }
-    }
+    return xmin;
+}
 
-    return 0; // there isn't movement
+int MotionDetection::getXMax() const {
+    int xmax = 1;
+
+    for (int i = 1; i < N_BOX; i++)
+        for (int j = 1; j < 2 * N_BOX; j++) {
+            if (o_cMatrix.get(i, j) == 5 && j > xmax)
+                xmax = j;
+        }
+    return xmax;
 }
 
 void MotionDetection::saveOccupationMatrix() {
