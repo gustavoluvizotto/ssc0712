@@ -8,12 +8,12 @@
 #ifndef MOTIONDETECTION_H
 #define	MOTIONDETECTION_H
 
+#include "Point.h"
+#include "Matrix.h"
+
 #define BOXX 0.15f      // delta_x = 15cm
 #define BOXY 0.15f      // delta_y = 15cm
 #define N_BOX 20        // number of boxes in an axis
-
-#include "Point.h"
-#include "Matrix.h"
 
 class Robot;
 
