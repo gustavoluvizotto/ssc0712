@@ -35,10 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/MotionDetection.o \
-	${OBJECTDIR}/CollisionAvoidance.o \
-	${OBJECTDIR}/RobotStates.o
+	${OBJECTDIR}/RobotStates.o \
+	${OBJECTDIR}/main.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -71,25 +70,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/main.o: main.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
-
-${OBJECTDIR}/MotionDetection.o: MotionDetection.cpp 
+${OBJECTDIR}/MotionDetection.o: nbproject/Makefile-${CND_CONF}.mk MotionDetection.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp
 
-${OBJECTDIR}/CollisionAvoidance.o: CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp
-
-${OBJECTDIR}/RobotStates.o: RobotStates.cpp 
+${OBJECTDIR}/RobotStates.o: nbproject/Makefile-${CND_CONF}.mk RobotStates.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
+
+${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -107,19 +101,6 @@ ${TESTDIR}/tests/MatrixTest.o: tests/MatrixTest.cpp
 	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest.o tests/MatrixTest.cpp
 
 
-${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
-	fi
-
 ${OBJECTDIR}/MotionDetection_nomain.o: ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/MotionDetection.o`; \
@@ -133,19 +114,6 @@ ${OBJECTDIR}/MotionDetection_nomain.o: ${OBJECTDIR}/MotionDetection.o MotionDete
 	    ${CP} ${OBJECTDIR}/MotionDetection.o ${OBJECTDIR}/MotionDetection_nomain.o;\
 	fi
 
-${OBJECTDIR}/CollisionAvoidance_nomain.o: ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/CollisionAvoidance.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance_nomain.o CollisionAvoidance.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/CollisionAvoidance.o ${OBJECTDIR}/CollisionAvoidance_nomain.o;\
-	fi
-
 ${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/RobotStates.o`; \
@@ -157,6 +125,19 @@ ${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates_nomain.o RobotStates.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/RobotStates.o ${OBJECTDIR}/RobotStates_nomain.o;\
+	fi
+
+${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
 	fi
 
 # Run Test Targets

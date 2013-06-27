@@ -93,14 +93,14 @@ void MotionDetection::doOccupationMatrix() {
 bool MotionDetection::isNearToPreviousObjective(const int r, const int c) const {
     for (int k = -1; k <= 1; k++)
         for (int l = -1; l <= 1; l++) {
-            if (r + k >= 1 && c + l >= 1) // nao acesso indices nao definidos
+            if (r + k >= 1 && c + l >= 1 && r + k <= N_BOX && c + l <= 2 * N_BOX) // nao acesso indices nao definidos
                 if (o_pMatrix.get(r + k, c + l) == 5)
                     return true;
         }
     return false;
 }
 
-int MotionDetection::getAngleToTurn() {
+double MotionDetection::getAngleToTurn() {
     int jmin, jmax;
     int jmid;
 
@@ -113,7 +113,7 @@ int MotionDetection::getAngleToTurn() {
 
     jmid = ceil((jmax + jmin) / 2);
 
-    return (-(jmid - N_BOX));
+    return (-(jmid - N_BOX)) / 2.0;
 }
 
 int MotionDetection::getXMin() const {
@@ -124,7 +124,7 @@ int MotionDetection::getXMin() const {
             if (o_cMatrix.get(i, j) == 5 && j < xmin)
                 xmin = j;
         }
-    
+
     return xmin;
 }
 
