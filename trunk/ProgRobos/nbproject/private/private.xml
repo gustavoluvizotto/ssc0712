@@ -4,7 +4,26 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="21">
+        <file>
+            <url>MotionDetection.h</url>
+            <bookmark id="18">
+                <name/>
+                <line>42</line>
+                <key/>
+            </bookmark>
+            <bookmark id="19">
+                <name/>
+                <line>42</line>
+                <key/>
+            </bookmark>
+            <bookmark id="20">
+                <name/>
+                <line>42</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
         <file>file:/mnt/windows/Users/GUSTAVO/Dropbox/eng%20comp/NetBeansProjects/ProgRobos/ProgRobos/RobotStates.cpp</file>
         <file>file:/mnt/windows/Users/GUSTAVO/Dropbox/eng%20comp/NetBeansProjects/ProgRobos/ProgRobos/Robot.h</file>

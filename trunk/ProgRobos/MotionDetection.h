@@ -24,7 +24,7 @@ public:
     MotionDetection(Robot* owner);
     virtual ~MotionDetection();
     void startOccupationMatrix();// initial condition  
-    int getAngleToTurn();        // called all time
+    double getAngleToTurn();        // called all time
     void saveOccupationMatrix();
     void saveLastSeenPosition();
     void reachLastSeenPosition();
