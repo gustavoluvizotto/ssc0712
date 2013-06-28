@@ -1,11 +1,7 @@
 #ifndef ROBOT_H
 #define	ROBOT_H
 
-#define THETA_MIN 0     // minimo angulo do laser
-#define THETA_MAX 180   // 180, definido no sick.inc
-#define LENGTH 3.0      // the max length of a data = 3m
-#define THETA_MID (THETA_MAX+THETA_MIN)/2
-
+#include "Parameters.h"
 #include "StateMachine.h"
 #include "RobotStates.h"
 #include "MotionDetection.h"
@@ -21,18 +17,21 @@ private:
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
     MotionDetection* m_pMD; //ponteiro pra classe MotionDetection
+    Matrix m_CurrentVisionMatrix; //representa a visão atual do Robô como uma matriz de ocupação
+    Matrix m_PreviousVisionMatrix; //visão anterior
+    Matrix m_LastSeenVisionMatrix; //visão "congelada" da última vez que o Prof. foi visto
 
 public:
 
     Robot() {
         m_pStateMachine = new StateMachine<Robot>(this);
-        m_pStateMachine->SetGlobalState(SGlobalExample::Instance());
-        m_pStateMachine->SetCurrentState(S_Andando::Instance());
+        m_pStateMachine->SetGlobalState(S_Global::Instance());
+        m_pStateMachine->SetCurrentState(S_InitialSetup::Instance());
         m_pRobot = new PlayerClient("localhost");
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
-        m_pMD = new MotionDetection(this);
+//        m_pMD = new MotionDetection(this);
     }
 
     virtual ~Robot() {
@@ -51,10 +50,7 @@ public:
         return m_pStateMachine;
     }
 
-    // Update na FSM, e talvez em outras variáveis do Robô, como Read() no sensor
-
     void Update() const {
-        m_pRobot->Read();
         m_pStateMachine->Update();
     }
 
@@ -66,7 +62,9 @@ public:
         return m_pRp->GetRange(Index);
     }
 
-    bool willHit() {
+    //TODO Tem que remover essa função willHit() daqui. Colocar na ToolBox ou direto no estado
+
+    bool willHit() const {
         for (int i = 0; i < THETA_MAX; i++) {
             if (this->m_pRp->GetRange(i) < 0.8) {
                 return true;
@@ -75,12 +73,24 @@ public:
         return false;
     }
 
-    void walkTurn(double speed, double angle) {
-        this->m_pPp->SetSpeed(speed, angle);
+    void SetSpeed(double speed, double angle) {
+        m_pPp->SetSpeed(speed, angle);
     }
 
-    MotionDetection* GetMD() {
+    MotionDetection* GetMD() const {
         return m_pMD;
+    }
+
+    Matrix& GetCurrentVisionMatrix() {
+        return m_CurrentVisionMatrix;
+    }
+
+    Matrix& GetLastSeenVisionMatrix() {
+        return m_LastSeenVisionMatrix;
+    }
+
+    Matrix& GetPreviousVisionMatrix() {
+        return m_PreviousVisionMatrix;
     }
 };
 

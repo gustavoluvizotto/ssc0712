@@ -3,22 +3,6 @@
 #include <iostream>
 using namespace std;
 
-/*----------------------------------------------------------------------------*/
-
-void SGlobalExample::Enter(Robot* pRobot) {
-    cout << "Robot: Entrou no SGlobal" << endl;
-}
-
-void SGlobalExample::Execute(Robot* pRobot) {
-    cout << "Robot: Executando o SGlobal" << endl;
-}
-
-void SGlobalExample::Exit(Robot* pRobot) {
-    cout << "Robot: Saiu do SGlobal" << endl;
-}
-
-/*----------------------------------------------------------------------------*/
-
 /* Busca pela ultima posição onde se encontrava, carregando para a matriz de
  * ocupação atual.
  */
@@ -41,7 +25,7 @@ void S_Andando::Execute(Robot* pRobot) {
         pRobot->GetMD()->saveLastSeenPosition();
         pRobot->GetFSM()->ChangeToState(S_Desviando::Instance());
     } else {
-        pRobot->walkTurn(0.03, pRobot->GetMD()->getAngleToTurn());
+        pRobot->SetSpeed(0.03, pRobot->GetMD()->getAngleToTurn());
     }
 }
 
@@ -54,7 +38,7 @@ void S_Desviando::Enter(Robot* pRobot) {
 }
 
 void S_Desviando::Execute(Robot* pRobot) {
-    if (pRobot->willHit()) pRobot->walkTurn(0.1, pRobot->GetMD()->getAngleToTurn());
+    if (pRobot->willHit()) pRobot->SetSpeed(0.1, pRobot->GetMD()->getAngleToTurn());
     else pRobot->GetFSM()->ChangeToState(S_Andando::Instance());
 }
 

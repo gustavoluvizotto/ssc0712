@@ -38,6 +38,11 @@ OBJECTFILES= \
 	${OBJECTDIR}/CollisionAvoidance.o \
 	${OBJECTDIR}/MotionDetection.o \
 	${OBJECTDIR}/RobotStates.o \
+	${OBJECTDIR}/S_CollisionAvoidance.o \
+	${OBJECTDIR}/S_Global.o \
+	${OBJECTDIR}/S_InitialSetup.o \
+	${OBJECTDIR}/S_Tracking.o \
+	${OBJECTDIR}/ToolBox.o \
 	${OBJECTDIR}/main.o
 
 # Test Directory
@@ -45,7 +50,8 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f2
 
 # C Compiler Flags
 CFLAGS=
@@ -86,6 +92,31 @@ ${OBJECTDIR}/RobotStates.o: nbproject/Makefile-${CND_CONF}.mk RobotStates.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 
+${OBJECTDIR}/S_CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk S_CollisionAvoidance.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp
+
+${OBJECTDIR}/S_Global.o: nbproject/Makefile-${CND_CONF}.mk S_Global.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global.o S_Global.cpp
+
+${OBJECTDIR}/S_InitialSetup.o: nbproject/Makefile-${CND_CONF}.mk S_InitialSetup.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp
+
+${OBJECTDIR}/S_Tracking.o: nbproject/Makefile-${CND_CONF}.mk S_Tracking.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp
+
+${OBJECTDIR}/ToolBox.o: nbproject/Makefile-${CND_CONF}.mk ToolBox.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox.o ToolBox.cpp
+
 ${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -100,11 +131,21 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/MatrixTest.o ${OBJECTFILES:%.o=%_nomai
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/MatrixTest2.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
+
 
 ${TESTDIR}/tests/MatrixTest.o: tests/MatrixTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest.o tests/MatrixTest.cpp
+
+
+${TESTDIR}/tests/MatrixTest2.o: tests/MatrixTest2.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest2.o tests/MatrixTest2.cpp
 
 
 ${OBJECTDIR}/CollisionAvoidance_nomain.o: ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp 
@@ -146,6 +187,71 @@ ${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 	    ${CP} ${OBJECTDIR}/RobotStates.o ${OBJECTDIR}/RobotStates_nomain.o;\
 	fi
 
+${OBJECTDIR}/S_CollisionAvoidance_nomain.o: ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_CollisionAvoidance.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance_nomain.o S_CollisionAvoidance.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_CollisionAvoidance.o ${OBJECTDIR}/S_CollisionAvoidance_nomain.o;\
+	fi
+
+${OBJECTDIR}/S_Global_nomain.o: ${OBJECTDIR}/S_Global.o S_Global.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_Global.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global_nomain.o S_Global.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_Global.o ${OBJECTDIR}/S_Global_nomain.o;\
+	fi
+
+${OBJECTDIR}/S_InitialSetup_nomain.o: ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_InitialSetup.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup_nomain.o S_InitialSetup.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_InitialSetup.o ${OBJECTDIR}/S_InitialSetup_nomain.o;\
+	fi
+
+${OBJECTDIR}/S_Tracking_nomain.o: ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_Tracking.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking_nomain.o S_Tracking.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_Tracking.o ${OBJECTDIR}/S_Tracking_nomain.o;\
+	fi
+
+${OBJECTDIR}/ToolBox_nomain.o: ${OBJECTDIR}/ToolBox.o ToolBox.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ToolBox.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox_nomain.o ToolBox.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ToolBox.o ${OBJECTDIR}/ToolBox_nomain.o;\
+	fi
+
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
@@ -164,6 +270,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

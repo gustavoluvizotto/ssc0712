@@ -8,12 +8,9 @@
 #ifndef MOTIONDETECTION_H
 #define	MOTIONDETECTION_H
 
+#include "Parameters.h"
 #include "Point.h"
 #include "Matrix.h"
-
-#define BOXX 0.15f      // delta_x = 15cm
-#define BOXY 0.15f      // delta_y = 15cm
-#define N_BOX 20        // number of boxes in an axis
 
 class Robot;
 
@@ -31,7 +28,6 @@ public:
     bool isProfessorHasDisappeared();
     void doOccupationMatrix();   // when following
     bool isNotNullLastSeenMatrix();
-    bool isNextToPreviousMatrixFives(const int row, const int col) const;
     bool isNextToFives(const Matrix&, const int row, const int col) const;
     int getXMin() const;
     int getXMax() const;
