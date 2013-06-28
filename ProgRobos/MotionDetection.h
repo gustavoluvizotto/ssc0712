@@ -28,18 +28,21 @@ public:
     void saveOccupationMatrix();
     void saveLastSeenPosition();
     void reachLastSeenPosition();
-    bool itDisapear();
+    bool isProfessorHasDisappeared();
     void doOccupationMatrix();   // when following
     bool isNotNullLastSeenMatrix();
-    bool isNearToPreviousObjective(const int r, const int c) const;
+    bool isNextToPreviousMatrixFives(const int row, const int col) const;
+    bool isNextToFives(const Matrix&, const int row, const int col) const;
     int getXMin() const;
     int getXMax() const;
+    int getXMiddle() const;
+    
 private:
     int threshold; // garante um número máximo de 5's
     Robot* m_pOwner;
-    Matrix o_cMatrix;   //current Matrix
-    Matrix o_pMatrix;   //previous Matrix
-    Matrix lastSeenMatrix;
+    Matrix m_CurrentMatrix;   //current Matrix
+    Matrix m_PreviousMatrix;   //previous Matrix
+    Matrix m_lastSeenMatrix;
 };
 
 #endif	/* MOTIONDETECTION_H */

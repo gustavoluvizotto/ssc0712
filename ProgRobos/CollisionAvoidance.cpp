@@ -8,11 +8,10 @@
 #include "CollisionAvoidance.h"
 
 CollisionAvoidance::CollisionAvoidance(const Matrix& M, Robot* owner) {
-    m_pCMatrix = M;
+    m_cMatrix = M;
 }
 
 CollisionAvoidance::~CollisionAvoidance() {
-    delete m_pCMatrix;
 }
 
 /**
@@ -25,8 +24,9 @@ double CollisionAvoidance::getAngleToAvoid(Robot* owner) {
     xmin = getXMin(-1);
     xmax = getXMax(-1);
     if (xmin <= 24 || xmax <= 24) { // proximo pela esquerda
-        
+        //falta fazer esse método.
     }
+    return 0.0;
 }
 
 /**
@@ -81,7 +81,7 @@ int CollisionAvoidance::getYMax(const int ref) {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (m_pCMatrix.get(i, j) == ref && i > ymax)
+            if (m_cMatrix.get(i, j) == ref && i > ymax)
                 ymax = i;
         }
 
@@ -96,7 +96,7 @@ int CollisionAvoidance::getXMax(const int ref) {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (m_pCMatrix.get(i, j) == ref && j > xmax)
+            if (m_cMatrix.get(i, j) == ref && j > xmax)
                 xmax = j;
         }
 
@@ -111,7 +111,7 @@ int CollisionAvoidance::getYMin(const int ref) {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (m_pCMatrix.get(i, j) == ref && i < ymin)
+            if (m_cMatrix.get(i, j) == ref && i < ymin)
                 ymin = i;
         }
 
@@ -126,7 +126,7 @@ int CollisionAvoidance::getXMin(const int ref) {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (m_pCMatrix.get(i, j) == ref && j < xmin)
+            if (m_cMatrix.get(i, j) == ref && j < xmin)
                 xmin = j;
         }
 

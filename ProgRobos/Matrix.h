@@ -72,7 +72,8 @@ public:
         return m_pMatrix[r - 1][c - 1];
     }
 
-    /* assignment/clone operator. Funciona como se fosse um clone() */
+    /* assignment/clone operator. Funciona como se fosse um clone(): cria uma
+     * cópia da matriz. Não é simplesmente uma atribuição de endereço a ponteiro... */
     Matrix& operator=(const Matrix& a) {
         //se a matriz existir anteriormente, deleta ela.
         if (m_pMatrix) {
