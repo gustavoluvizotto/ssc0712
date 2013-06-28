@@ -13,8 +13,8 @@ MotionDetection::MotionDetection(Robot* owner) {
     if (owner != NULL) {
         threshold = 0;
         m_pOwner = owner;
-        o_cMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
-        o_pMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
+        m_CurrentMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
+        m_PreviousMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
 
         for (int i = 0; i <= 5; i++)
             m_pOwner->ReadSensors(); //cria um delay. Bug do PlayerCC
@@ -25,13 +25,25 @@ MotionDetection::MotionDetection(Robot* owner) {
 MotionDetection::~MotionDetection() {
 }
 
+/**
+ * A matriz de ocupação é a visão do Robô. É aproximadamente um retângulo de 6x3 m.
+ * Qualquer coisa que aparecer nesse retângulo é levado em consideração pelo robô.
+ * Todo o resto é ignorado.
+ * 
+ * Este método inicializa esta matriz com 5's, representando um objeto posicionado
+ * frontalmenente ao robô, e desde que não tenha nada a menos de 1m de suas laterais.
+ * Talvez tenhamos que mudar este valor.
+ */
 void MotionDetection::startOccupationMatrix() {
     Point<double> P;
-    int x, y;
+    int x = 0, y = 0;
+    int xold, yold;
 
     for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
+            xold = x;
+            yold = y;
             y = ceil(P.getY() / BOXY);
             if (y > N_BOX) y = N_BOX;
             if (y == 0) y = 1;
@@ -43,30 +55,30 @@ void MotionDetection::startOccupationMatrix() {
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
             if (x <= (N_BOX + ceil(N_BOX / LENGTH)) || x >= (N_BOX - ceil(N_BOX / LENGTH))) {
-                o_cMatrix(y, x) = 5; // the frontal object to follow
-                threshold++;
-            } else {
-                if (m_pOwner->GetRange(i) < LENGTH) {
-                    o_cMatrix(y, x) = -1; // obstacle of ambient
-                }
-            }
+                m_CurrentMatrix(y, x) = 5; // the frontal object to follow
+                if (xold != x || yold != y) threshold++;
+            } else
+                m_CurrentMatrix(y, x) = -1; // obstacle of ambient
         }
     }
-    o_cMatrix.Print();
+    m_CurrentMatrix.Print();
 }
 
 void MotionDetection::doOccupationMatrix() {
     int nfives = 0;
     Point<double> P;
-    int x, y;
+    int x = 0, y = 0;
+    int xold, yold;
 
     saveOccupationMatrix(); // saving actual informations
 
-    o_cMatrix.Clean(); // limpo a matriz
+    m_CurrentMatrix.Clean(); // limpo a matriz
 
     for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
         if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
             P.polarToCartesian(m_pOwner->GetRange(i), i);
+            xold = x;
+            yold = y;
             y = ceil(P.getY() / BOXY);
             if (y > N_BOX) y = N_BOX;
             if (y == 0) y = 1;
@@ -74,46 +86,44 @@ void MotionDetection::doOccupationMatrix() {
             if (x > 2 * N_BOX) x = 2 * N_BOX;
             if (x == 0) x = 1;
 
-            if (m_pOwner->GetRange(i) < LENGTH) {// new tracking... all itens detected are obstacle
-                o_cMatrix(y, x) = -1; // obstacle of ambient
-                if (isNearToPreviousObjective(y, x) && nfives <= threshold) {
-                    o_cMatrix(y, x) = 5;
-                    nfives++;
-                }
+            m_CurrentMatrix(y, x) = -1; // obstacle of ambient
+            if ((isNextToFives(m_PreviousMatrix, y, x) || isNextToFives(m_CurrentMatrix, y, x)) && nfives <= threshold + 2) {
+                m_CurrentMatrix(y, x) = 5;
+                if (xold != x || yold != y) nfives++;
             }
         }
     }
-    o_cMatrix.Print();
+    m_CurrentMatrix.Print();
 }
 
 /**percorre procurando se tem algum 5 ao redor de i,j
  * @param linha r e coluna c
  * @return true se está nas redondezas de um 5 e false cc.
  */
-bool MotionDetection::isNearToPreviousObjective(const int r, const int c) const {
+bool MotionDetection::isNextToFives(const Matrix& M, const int r, const int c) const {
     for (int k = -1; k <= 1; k++)
         for (int l = -1; l <= 1; l++) {
             if (r + k >= 1 && c + l >= 1 && r + k <= N_BOX && c + l <= 2 * N_BOX) // nao acesso indices nao definidos
-                if (o_pMatrix.get(r + k, c + l) == 5)
+                if (M.get(r + k, c + l) == 5)
                     return true;
         }
     return false;
 }
 
 double MotionDetection::getAngleToTurn() {
-    int jmin, jmax;
-    int jmid;
+    doOccupationMatrix();
 
-    this->saveOccupationMatrix();
+    double giro = (N_BOX - getXMiddle()) / 20.0;
 
-    this->doOccupationMatrix();
+    //dá uma segurada na velocidade de giro.
+    if (giro > 1.0) giro = 1.0;
+    else if (giro < -1.0) giro = -1.0;
 
-    jmin = getXMin();
-    jmax = getXMax();
+    return giro;
+}
 
-    jmid = ceil((jmax + jmin) / 2);
-
-    return (-(jmid - N_BOX)) / 2.0;
+int MotionDetection::getXMiddle() const {
+    return (getXMax() + getXMin()) / 2;
 }
 
 int MotionDetection::getXMin() const {
@@ -121,7 +131,7 @@ int MotionDetection::getXMin() const {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (o_cMatrix.get(i, j) == 5 && j < xmin)
+            if (m_CurrentMatrix.get(i, j) == 5 && j < xmin)
                 xmin = j;
         }
 
@@ -133,22 +143,22 @@ int MotionDetection::getXMax() const {
 
     for (int i = 1; i <= N_BOX; i++)
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (o_cMatrix.get(i, j) == 5 && j > xmax)
+            if (m_CurrentMatrix.get(i, j) == 5 && j > xmax)
                 xmax = j;
         }
     return xmax;
 }
 
 void MotionDetection::saveOccupationMatrix() {
-    o_pMatrix = o_cMatrix;
+    m_PreviousMatrix = m_CurrentMatrix;
 }
 
 void MotionDetection::saveLastSeenPosition() {
-    lastSeenMatrix = o_cMatrix;
+    m_lastSeenMatrix = m_CurrentMatrix;
 }
 
 void MotionDetection::reachLastSeenPosition() {
-    o_cMatrix = lastSeenMatrix;
+    m_CurrentMatrix = m_lastSeenMatrix;
 }
 
 /**
@@ -156,10 +166,10 @@ void MotionDetection::reachLastSeenPosition() {
    se isso ocorre, é porque o objeto a ser perseguido
    foi perdido. Retorna true para isso.
  */
-bool MotionDetection::itDisapear() {
+bool MotionDetection::isProfessorHasDisappeared() {
     for (int i = 1; i <= N_BOX; i++) {
         for (int j = 1; j <= 2 * N_BOX; j++) {
-            if (o_cMatrix(i, j) == 5)
+            if (m_CurrentMatrix(i, j) == 5)
                 return false;
         }
     }
@@ -170,5 +180,5 @@ bool MotionDetection::itDisapear() {
  * @return true se a matriz já foi alocada. false caso contrário.
  */
 bool MotionDetection::isNotNullLastSeenMatrix() {
-    return lastSeenMatrix.isAllocated();
+    return m_lastSeenMatrix.isAllocated();
 }

@@ -26,7 +26,7 @@ public:
     double decreaseSpeed(double actualSpeed);
     double getAngleToAvoid(Robot* owner);
 private:
-    Matrix m_pCMatrix;
+    Matrix m_cMatrix;
 };
 
 #endif	/* COLLISIONAVOIDANCE_H */
