@@ -12,7 +12,7 @@ void S_Global::Execute(Robot* pRobot) {
     cout << "\nExecutando a S_Global" << endl;
     pRobot->ReadSensors();
     pRobot->GetPreviousVisionMatrix() = pRobot->GetCurrentVisionMatrix();
-    ToolBox::FillVisionMatrix(pRobot, pRobot->GetCurrentVisionMatrix());
+    ToolBox::FillVisionMatrix(pRobot, pRobot->GetCurrentVisionMatrix(), false);
 }
 
 void S_Global::Exit(Robot* pRobot) {

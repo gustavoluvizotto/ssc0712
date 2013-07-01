@@ -1,52 +1,137 @@
-/* 
- * File:   Vector.h
- * Author: gustavo
- *
- * Created on June 11, 2013, 10:46 PM
- */
-
 #ifndef POINT_H
 #define	POINT_H
 
-#include <math.h>
-#include <vector>
+#include <cmath>
+#include <iostream>
 
-template <class g_Type>
+// Eleva ao quadrado
+#ifndef POW
+#define POW(x)  ((x) * (x))
+#endif
+
+template <class _T3>
 class Point {
 private:
-    g_Type x, y;
+    _T3 x, y;
 
 public:
-    Point() {}
-    Point(g_Type x, g_Type y) {
-        this->x = x;
-        this->y = y;
+
+    Point() {
+        x = y = 0;
     }
 
-    void setX(g_Type x) {
-        this->x = x;
+    /**
+     * Construtor a partir de valores fornecidos de x e y 
+     * @param X x fornecido
+     * @param Y y fornecido
+     */
+    Point(const _T3 xval, const _T3 yval) {
+        Set(xval, yval);
     }
 
-    void setY(g_Type y) {
-        this->y = y;
+    /**
+     * Construtor a partir de um Ponto existente fornecido
+     * @param orig Ponto existente fornecido
+     */
+    Point(const Point<_T3>& orig) {
+        Set(orig.x, orig.y);
     }
 
-    g_Type getX() {
-        return this->x;
+    virtual ~Point() {
     }
 
-    g_Type getY() {
-        return this->y;
+    _T3 GetX() const {
+        return x;
     }
 
-    void polarToCartesian(g_Type radius, g_Type angle) { // angle in degree.
-        this->x = radius * cos(angle * M_PI / 180.0f);
-        this->y = radius * sin(angle * M_PI / 180.0f);
+    void SetX(_T3 val) {
+        x = val;
     }
 
-    g_Type distance(g_Type x2, g_Type x1) {
-        return x2 - x1;
+    _T3 GetY() const {
+        return y;
     }
+
+    void SetY(_T3 val) {
+        y = val;
+    }
+
+    void Set(const _T3 xval, const _T3 yval) {
+        x = xval;
+        y = yval;
+    }
+
+    /**
+     * Distância entre 2 pontos
+     * @param P1 ponto 1
+     * @param P2 ponto 2
+     * @return a distância (double) entre os 2 pontos
+     */
+    double GetDistance(Point<_T3>& P1, Point<_T3>& P2) {
+        return sqrt(POW(P2.x - P1.x) + POW(P2.y - P1.y));
+    }
+
+    /**
+     * Imprime os valores x e y do ponto
+     */
+    void Print() {
+        std::cout << "x: " << x << "   y: " << y << std::endl;
+    }
+
+    /**
+     * Clona o ponto fornecido como parâmetro, e retorna esse ponto
+     * @param P ponto a ser clonado
+     * @return um ponto novo, clonado a partir do ponto fornecido como parâmetro
+     */
+    Point<_T3>& operator=(const Point<_T3>& P) {
+        x = P.x;
+        y = P.y;
+        return *this;
+    }
+
+    bool operator==(const Point<_T3>& P) {
+        return (x == P.x && y == P.y);
+    }
+
+    /**
+     * Retorna um novo ponto obtido da soma P1 + P2
+     */
+    friend Point<_T3> operator+(const Point<_T3>& P1, const Point<_T3>& P2) {
+        Point<_T3> res(P1.x + P2.x, P1.y + P2.y);
+        return res;
+    }
+
+    /** 
+     * Retorna um novo ponto obtido da subtração P1 - P2
+     */
+    friend Point<_T3> operator-(const Point<_T3>& P1, const Point<_T3>& P2) {
+        Point<_T3> res(P1.x - P2.x, P1.y - P2.y);
+        return res;
+    }
+
+    /** 
+     * Retorna um novo ponto obtido da multiplicação P1 * P2, ordenada a ordenada
+     */
+    friend Point<_T3> operator*(const Point<_T3>& P1, const Point<_T3>& P2) {
+        Point<_T3> res(P1.x * P2.x, P1.y * P2.y);
+        return res;
+    }
+
+    /** 
+     * Retorna um novo ponto obtido da multiplicação P * val
+     */
+    friend Point<_T3> operator*(const Point<_T3>& P, const double val) {
+        Point<_T3> res(P.x * val, P.y * val);
+        return res;
+    }
+
+    /** 
+     * Retorna um novo ponto obtido da multiplicação val * P
+     */
+    friend Point<_T3> operator*(const double val, const Point<_T3>& P) {
+        return P * val;
+    }
+
 };
 
 #endif	/* POINT_H */

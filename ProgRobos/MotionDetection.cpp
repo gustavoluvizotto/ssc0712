@@ -7,14 +7,15 @@
 
 #include "MotionDetection.h"
 #include "Robot.h"
+#include "Parameters.h"
 #include <cmath>
 
 MotionDetection::MotionDetection(Robot* owner) {
     if (owner != NULL) {
         threshold = 0;
         m_pOwner = owner;
-        m_CurrentMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
-        m_PreviousMatrix = Matrix(N_BOX, 2 * N_BOX); //já cria com zeros
+        m_CurrentMatrix = Matrix(Y_BOXES, 2 * Y_BOXES); //já cria com zeros
+        m_PreviousMatrix = Matrix(Y_BOXES, 2 * Y_BOXES); //já cria com zeros
 
         for (int i = 0; i <= 5; i++)
             m_pOwner->ReadSensors(); //cria um delay. Bug do PlayerCC
@@ -39,22 +40,22 @@ void MotionDetection::startOccupationMatrix() {
     int x = 0, y = 0;
     int xold, yold;
 
-    for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
-        if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
-            P.polarToCartesian(m_pOwner->GetRange(i), i);
+    for (int i = LASER_0DEG; i <= LASER_180DEG; i++) { // para todos os angulos
+        if (m_pOwner->GetRange(i) <= DETECTIONBOX_LENGTH) { // para os raios que estejam dentro da caixa imaginaria
+//            P.polarToCartesian(m_pOwner->GetRange(i), i);
             xold = x;
             yold = y;
-            y = ceil(P.getY() / BOXY);
-            if (y > N_BOX) y = N_BOX;
+//            y = ceil(P.getY() / BOXSIZE);
+            if (y > Y_BOXES) y = Y_BOXES;
             if (y == 0) y = 1;
-            x = N_BOX + ceil(P.getX() / BOXX);
-            if (x > 2 * N_BOX) x = 2 * N_BOX - 1;
+//            x = Y_BOXES + ceil(P.getX() / BOXSIZE);
+            if (x > 2 * Y_BOXES) x = 2 * Y_BOXES - 1;
             if (x == 0) x = 1;
 
             /* para todos os raios frontais (um metro pra esquera e um para a direita do robo)
                digo que valem 5 (para informar que é o objeto a ser seguido).
              */
-            if (x <= (N_BOX + ceil(N_BOX / LENGTH)) || x >= (N_BOX - ceil(N_BOX / LENGTH))) {
+            if (x <= (Y_BOXES + ceil(Y_BOXES / DETECTIONBOX_LENGTH)) || x >= (Y_BOXES - ceil(Y_BOXES / DETECTIONBOX_LENGTH))) {
                 m_CurrentMatrix(y, x) = 5; // the frontal object to follow
                 if (xold != x || yold != y) threshold++;
             } else
@@ -74,16 +75,16 @@ void MotionDetection::doOccupationMatrix() {
 
     m_CurrentMatrix.Clean(); // limpo a matriz
 
-    for (int i = THETA_MIN; i <= THETA_MAX; i++) { // para todos os angulos
-        if (m_pOwner->GetRange(i) <= LENGTH) { // para os raios que estejam dentro da caixa imaginaria
-            P.polarToCartesian(m_pOwner->GetRange(i), i);
+    for (int i = LASER_0DEG; i <= LASER_180DEG; i++) { // para todos os angulos
+        if (m_pOwner->GetRange(i) <= DETECTIONBOX_LENGTH) { // para os raios que estejam dentro da caixa imaginaria
+            //P.polarToCartesian(m_pOwner->GetRange(i), i);
             xold = x;
             yold = y;
-            y = ceil(P.getY() / BOXY);
-            if (y > N_BOX) y = N_BOX;
+            //y = ceil(P.getY() / BOXSIZE);
+            if (y > Y_BOXES) y = Y_BOXES;
             if (y == 0) y = 1;
-            x = N_BOX + ceil(P.getX() / BOXX);
-            if (x > 2 * N_BOX) x = 2 * N_BOX;
+            //x = Y_BOXES + ceil(P.getX() / BOXSIZE);
+            if (x > 2 * Y_BOXES) x = 2 * Y_BOXES;
             if (x == 0) x = 1;
 
             m_CurrentMatrix(y, x) = -1; // obstacle of ambient
@@ -103,7 +104,7 @@ void MotionDetection::doOccupationMatrix() {
 bool MotionDetection::isNextToFives(const Matrix& M, const int r, const int c) const {
     for (int k = -1; k <= 1; k++)
         for (int l = -1; l <= 1; l++) {
-            if (r + k >= 1 && c + l >= 1 && r + k <= N_BOX && c + l <= 2 * N_BOX) // nao acesso indices nao definidos
+            if (r + k >= 1 && c + l >= 1 && r + k <= Y_BOXES && c + l <= 2 * Y_BOXES) // nao acesso indices nao definidos
                 if (M.get(r + k, c + l) == 5)
                     return true;
         }
@@ -113,7 +114,7 @@ bool MotionDetection::isNextToFives(const Matrix& M, const int r, const int c) c
 double MotionDetection::getAngleToTurn() {
     doOccupationMatrix();
 
-    double giro = (N_BOX - getXMiddle()) / 20.0;
+    double giro = (Y_BOXES - getXMiddle()) / 20.0;
 
     //dá uma segurada na velocidade de giro.
     if (giro > 1.0) giro = 1.0;
@@ -127,10 +128,10 @@ int MotionDetection::getXMiddle() const {
 }
 
 int MotionDetection::getXMin() const {
-    int xmin = 2 * N_BOX;
+    int xmin = 2 * Y_BOXES;
 
-    for (int i = 1; i <= N_BOX; i++)
-        for (int j = 1; j <= 2 * N_BOX; j++) {
+    for (int i = 1; i <= Y_BOXES; i++)
+        for (int j = 1; j <= 2 * Y_BOXES; j++) {
             if (m_CurrentMatrix.get(i, j) == 5 && j < xmin)
                 xmin = j;
         }
@@ -141,8 +142,8 @@ int MotionDetection::getXMin() const {
 int MotionDetection::getXMax() const {
     int xmax = 1;
 
-    for (int i = 1; i <= N_BOX; i++)
-        for (int j = 1; j <= 2 * N_BOX; j++) {
+    for (int i = 1; i <= Y_BOXES; i++)
+        for (int j = 1; j <= 2 * Y_BOXES; j++) {
             if (m_CurrentMatrix.get(i, j) == 5 && j > xmax)
                 xmax = j;
         }
@@ -167,8 +168,8 @@ void MotionDetection::reachLastSeenPosition() {
    foi perdido. Retorna true para isso.
  */
 bool MotionDetection::isProfessorHasDisappeared() {
-    for (int i = 1; i <= N_BOX; i++) {
-        for (int j = 1; j <= 2 * N_BOX; j++) {
+    for (int i = 1; i <= Y_BOXES; i++) {
+        for (int j = 1; j <= 2 * Y_BOXES; j++) {
             if (m_CurrentMatrix(i, j) == 5)
                 return false;
         }

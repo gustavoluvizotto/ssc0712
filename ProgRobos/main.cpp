@@ -14,10 +14,15 @@
 
 #include "Robot.h"
 #include "Matrix.h"
+#include "Parameters.h"
 
 using namespace std;
 
 int main(int argc, char **argv) {
+
+#ifdef DEBUG
+    LASER_INFO;
+#endif
 
     Robot* robot = new Robot();
 

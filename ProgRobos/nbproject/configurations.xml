@@ -18,7 +18,7 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>Ideias</itemPath>
+      <itemPath>Hokuyo info</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -93,7 +93,7 @@
       </item>
       <item path="CollisionAvoidance.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Ideias" ex="false" tool="3" flavor2="0">
+      <item path="Hokuyo info" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -189,7 +189,7 @@
       </item>
       <item path="CollisionAvoidance.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Ideias" ex="false" tool="3" flavor2="0">
+      <item path="Hokuyo info" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix.h" ex="false" tool="3" flavor2="0">
       </item>

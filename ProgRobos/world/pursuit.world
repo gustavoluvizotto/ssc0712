@@ -1,6 +1,6 @@
 include "pioneer.inc"
 include "map.inc"
-include "sick.inc"
+include "hokuyo_simulado.inc"
 
 # time to pause (in GUI mode) or quit (in headless mode (-g)) the simulation
 quit_time 360000 # 100 hour of simulated time
@@ -12,9 +12,9 @@ resolution 0.02
 # configure the GUI window
 window
 (
-  size [ 635 666 ] # in pixels
-  scale 37.481   # pixels per meter
-  center [ -4.222  -1.761 ]
+  size [ 519 533 ] # in pixels
+  scale 229.230   # pixels per meter
+  center [ -3.986  -4.778 ]
   rotate [ 0.000  0.000 ]
   show_data 1              # 1=on 0=off
 )
@@ -39,20 +39,20 @@ define silly position (
 
 silly (
   name "block1"
-  pose [-1.538 2.341 0.000 0.000]
+  pose [-2.046 -5.075 0.000 0.000]
   color "green"
   bitmap "block.png"
 )
 
 silly (
   name "block2"
-  pose [-7.401 -1.608 0.000 0.000]
+  pose [-3.076 -3.018 0.000 0.000]
   color "blue"
   bitmap "block.png"
 )
 
 define bola position (
-  size [2.000 2.000 0.500]
+  size [0.600 0.600 0.500]
   fiducial_return 23  #ID 
   laser_return 1      #Enable
   gui_outline 1
@@ -61,7 +61,7 @@ define bola position (
 
 bola (
   name "bola1" 
-  pose [-4.115 -4.011 0.000 0.000]  
+  pose [-4.154 -4.014 0.000 0.000]  
   color "red"  
   bitmap "bola.png"
 )
@@ -83,7 +83,7 @@ wall (
 
 wall (
   name "wall2"
-  pose [1.539 -4.735 0.000 90.000]
+  pose [-0.425 -4.496 0.000 90.000]
   color "black"
   bitmap "wall.png"
 )
@@ -97,7 +97,7 @@ wall (
 
 wall (
   name "wall4"
-  pose [-9.526 -4.216 0.000 90.000]
+  pose [-7.806 -4.059 0.000 90.000]
   color "black"
   bitmap "wall.png"
 )
@@ -106,11 +106,11 @@ pioneer2dx
 (
   # can refer to the robot by this name
   name "r0"
-  pose [ -4.148 -6.903 0.000 90.590 ]
+  pose [ -4.146 -4.994 0.000 90.590 ]
 
   sicklaser(
     alwayson 1
-    # ctrl "lasernoise"  # uncomment this line to run a laser noise generator
+#    ctrl "lasernoise"  # uncomment this line to run a laser noise generator
   )
  
   # ctrl "wander"
