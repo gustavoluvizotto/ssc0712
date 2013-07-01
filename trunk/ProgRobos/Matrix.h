@@ -285,7 +285,7 @@ public:
     void Print() const {
         int r, c;
         if (m_pMatrix != NULL) {
-            printf("[");
+            cout << "[";
             for (r = 0; r < rows; r++) {
                 if (r > 0) {
                     cout << " ";

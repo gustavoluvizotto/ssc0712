@@ -11,11 +11,14 @@ void S_InitialSetup::Enter(Robot* pRobot) {
 
 void S_InitialSetup::Execute(Robot* pRobot) {
     cout << "\nExecutando a S_InitialSetup" << endl;
-    ToolBox::FillVisionMatrix(pRobot, pRobot->GetCurrentVisionMatrix(), 1, 1);
+    pRobot->ReadSensors();
+    ToolBox::FillVisionMatrix(pRobot, pRobot->GetCurrentVisionMatrix(), true);
 
     double DistanciaDoProfessor = ToolBox::GetProfDistance(pRobot->GetCurrentVisionMatrix());
-    if (DistanciaDoProfessor >= 2)
+    if (DistanciaDoProfessor >= 2) {
+        pRobot->GetFSM()->SetGlobalState(S_Global::Instance());
         pRobot->GetFSM()->ChangeToState(S_Tracking::Instance());
+    }
 }
 
 void S_InitialSetup::Exit(Robot* pRobot) {

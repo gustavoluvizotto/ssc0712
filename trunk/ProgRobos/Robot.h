@@ -7,6 +7,7 @@
 #include "MotionDetection.h"
 #include "Point.h"
 #include <libplayerc++/playerc++.h>
+#include <cmath>
 
 using namespace PlayerCc;
 
@@ -20,18 +21,25 @@ private:
     Matrix m_CurrentVisionMatrix; //representa a visão atual do Robô como uma matriz de ocupação
     Matrix m_PreviousVisionMatrix; //visão anterior
     Matrix m_LastSeenVisionMatrix; //visão "congelada" da última vez que o Prof. foi visto
+    int ProfSizeOnMatrix; //estimativa do tamanho do Professor na matriz. É a qde de 5's detectados na primeira visão.
 
 public:
 
     Robot() {
         m_pStateMachine = new StateMachine<Robot>(this);
-        m_pStateMachine->SetGlobalState(S_Global::Instance());
+        //        m_pStateMachine->SetGlobalState(S_Global::Instance());
         m_pStateMachine->SetCurrentState(S_InitialSetup::Instance());
         m_pRobot = new PlayerClient("localhost");
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
-//        m_pMD = new MotionDetection(this);
+        m_CurrentVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
+        m_PreviousVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
+        m_LastSeenVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
+        ProfSizeOnMatrix = 0;
+        for (int i = 0; i <= 5; i++)
+            ReadSensors(); //cria um delay. Bug do PlayerCC
+        //        m_pMD = new MotionDetection(this);
     }
 
     virtual ~Robot() {
@@ -65,16 +73,12 @@ public:
     //TODO Tem que remover essa função willHit() daqui. Colocar na ToolBox ou direto no estado
 
     bool willHit() const {
-        for (int i = 0; i < THETA_MAX; i++) {
+        for (int i = LASER_0DEG; i < LASER_180DEG; i++) {
             if (this->m_pRp->GetRange(i) < 0.8) {
                 return true;
             }
         }
         return false;
-    }
-
-    void SetSpeed(double speed, double angle) {
-        m_pPp->SetSpeed(speed, angle);
     }
 
     MotionDetection* GetMD() const {
@@ -92,6 +96,20 @@ public:
     Matrix& GetPreviousVisionMatrix() {
         return m_PreviousVisionMatrix;
     }
+
+    int GetProfSizeOnMatrix() const {
+        return ProfSizeOnMatrix;
+    }
+
+    void SetProfSizeOnMatrix(const int val) {
+        assert(val >= 0);
+        ProfSizeOnMatrix = val;
+    }
+
+    void IncreaseProfSizeOnMatrix() {
+        ProfSizeOnMatrix++;
+    }
+
 };
 
 #endif	/* ROBOT_H */
