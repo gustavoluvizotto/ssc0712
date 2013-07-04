@@ -16,13 +16,12 @@ namespace ToolBox {
         double rangeX_max, rangeY_max, rangeY_min; //unidade: metros
         int nfives = 0; //contador pra checar o tamanho do Prof.
         Point<int> P; //ponto contendo as coordenadas da linha (row) e coluna (col) da matriz de visão
-        list < Point<int> > PointList;
-        list < Point<int> >::iterator iterador;
+        list < Point<int> > PointList; //lista de pontos
+        list < Point<int> >::iterator iterador; //iterador pra lista de pontos
 
         /* seta os limites da visão do robô. Se for detecção, enxerga
          * um retângulo pequeno, caso contrário tem visão total. */
         if (deteccao) {
-            matrix.Clean();
             pRobot->SetProfSizeOnMatrix(0); //zera tamanho do Prof na matriz, pois será recalculado
             rangeX_max = DETECTIONBOX_WIDTH / 2.0;
             rangeY_max = DETECTIONBOX_LENGTH;
@@ -56,8 +55,8 @@ namespace ToolBox {
             /* todos os pontos que chegaram até aqui serão detectados,
              * pois fazem parte do que deve ser enxergado pelo robô */
 
-            col = (int) (Y_BOXES / 2) + floor(rangeX / BOXSIZE);
-            row = (int) (X_BOXES / 2) + floor(rangeY / BOXSIZE);
+            col = (int) (BOXES_COLUMNS / 2) + floor(rangeX / BOXSIZE);
+            row = (int) (BOXES_LINES / 2) + floor(rangeY / BOXSIZE);
             P.Set(row, col);
 
             if (deteccao) { //marca tudo com 5
@@ -124,6 +123,6 @@ namespace ToolBox {
      * @return a distância entre o robô e o Professor, em metros.
      */
     double GetProfDistance(Matrix& matrix) {
-        return 0.0;
+        return 3.0;
     }
 }

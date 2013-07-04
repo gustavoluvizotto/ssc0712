@@ -404,7 +404,7 @@ public:
     }
 
     /**
-     * Cria uma matriz randômica
+     * Cria uma matriz de inteiros randômica (centrada em 15, amplitude 15)
      * @param rows número de linhas da matriz
      * @param cols número de colunas da matriz
      * @return uma nova matriz randômica

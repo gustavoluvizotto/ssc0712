@@ -33,9 +33,9 @@ public:
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
-        m_CurrentVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
-        m_PreviousVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
-        m_LastSeenVisionMatrix = Matrix(X_BOXES, Y_BOXES); //por segurança
+        m_CurrentVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
+        m_PreviousVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
+        m_LastSeenVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
         ProfSizeOnMatrix = 0;
         for (int i = 0; i <= 5; i++)
             ReadSensors(); //cria um delay. Bug do PlayerCC
