@@ -80,11 +80,11 @@ bool CollisionAvoidance::willCollideWithObjective() {
 int CollisionAvoidance::getYMax(const int ref) {
     int ymax = 1;
 
-    for (int i = 1; i <= Y_BOXES; i++)
-        for (int j = 1; j <= 2 * Y_BOXES; j++) {
-            if (m_cMatrix.get(i, j) == ref && i > ymax)
-                ymax = i;
-        }
+//    for (int i = 1; i <= Y_BOXES; i++)
+//        for (int j = 1; j <= 2 * Y_BOXES; j++) {
+//            if (m_cMatrix.get(i, j) == ref && i > ymax)
+//                ymax = i;
+//        }
 
     return ymax;
 }
@@ -94,12 +94,12 @@ int CollisionAvoidance::getYMax(const int ref) {
  */
 int CollisionAvoidance::getXMax(const int ref) {
     int xmax = 1;
-
-    for (int i = 1; i <= Y_BOXES; i++)
-        for (int j = 1; j <= 2 * Y_BOXES; j++) {
-            if (m_cMatrix.get(i, j) == ref && j > xmax)
-                xmax = j;
-        }
+//
+//    for (int i = 1; i <= Y_BOXES; i++)
+//        for (int j = 1; j <= 2 * Y_BOXES; j++) {
+//            if (m_cMatrix.get(i, j) == ref && j > xmax)
+//                xmax = j;
+//        }
 
     return xmax;
 }
@@ -108,30 +108,32 @@ int CollisionAvoidance::getXMax(const int ref) {
  * @return a menor linha da matriz que contenha o elemento ref
  */
 int CollisionAvoidance::getYMin(const int ref) {
-    int ymin = Y_BOXES;
-
-    for (int i = 1; i <= Y_BOXES; i++)
-        for (int j = 1; j <= 2 * Y_BOXES; j++) {
-            if (m_cMatrix.get(i, j) == ref && i < ymin)
-                ymin = i;
-        }
-
-    return ymin;
+//    int ymin = Y_BOXES;
+//
+//    for (int i = 1; i <= Y_BOXES; i++)
+//        for (int j = 1; j <= 2 * Y_BOXES; j++) {
+//            if (m_cMatrix.get(i, j) == ref && i < ymin)
+//                ymin = i;
+//        }
+//
+//    return ymin;
+    return 0;
 }
 
 /**
  * @return a menor coluna da matriz que contenha o elemento ref
  */
 int CollisionAvoidance::getXMin(const int ref) {
-    int xmin = 2 * Y_BOXES;
-
-    for (int i = 1; i <= Y_BOXES; i++)
-        for (int j = 1; j <= 2 * Y_BOXES; j++) {
-            if (m_cMatrix.get(i, j) == ref && j < xmin)
-                xmin = j;
-        }
-
-    return xmin;
+//    int xmin = 2 * Y_BOXES;
+//
+//    for (int i = 1; i <= Y_BOXES; i++)
+//        for (int j = 1; j <= 2 * Y_BOXES; j++) {
+//            if (m_cMatrix.get(i, j) == ref && j < xmin)
+//                xmin = j;
+//        }
+//
+//    return xmin;
+    return 0;
 }
 
 /**
