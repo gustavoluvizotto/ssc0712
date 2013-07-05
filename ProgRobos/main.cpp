@@ -26,9 +26,8 @@ int main(int argc, char **argv) {
 
     Robot* robot = new Robot();
 
-    for (;;) {
+    for (;;)
         robot->Update();
-    }
 
     delete robot;
     return 0;

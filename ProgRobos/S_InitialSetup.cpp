@@ -2,6 +2,7 @@
 #include "Robot.h"
 #include <iostream>
 #include "ToolBox.h"
+#include "Parameters.h"
 
 using namespace std;
 
@@ -12,9 +13,11 @@ void S_InitialSetup::Enter(Robot* pRobot) {
 void S_InitialSetup::Execute(Robot* pRobot) {
     cout << "\nExecutando a S_InitialSetup" << endl;
     pRobot->ReadSensors();
-    ToolBox::FillVisionMatrix(pRobot, pRobot->GetCurrentVisionMatrix(), true);
+    pRobot->GetVisionMatrix().Clean();
+    ToolBox::FillVisionMatrix(pRobot, pRobot->GetVisionMatrix(), true);
 
-    double DistanciaDoProfessor = ToolBox::GetProfDistance(pRobot->GetCurrentVisionMatrix());
+    double DistanciaDoProfessor = ToolBox::GetProfDistance(pRobot->GetVisionMatrix());
+    PRINT(DistanciaDoProfessor);
     if (DistanciaDoProfessor >= 2) {
         pRobot->GetFSM()->SetGlobalState(S_Global::Instance());
         pRobot->GetFSM()->ChangeToState(S_Tracking::Instance());
