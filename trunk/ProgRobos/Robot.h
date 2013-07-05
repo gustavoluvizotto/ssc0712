@@ -18,10 +18,10 @@ private:
     Position2dProxy* m_pPp;
     RangerProxy* m_pRp;
     MotionDetection* m_pMD; //ponteiro pra classe MotionDetection
-    Matrix m_CurrentVisionMatrix; //representa a visão atual do Robô como uma matriz de ocupação
-    Matrix m_PreviousVisionMatrix; //visão anterior
-    Matrix m_LastSeenVisionMatrix; //visão "congelada" da última vez que o Prof. foi visto
-    int ProfSizeOnMatrix; //estimativa do tamanho do Professor na matriz. É a qde de 5's detectados na primeira visão.
+    Matrix m_VisionMatrix; //representa a visão atual do Robô como uma matriz de ocupação
+    Matrix m_PreviousVisionMatrix; //visão imediatamente anterior. Poderia estar em ToolBox::FillVisionMatrix(), mas criamos aqui por questões de performance.
+    Matrix m_LostTrackVisionMatrix; //visão "congelada" da última vez que o Prof. foi visto
+    int ProfSizeOnMatrix; //estimativa do tamanho do Professor na matriz. É a qde de 5's colocados em m_VisionMatrix, quando no estado S_InitialSetup.
 
 public:
 
@@ -33,13 +33,12 @@ public:
         m_pPp = new Position2dProxy(m_pRobot, 0);
         m_pRp = new RangerProxy(m_pRobot, 1);
         m_pPp->SetMotorEnable(true);
-        m_CurrentVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
-        m_PreviousVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
-        m_LastSeenVisionMatrix = Matrix(BOXES_LINES, BOXES_COLUMNS);
+        m_VisionMatrix = Matrix(BOXES_ROWS, BOXES_COLUMNS);
+        m_PreviousVisionMatrix = Matrix(BOXES_ROWS, BOXES_COLUMNS);
+        m_LostTrackVisionMatrix = Matrix(BOXES_ROWS, BOXES_COLUMNS);
         ProfSizeOnMatrix = 0;
         for (int i = 0; i <= 5; i++)
             ReadSensors(); //cria um delay. Bug do PlayerCC
-        //        m_pMD = new MotionDetection(this);
     }
 
     virtual ~Robot() {
@@ -62,7 +61,17 @@ public:
         m_pStateMachine->Update();
     }
 
-    void SetSpeed(const double XSpeed, const double YawSpeed) const {
+    void SetSpeed(double XSpeed, double YawSpeed) const {
+        //limita as velocidades em X e de giro, em 0.2m/s e 1volta/3s.
+        if (XSpeed > 0.2)
+            XSpeed = 0.2;
+        if (XSpeed < -0.2)
+            XSpeed = -0.2;
+        if (YawSpeed > 2.0)
+            YawSpeed = 2.0;
+        if (YawSpeed < -2.0)
+            YawSpeed = -2.0;
+
         m_pPp->SetSpeed(XSpeed, YawSpeed);
     }
 
@@ -70,7 +79,7 @@ public:
         return m_pRp->GetRange(Index);
     }
 
-    //TODO Tem que remover essa função willHit() daqui. Colocar na ToolBox ou direto no estado
+    //TODO Tem que remover a função willHit() daqui. Colocar na ToolBox ou direto no estado
 
     bool willHit() const {
         for (int i = LASER_0DEG; i < LASER_180DEG; i++) {
@@ -85,16 +94,16 @@ public:
         return m_pMD;
     }
 
-    Matrix& GetCurrentVisionMatrix() {
-        return m_CurrentVisionMatrix;
-    }
-
-    Matrix& GetLastSeenVisionMatrix() {
-        return m_LastSeenVisionMatrix;
+    Matrix& GetVisionMatrix() {
+        return m_VisionMatrix;
     }
 
     Matrix& GetPreviousVisionMatrix() {
         return m_PreviousVisionMatrix;
+    }
+
+    Matrix& GetLostTrackVisionMatrix() {
+        return m_LostTrackVisionMatrix;
     }
 
     int GetProfSizeOnMatrix() const {

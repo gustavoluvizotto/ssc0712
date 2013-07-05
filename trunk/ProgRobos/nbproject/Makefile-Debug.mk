@@ -35,9 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/CollisionAvoidance.o \
-	${OBJECTDIR}/MotionDetection.o \
-	${OBJECTDIR}/RobotStates.o \
 	${OBJECTDIR}/S_CollisionAvoidance.o \
 	${OBJECTDIR}/S_Global.o \
 	${OBJECTDIR}/S_InitialSetup.o \
@@ -51,7 +48,8 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2
+	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f3
 
 # C Compiler Flags
 CFLAGS=
@@ -76,21 +74,6 @@ LDLIBSOPTIONS=`pkg-config --libs opencv` `pkg-config --libs playerc++`
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp
-
-${OBJECTDIR}/MotionDetection.o: nbproject/Makefile-${CND_CONF}.mk MotionDetection.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp
-
-${OBJECTDIR}/RobotStates.o: nbproject/Makefile-${CND_CONF}.mk RobotStates.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 
 ${OBJECTDIR}/S_CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk S_CollisionAvoidance.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -135,6 +118,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/MatrixTest2.o ${OBJECTFILES:%.o=%_noma
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
 
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/PointTest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
+
 
 ${TESTDIR}/tests/MatrixTest.o: tests/MatrixTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
@@ -148,44 +135,11 @@ ${TESTDIR}/tests/MatrixTest2.o: tests/MatrixTest2.cpp
 	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest2.o tests/MatrixTest2.cpp
 
 
-${OBJECTDIR}/CollisionAvoidance_nomain.o: ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/CollisionAvoidance.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance_nomain.o CollisionAvoidance.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/CollisionAvoidance.o ${OBJECTDIR}/CollisionAvoidance_nomain.o;\
-	fi
+${TESTDIR}/tests/PointTest.o: tests/PointTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -I. -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/PointTest.o tests/PointTest.cpp
 
-${OBJECTDIR}/MotionDetection_nomain.o: ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/MotionDetection.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection_nomain.o MotionDetection.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/MotionDetection.o ${OBJECTDIR}/MotionDetection_nomain.o;\
-	fi
-
-${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/RobotStates.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates_nomain.o RobotStates.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/RobotStates.o ${OBJECTDIR}/RobotStates_nomain.o;\
-	fi
 
 ${OBJECTDIR}/S_CollisionAvoidance_nomain.o: ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -271,6 +225,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

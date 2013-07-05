@@ -6,18 +6,15 @@ namespace ToolBox {
      * Preenche a matriz de visão do Robô.
      * @param pRobot ponteiro para o Robô
      * @param matrix referência para a matriz que deve ser povoada
-     * @param deteccao true: modo de detecção inicial, onde o robô "enxerga pouco". 
-     * false: detecção usual, onde o Robô leva em consideração tudo o que vê, e não
-     * só uma caixinha virtual pequena a sua frente.
+     * @param deteccao true: modo de detecção inicial onde o robô "enxerga pouco". 
+     * false: detecção usual, onde o Robô leva em consideração tudo o que vê, e
+     * não só uma caixinha virtual pequena a sua frente.
      */
     void FillVisionMatrix(Robot *pRobot, Matrix& matrix, bool deteccao) {
         int col = 0, row = 0; //x e y estão em unidades de caixas
         double rangeX, rangeY; //unidade: metros
         double rangeX_max, rangeY_max, rangeY_min; //unidade: metros
         int nfives = 0; //contador pra checar o tamanho do Prof.
-        Point<int> P; //ponto contendo as coordenadas da linha (row) e coluna (col) da matriz de visão
-        list < Point<int> > PointList; //lista de pontos
-        list < Point<int> >::iterator iterador; //iterador pra lista de pontos
 
         /* seta os limites da visão do robô. Se for detecção, enxerga
          * um retângulo pequeno, caso contrário tem visão total. */
@@ -40,8 +37,10 @@ namespace ToolBox {
             if (Range < MINRANGE || Range > MAXRANGE)
                 continue;
 
-            rangeX = Range * cos(ANGLERADIAN(i));
-            rangeY = Range * sin(ANGLERADIAN(i));
+            rangeX = Range * cos(RADIAN(i));
+            rangeY = Range * sin(RADIAN(i));
+            col = (int) (BOXES_COLUMNS / 2) + floor(rangeX / BOXSIZE);
+            row = (int) (BOXES_ROWS / 2) - floor(rangeY / BOXSIZE);
 
             /* limitando a visão do robô, caso escolhido 'deteccao=true' */
             if (rangeY < 0) {
@@ -55,34 +54,29 @@ namespace ToolBox {
             /* todos os pontos que chegaram até aqui serão detectados,
              * pois fazem parte do que deve ser enxergado pelo robô */
 
-            col = (int) (BOXES_COLUMNS / 2) + floor(rangeX / BOXSIZE);
-            row = (int) (BOXES_LINES / 2) + floor(rangeY / BOXSIZE);
-            P.Set(row, col);
-
             if (deteccao) { //marca tudo com 5
                 if (matrix.get(row, col) != 5) {
                     matrix(row, col) = 5;
                     pRobot->IncreaseProfSizeOnMatrix();
                 }
             } else { //marca com -1 e compara com as 2 visões (atual e anterior) pra decidir se é o Prof ou não
-                PointList.push_back(P); //append o novo ponto na lista
-                PointList.unique(); //remove elementos duplicados da lista
-                matrix(row, col) = -1;
-                if ((isNextToFives(pRobot->GetPreviousVisionMatrix(), row, col) || \
-                     isNextToFives(pRobot->GetCurrentVisionMatrix(), row, col)) && \
-                     nfives <= pRobot->GetProfSizeOnMatrix() + 2) {
-                    matrix(row, col) = 5;
-                    iterador = find(PointList.begin(), PointList.end(), P);
-                    if (*iterador == P)
+                if (matrix.get(row, col) == 5) //se for um 5 já detectado, não faz nada
+                    continue;
+                else { //verifica se este ponto será um 5 ou um -1
+                    if ((isNextToFives(pRobot->GetPreviousVisionMatrix(), row, col) ||
+                            isNextToFives(pRobot->GetVisionMatrix(), row, col)) &&
+                            nfives <= pRobot->GetProfSizeOnMatrix() + 2) {//se estiver perto de outros 5's, é 5.
+                        matrix(row, col) = 5;
                         nfives++;
+                    } else //se não estiver perto de outros 5's, é -1
+                        matrix(row, col) = -1;
                 }
             }
         }
-        PointList.clear(); //limpa a lista (desaloca memória)
         PRINT(GetNumberOfFives(matrix));
         PRINT(pRobot->GetProfSizeOnMatrix());
-        cout << endl;
-        //        matrix.Print();
+//        matrix.Print();
+//        cout << endl;
         //ShowVisionMatrix(pRobot->GetCurrentVisionMatrix()) //versão de matrix.Print() só que em OpenCV
     }
 
@@ -123,6 +117,47 @@ namespace ToolBox {
      * @return a distância entre o robô e o Professor, em metros.
      */
     double GetProfDistance(Matrix& matrix) {
-        return 3.0;
+        Point<int> CenterVM((int) (BOXES_ROWS / 2), (int) (BOXES_COLUMNS / 2)); //VisionMatrix center
+        Point<int> CMOfFives = GetCMOfFives(matrix, REFERENCIAL_ROBOT);
+        return (Point<int>::GetDistance(CenterVM, CMOfFives) * BOXSIZE);
+    }
+
+    /**
+     * Retorna o centro de massa dos 5's da matriz (representação do Professor), com a
+     * referência podendo ser, ou no começo da matriz (posição (1,1)), ou no centro da
+     * matriz (visão do Robô).
+     * @param matrix matriz de visão do robô
+     * @param ref indica se é pra retornar o ponto com relação ao referencial Global
+     * REFERENCIAL_MATRIX, ou ao referencial local do Robô (referencial centrado na matriz)
+     * @return centro de massa dos 5's na matriz (CM do Professor)
+     */
+    Point<int> GetCMOfFives(Matrix& matrix, Referencial ref) {
+        list< Point<int> > LP;
+        list< Point<int> >::iterator it;
+        Point<int> res(0, 0);
+        Point<int> CenterVM((int) (BOXES_ROWS / 2), (int) (BOXES_COLUMNS / 2)); //VisionMatrix center
+
+        for (int row = 1; row <= matrix.GetRows(); row++)
+            for (int col = 1; col <= matrix.GetCols(); col++)
+                if (matrix.get(row, col) == 5)
+                    LP.push_back(*(new Point<int>(row, col)));
+
+        for (it = LP.begin(); it != LP.end(); it++)
+            res += *it;
+
+        res /= LP.size();
+
+        if (ref == REFERENCIAL_MATRIX)
+            return res;
+        else {
+            if (ref == REFERENCIAL_ROBOT) {
+                Point<int> P(CenterVM.GetX() - res.GetX(), res.GetY() - CenterVM.GetY());
+                return P;
+            }
+        }
+        
+        //não é pra chegar aqui. Se chegar, deu erro.
+        exit(-1);
+        return *(new Point<int>(-1,-1));
     }
 }

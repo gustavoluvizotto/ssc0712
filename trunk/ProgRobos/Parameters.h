@@ -23,12 +23,13 @@
 #define MINRANGE                BOXSIZE                                         //menor comprimento detectável pelo laser
 #define DETECTIONBOX_LENGTH     1.0                                             //comprimento de detecção
 #define DETECTIONBOX_WIDTH      1.5                                             //largura de detecão
-#define BOXSIZE                 0.05                                            //precisão da visão do robô. É o tamanho da aresta da caixa de visão
+#define BOXSIZE                 0.2                                             //precisão da visão do robô. É o tamanho da aresta da caixa de visão
+//TODO: mudar BOXSIZE para 0.05
 
 /* Estamos sendo "gastadores". Dá pra diminuir a matriz
  * de visão um pouco mais. Assumimos que o robô enxerga
  * pra trás também, como se FOV fosse 360 graus */
-#define BOXES_LINES             ceil(2*NOMINALRANGE/BOXSIZE)                    //#linhas de caixas
+#define BOXES_ROWS              ceil(2*NOMINALRANGE/BOXSIZE)                    //#linhas de caixas
 #define BOXES_COLUMNS           ceil(2*NOMINALRANGE/BOXSIZE)                    //#colunas de caixas
 
 #define ANGULAR_RESOLUTION      (double)(FOV/(SAMPLES-1))
@@ -37,8 +38,8 @@
 #define LASER_180DEG            (int)(SAMPLES-1-LASER_0DEG)
 #define LASER_FIRST             0
 #define LASER_LAST              SAMPLES-1
-#define ANGLEDEGREE(feixe)      feixe*ANGULAR_RESOLUTION-(FOV-180)/2.0
-#define ANGLERADIAN(feixe)      DTOR(ANGLEDEGREE(feixe))
+#define DEGREE(feixe)           feixe*ANGULAR_RESOLUTION-(FOV-180)/2.0
+#define RADIAN(feixe)           DTOR(DEGREE(feixe))
 #define LASER_W_DEG(d)          (int)(LASER_0DEG + d/ANGULAR_RESOLUTION) //laser number with degree d
 #define PRINT(x)                std::cout << #x << ": " << x << std::endl;
 
@@ -53,16 +54,21 @@
              << "\nLASER_90DEG: " << LASER_90DEG                               \
              << "\nLASER_180DEG: " << LASER_180DEG                             \
              << "\nANGULAR_RESOLUTION: " << ANGULAR_RESOLUTION                 \
-             << "\nANGLEDEGREE(0): " << ANGLEDEGREE(0)                         \
-             << "\nANGLERADIAN(0): " << ANGLERADIAN(0)                         \
+             << "\nDEGREE(0): " << DEGREE(0)                                   \
+             << "\nRADIAN(0): " << RADIAN(0)                                   \
              << "\nDETECTIONBOX_LENGTH: " << DETECTIONBOX_LENGTH               \
              << "\nDETECTIONBOX_WIDTH: " << DETECTIONBOX_WIDTH                 \
              << "\nMAXRANGE: " << MAXRANGE                                     \
              << "\nMINRANGE: " << MINRANGE                                     \
              << "\nBOXSIZE: " << BOXSIZE                                       \
-             << "\nBOXES_LINES: " << BOXES_LINES                               \
+             << "\nBOXES_ROWS: " << BOXES_ROWS                                 \
              << "\nBOXES_COLUMNS: " << BOXES_COLUMNS                           \
              << "\n\n" << std::endl;                                           \
     } while(0)
+
+enum Referencial {
+    REFERENCIAL_MATRIX, //referencial centrado na posição (1,1) da matriz de visão
+    REFERENCIAL_ROBOT   //referencial centrado no centro da matriz de visão
+};
 
 #endif	/* PARAMETERS_H */

@@ -57,17 +57,26 @@ public:
     }
 
     void Set(const _T3 xval, const _T3 yval) {
-        x = xval;
-        y = yval;
+        x = (_T3) xval;
+        y = (_T3) yval;
+    }
+
+    /**
+     * Distância entre 'this' e o ponto P
+     * @param P ponto que se deseja medir a distância
+     * @return a distância entre 'this'e o ponto P fornecido
+     */
+    double GetDistance(Point<_T3>& P) const {
+        return sqrt(POW(x - P.x) + POW(y - P.y));
     }
 
     /**
      * Distância entre 2 pontos
      * @param P1 ponto 1
      * @param P2 ponto 2
-     * @return a distância (double) entre os 2 pontos
+     * @return distância entre os pontos 1 e 2
      */
-    double GetDistance(Point<_T3>& P1, Point<_T3>& P2) {
+    static double GetDistance(Point<_T3>& P1, Point<_T3>& P2) {
         return sqrt(POW(P2.x - P1.x) + POW(P2.y - P1.y));
     }
 
@@ -75,7 +84,7 @@ public:
      * Imprime os valores x e y do ponto
      */
     void Print() {
-        std::cout << "x: " << x << "   y: " << y << std::endl;
+        std::cout << "[" << x << ", " << y << "]" << std::endl;
     }
 
     /**
@@ -89,8 +98,14 @@ public:
         return *this;
     }
 
-    bool operator==(const Point<_T3>& P) {
-        return (x == P.x && y == P.y);
+    /**
+     * Soma P a 'this'
+     * @param P ponto a ser somado a este (this)
+     * @return o mesmo ponto (this), porém acrescido de P
+     */
+    Point<_T3>& operator+=(const Point<_T3>& P) {
+        *this = *this +P;
+        return *this;
     }
 
     /**
@@ -101,12 +116,58 @@ public:
         return res;
     }
 
+    /**
+     * Divide 'this' por val.
+     * @param val valor que divide 'this'
+     * @return o mesmo ponto (this), porém dividido por val
+     */
+    Point<_T3>& operator/=(const double val) {
+        *this = *this / val;
+        return *this;
+    }
+
+    /**
+     * Retorna um novo ponto obtido da divisão P / val.
+     */
+    friend Point<_T3> operator/(const Point<_T3>& P, const double val) {
+        Point<_T3> res(P.x / val, P.y / val);
+        return res;
+    }
+
+    /**
+     * Subtrai P de 'this'
+     * @param P ponto a ser subtraído de 'this'
+     * @return o mesmo ponto (this), porém subtraído de P
+     */
+    Point<_T3>& operator-=(const Point<_T3>& P) {
+        *this = *this -P;
+        return *this;
+    }
+
     /** 
      * Retorna um novo ponto obtido da subtração P1 - P2
      */
     friend Point<_T3> operator-(const Point<_T3>& P1, const Point<_T3>& P2) {
         Point<_T3> res(P1.x - P2.x, P1.y - P2.y);
         return res;
+    }
+
+    /**
+     * Operador 'menos unário' = 'negativo'. Retorna um novo ponto, simétrico a P.
+     */
+    friend Point<_T3> operator-(const Point<_T3>& P) {
+        Point<_T3> res(-P.x, -P.y);
+        return res;
+    }
+
+    /**
+     * Multiplica P com 'this'
+     * @param P ponto a ser multiplicado por 'this'
+     * @return o mesmo ponto (this), porém multiplicado por P
+     */
+    Point<_T3>& operator*=(const Point<_T3>& P) {
+        *this = *this * P;
+        return *this;
     }
 
     /** 
@@ -132,6 +193,12 @@ public:
         return P * val;
     }
 
+    /**
+     * Operador comparação. Retorna true se os pontos são iguais. false caso contrário.
+     */
+    bool operator==(const Point<_T3>& P) const {
+        return (x == P.x && y == P.y);
+    }
 };
 
 #endif	/* POINT_H */

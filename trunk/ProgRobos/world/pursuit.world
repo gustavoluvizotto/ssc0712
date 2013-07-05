@@ -110,7 +110,7 @@ pioneer2dx
 
   sicklaser(
     alwayson 1
-#    ctrl "lasernoise"  # uncomment this line to run a laser noise generator
+    ctrl "lasernoise"  # uncomment this line to run a laser noise generator
   )
  
   # ctrl "wander"
