@@ -69,41 +69,41 @@ LDLIBSOPTIONS=`pkg-config --libs opencv` `pkg-config --libs playerc++`
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f4
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos ${OBJECTFILES} ${LDLIBSOPTIONS}
+${TESTDIR}/TestFiles/f4: ${OBJECTFILES}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f4 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/S_CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk S_CollisionAvoidance.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp
 
 ${OBJECTDIR}/S_Global.o: nbproject/Makefile-${CND_CONF}.mk S_Global.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global.o S_Global.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global.o S_Global.cpp
 
 ${OBJECTDIR}/S_InitialSetup.o: nbproject/Makefile-${CND_CONF}.mk S_InitialSetup.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp
 
 ${OBJECTDIR}/S_Tracking.o: nbproject/Makefile-${CND_CONF}.mk S_Tracking.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp
 
 ${OBJECTDIR}/ToolBox.o: nbproject/Makefile-${CND_CONF}.mk ToolBox.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox.o ToolBox.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox.o ToolBox.cpp
 
 ${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -126,19 +126,19 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/PointTest.o ${OBJECTFILES:%.o=%_nomain
 ${TESTDIR}/tests/MatrixTest.o: tests/MatrixTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest.o tests/MatrixTest.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest.o tests/MatrixTest.cpp
 
 
 ${TESTDIR}/tests/MatrixTest2.o: tests/MatrixTest2.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest2.o tests/MatrixTest2.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/MatrixTest2.o tests/MatrixTest2.cpp
 
 
 ${TESTDIR}/tests/PointTest.o: tests/PointTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I. -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/PointTest.o tests/PointTest.cpp
+	$(COMPILE.cc) -g -Wall -I. -I. -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${TESTDIR}/tests/PointTest.o tests/PointTest.cpp
 
 
 ${OBJECTDIR}/S_CollisionAvoidance_nomain.o: ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp 
@@ -149,7 +149,7 @@ ${OBJECTDIR}/S_CollisionAvoidance_nomain.o: ${OBJECTDIR}/S_CollisionAvoidance.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance_nomain.o S_CollisionAvoidance.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_CollisionAvoidance_nomain.o S_CollisionAvoidance.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_CollisionAvoidance.o ${OBJECTDIR}/S_CollisionAvoidance_nomain.o;\
 	fi
@@ -162,7 +162,7 @@ ${OBJECTDIR}/S_Global_nomain.o: ${OBJECTDIR}/S_Global.o S_Global.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global_nomain.o S_Global.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Global_nomain.o S_Global.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_Global.o ${OBJECTDIR}/S_Global_nomain.o;\
 	fi
@@ -175,7 +175,7 @@ ${OBJECTDIR}/S_InitialSetup_nomain.o: ${OBJECTDIR}/S_InitialSetup.o S_InitialSet
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup_nomain.o S_InitialSetup.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup_nomain.o S_InitialSetup.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_InitialSetup.o ${OBJECTDIR}/S_InitialSetup_nomain.o;\
 	fi
@@ -188,7 +188,7 @@ ${OBJECTDIR}/S_Tracking_nomain.o: ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking_nomain.o S_Tracking.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_Tracking_nomain.o S_Tracking.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_Tracking.o ${OBJECTDIR}/S_Tracking_nomain.o;\
 	fi
@@ -201,7 +201,7 @@ ${OBJECTDIR}/ToolBox_nomain.o: ${OBJECTDIR}/ToolBox.o ToolBox.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox_nomain.o ToolBox.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/ToolBox_nomain.o ToolBox.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ToolBox.o ${OBJECTDIR}/ToolBox_nomain.o;\
 	fi
@@ -214,7 +214,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
 	fi
@@ -233,7 +233,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/progrobos
+	${RM} ${TESTDIR}/TestFiles/f4
 
 # Subprojects
 .clean-subprojects:

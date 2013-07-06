@@ -16,6 +16,8 @@ namespace ToolBox {
         double rangeX_max, rangeY_max, rangeY_min; //unidade: metros
         int nfives = 0; //contador pra checar o tamanho do Prof.
 
+        matrix.Clean();
+
         /* seta os limites da visão do robô. Se for detecção, enxerga
          * um retângulo pequeno, caso contrário tem visão total. */
         if (deteccao) {
@@ -65,7 +67,7 @@ namespace ToolBox {
                 else { //verifica se este ponto será um 5 ou um -1
                     if ((isNextToFives(pRobot->GetPreviousVisionMatrix(), row, col) ||
                             isNextToFives(pRobot->GetVisionMatrix(), row, col)) &&
-                            nfives <= pRobot->GetProfSizeOnMatrix() + 2) {//se estiver perto de outros 5's, é 5.
+                            nfives < pRobot->GetProfSizeOnMatrix()) {//se estiver perto de outros 5's, é 5.
                         matrix(row, col) = 5;
                         nfives++;
                     } else //se não estiver perto de outros 5's, é -1
@@ -75,8 +77,8 @@ namespace ToolBox {
         }
         PRINT(GetNumberOfFives(matrix));
         PRINT(pRobot->GetProfSizeOnMatrix());
-//        matrix.Print();
-//        cout << endl;
+        //        matrix.Print();
+        //        cout << endl;
         //ShowVisionMatrix(pRobot->GetCurrentVisionMatrix()) //versão de matrix.Print() só que em OpenCV
     }
 
@@ -90,8 +92,9 @@ namespace ToolBox {
     bool isNextToFives(Matrix& matrix, int row, int col) {
         for (int k = -1; k <= 1; k++)
             for (int l = -1; l <= 1; l++) {
-                if (matrix.get(row + k, col + l) == 5)
-                    return true;
+                if (row + k >= 1 && row + k <= matrix.GetRows() && col + l >= 1 && col + l <= matrix.GetCols())
+                    if (matrix.get(row + k, col + l) == 5)
+                        return true;
             }
         return false;
     }
@@ -117,9 +120,10 @@ namespace ToolBox {
      * @return a distância entre o robô e o Professor, em metros.
      */
     double GetProfDistance(Matrix& matrix) {
-        Point<int> CenterVM((int) (BOXES_ROWS / 2), (int) (BOXES_COLUMNS / 2)); //VisionMatrix center
+        Point<int> PCentro(0, 0);
         Point<int> CMOfFives = GetCMOfFives(matrix, REFERENCIAL_ROBOT);
-        return (Point<int>::GetDistance(CenterVM, CMOfFives) * BOXSIZE);
+
+        return (Point<int>::GetDistance(PCentro, CMOfFives) * BOXSIZE);
     }
 
     /**
@@ -142,22 +146,30 @@ namespace ToolBox {
                 if (matrix.get(row, col) == 5)
                     LP.push_back(*(new Point<int>(row, col)));
 
+        /* se não houver 5's na matriz de visão, significa que o Prof não foi
+         detectado. Retorna (0,0) indicando isso. */
+        if (LP.size() == 0)
+            return *(new Point<int>(0, 0));
+
         for (it = LP.begin(); it != LP.end(); it++)
             res += *it;
 
         res /= LP.size();
 
-        if (ref == REFERENCIAL_MATRIX)
-            return res;
-        else {
-            if (ref == REFERENCIAL_ROBOT) {
+        /* limpa a memória */
+        LP.clear();
+
+        switch (ref) {
+            case REFERENCIAL_MATRIX:
+                return res;
+                break;
+            case REFERENCIAL_ROBOT:
                 Point<int> P(CenterVM.GetX() - res.GetX(), res.GetY() - CenterVM.GetY());
                 return P;
-            }
         }
-        
+
         //não é pra chegar aqui. Se chegar, deu erro.
         exit(-1);
-        return *(new Point<int>(-1,-1));
+        return *(new Point<int>(-1, -1));
     }
 }
