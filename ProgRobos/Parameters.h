@@ -9,17 +9,17 @@
 #define LASERNAME               "SICK"
 #define FOV                     180
 #define SAMPLES                 181
-#define NOMINALRANGE            8                                               //8 metros de alcance
+#define NOMINALRANGE            8.0                                             //8 metros de alcance
 #endif
 
 #ifdef HOKUYO
 #define LASERNAME               "HOKUYO"
-#define FOV                     682*360/1024.0                                  //239.765625 (tirado do datasheet do Hokuyo)
+#define FOV                     (682*360/1024.0)                                //239.765625 (tirado do datasheet do Hokuyo)
 #define SAMPLES                 683
 #define NOMINALRANGE            4.0                                             //4.0 metros de alcance
 #endif
 
-#define MAXRANGE                NOMINALRANGE-BOXSIZE                            //maior comprimento detectável pelo laser
+#define MAXRANGE                (NOMINALRANGE-BOXSIZE)                          //maior comprimento detectável pelo laser
 #define MINRANGE                BOXSIZE                                         //menor comprimento detectável pelo laser
 #define DETECTIONBOX_LENGTH     1.0                                             //comprimento de detecção
 #define DETECTIONBOX_WIDTH      1.5                                             //largura de detecão
@@ -32,15 +32,15 @@
 #define BOXES_ROWS              ceil(2*NOMINALRANGE/BOXSIZE)                    //#linhas de caixas
 #define BOXES_COLUMNS           ceil(2*NOMINALRANGE/BOXSIZE)                    //#colunas de caixas
 
-#define ANGULAR_RESOLUTION      (double)(FOV/(SAMPLES-1))
-#define LASER_0DEG              (int)((FOV-180)/(2.0*ANGULAR_RESOLUTION))
-#define LASER_90DEG             (int)(SAMPLES-1)/2
-#define LASER_180DEG            (int)(SAMPLES-1-LASER_0DEG)
+#define ANGULAR_RESOLUTION      ((double)(FOV/(SAMPLES-1)))
+#define LASER_0DEG              ((int)((FOV-180)/(2.0*ANGULAR_RESOLUTION)))
+#define LASER_90DEG             ((int)(SAMPLES-1)/2)
+#define LASER_180DEG            ((int)(SAMPLES-1-LASER_0DEG))
 #define LASER_FIRST             0
-#define LASER_LAST              SAMPLES-1
-#define DEGREE(feixe)           feixe*ANGULAR_RESOLUTION-(FOV-180)/2.0
+#define LASER_LAST              (SAMPLES-1)
+#define DEGREE(feixe)           (feixe*ANGULAR_RESOLUTION-(FOV-180)/2.0)
 #define RADIAN(feixe)           DTOR(DEGREE(feixe))
-#define LASER_W_DEG(d)          (int)(LASER_0DEG + d/ANGULAR_RESOLUTION) //laser number with degree d
+#define LASER_W_DEG(d)          ((int)(LASER_0DEG + d/ANGULAR_RESOLUTION))      //laser number with degree d
 #define PRINT(x)                std::cout << #x << ": " << x << std::endl;
 
 
