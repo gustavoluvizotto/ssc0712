@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/S_CollisionAvoidance.o \
 	${OBJECTDIR}/S_Global.o \
 	${OBJECTDIR}/S_InitialSetup.o \
+	${OBJECTDIR}/S_LostTrack.o \
 	${OBJECTDIR}/S_Tracking.o \
 	${OBJECTDIR}/ToolBox.o \
 	${OBJECTDIR}/main.o
@@ -89,6 +90,11 @@ ${OBJECTDIR}/S_InitialSetup.o: nbproject/Makefile-${CND_CONF}.mk S_InitialSetup.
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp
+
+${OBJECTDIR}/S_LostTrack.o: nbproject/Makefile-${CND_CONF}.mk S_LostTrack.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_LostTrack.o S_LostTrack.cpp
 
 ${OBJECTDIR}/S_Tracking.o: nbproject/Makefile-${CND_CONF}.mk S_Tracking.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -178,6 +184,19 @@ ${OBJECTDIR}/S_InitialSetup_nomain.o: ${OBJECTDIR}/S_InitialSetup.o S_InitialSet
 	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup_nomain.o S_InitialSetup.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_InitialSetup.o ${OBJECTDIR}/S_InitialSetup_nomain.o;\
+	fi
+
+${OBJECTDIR}/S_LostTrack_nomain.o: ${OBJECTDIR}/S_LostTrack.o S_LostTrack.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_LostTrack.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -I. -I. `pkg-config --cflags opencv` `pkg-config --cflags playerc++`  -std=c++0x -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_LostTrack_nomain.o S_LostTrack.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_LostTrack.o ${OBJECTDIR}/S_LostTrack_nomain.o;\
 	fi
 
 ${OBJECTDIR}/S_Tracking_nomain.o: ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp 

@@ -2,7 +2,6 @@
 #define	ROBOTSTATES_H
 
 #include "State.h"
-#include "MotionDetection.h"
 
 class Robot;
 

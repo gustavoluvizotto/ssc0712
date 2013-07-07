@@ -199,6 +199,32 @@ public:
     bool operator==(const Point<_T3>& P) const {
         return (x == P.x && y == P.y);
     }
+
+    /**
+     * Argumento do ponto, em radianos, definido aqui como sendo arctg(y/x)
+     * @return argumento do ponto, em radianos
+     */
+    double argument() const {
+        return atan2(y, x);
+    }
+
+    /**
+     * Distância do ponto à origem (0,0).
+     * @return Distância do ponto à origem (0,0).
+     */
+    double module() const {
+        return sqrt(POW(x) + POW(y));
+    }
+
+    /**
+     * Testa se o ponto é igual ao "ponto" passado por parâmetro
+     * @param xval valor a ser testado com a coordenada x do ponto
+     * @param yval valor a ser testado com a coordenada y do ponto
+     * @return true se 'this' for igual ao "ponto" fornecido. false caso contrário.
+     */
+    bool equals(_T3 xval, _T3 yval) {
+        return (x == xval && y == yval);
+    }
 };
 
 #endif	/* POINT_H */
