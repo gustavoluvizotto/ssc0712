@@ -13,8 +13,8 @@ resolution 0.02
 window
 (
   size [ 519 533 ] # in pixels
-  scale 229.230   # pixels per meter
-  center [ -3.986  -4.778 ]
+  scale 45.352   # pixels per meter
+  center [ -4.009  -3.575 ]
   rotate [ 0.000  0.000 ]
   show_data 1              # 1=on 0=off
 )
@@ -39,14 +39,14 @@ define silly position (
 
 silly (
   name "block1"
-  pose [-2.046 -5.075 0.000 0.000]
+  pose [-1.451 -5.053 0.000 0.000]
   color "green"
   bitmap "block.png"
 )
 
 silly (
   name "block2"
-  pose [-3.076 -3.018 0.000 0.000]
+  pose [-6.780 -3.305 0.000 0.000]
   color "blue"
   bitmap "block.png"
 )
