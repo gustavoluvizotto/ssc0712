@@ -2,7 +2,7 @@
 #define	PARAMETERS_H
 
 #define DEBUG
-#define HOKUYO  //se estiver usando o HOKUYO
+#define HOKUYO_SIMULADO  //se estiver usando o HOKUYO SIMULADO
 //#define SICK  //se estiver usando o SICK
 
 #ifdef SICK
@@ -12,8 +12,8 @@
 #define NOMINALRANGE            8.0                                             //8 metros de alcance
 #endif
 
-#ifdef HOKUYO
-#define LASERNAME               "HOKUYO"
+#ifdef HOKUYO_SIMULADO
+#define LASERNAME               "HOKUYO_SIMULADO"
 #define FOV                     (682*360/1024.0)                                //239.765625 (tirado do datasheet do Hokuyo)
 #define SAMPLES                 683
 #define NOMINALRANGE            4.0                                             //4.0 metros de alcance

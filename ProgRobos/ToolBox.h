@@ -20,6 +20,8 @@ namespace ToolBox {
     extern int GetNumberOfFives(Matrix& matrix);
     extern double GetProfDistance(Matrix& matrix);
     extern Point<int> GetCMOfFives(Matrix& matrix, Referencial ref);
+    bool WillHitOnObstacle(Robot* pRobot);
+
 }
 
 #endif	/* TOOLBOX_H */
