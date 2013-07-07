@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>CollisionAvoidance.h</itemPath>
       <itemPath>Matrix.h</itemPath>
-      <itemPath>MotionDetection.h</itemPath>
       <itemPath>Parameters.h</itemPath>
       <itemPath>Point.h</itemPath>
       <itemPath>Robot.h</itemPath>
@@ -24,11 +23,11 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>CollisionAvoidance.cpp</itemPath>
-      <itemPath>MotionDetection.cpp</itemPath>
       <itemPath>RobotStates.cpp</itemPath>
       <itemPath>S_CollisionAvoidance.cpp</itemPath>
       <itemPath>S_Global.cpp</itemPath>
       <itemPath>S_InitialSetup.cpp</itemPath>
+      <itemPath>S_LostTrack.cpp</itemPath>
       <itemPath>S_Tracking.cpp</itemPath>
       <itemPath>ToolBox.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -115,6 +114,8 @@
       <item path="S_Global.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="S_InitialSetup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="S_LostTrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="S_Tracking.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -220,10 +221,6 @@
       </item>
       <item path="Matrix.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="MotionDetection.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="MotionDetection.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Parameters.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Point.h" ex="false" tool="3" flavor2="0">
@@ -239,6 +236,8 @@
       <item path="S_Global.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="S_InitialSetup.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="S_LostTrack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="S_Tracking.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -19,11 +19,14 @@
 #define NOMINALRANGE            4.0                                             //4.0 metros de alcance
 #endif
 
+#define XSPEED_LIMIT            0.2                                             //velocidade máxima recomendada
+#define YAWSPEED_LIMIT          1.5                                             //velocidade máxima de giro recomendada
 #define MAXRANGE                (NOMINALRANGE-BOXSIZE)                          //maior comprimento detectável pelo laser
 #define MINRANGE                BOXSIZE                                         //menor comprimento detectável pelo laser
-#define DETECTIONBOX_LENGTH     1.0                                             //comprimento de detecção
+#define DETECTIONBOX_LENGTH     1.5                                             //comprimento de detecção
 #define DETECTIONBOX_WIDTH      1.5                                             //largura de detecão
-#define BOXSIZE                 0.2                                             //precisão da visão do robô. É o tamanho da aresta da caixa de visão
+#define DETECTION_DISTANCE      1.3                                             //a partir de que distância começa a perseguir (usado na transição S_InitialSetup -> S_Tracking)
+#define BOXSIZE                 0.08                                            //precisão da visão do robô. É o tamanho da aresta da caixa de visão
 //TODO: mudar BOXSIZE para 0.05
 
 /* Estamos sendo "gastadores". Dá pra diminuir a matriz
@@ -67,8 +70,8 @@
     } while(0)
 
 enum Referencial {
-    REFERENCIAL_MATRIX, //referencial centrado na posição (1,1) da matriz de visão
-    REFERENCIAL_ROBOT   //referencial centrado no centro da matriz de visão
+    REFERENCIAL_MATRIX, //referencial na posição (1,1) da matriz de visão
+    REFERENCIAL_ROBOT   //referencial no centro da matriz de visão
 };
 
 #endif	/* PARAMETERS_H */

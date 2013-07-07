@@ -5,18 +5,17 @@ namespace ToolBox {
     /**
      * Preenche a matriz de visão do Robô.
      * @param pRobot ponteiro para o Robô
-     * @param matrix referência para a matriz que deve ser povoada
      * @param deteccao true: modo de detecção inicial onde o robô "enxerga pouco". 
      * false: detecção usual, onde o Robô leva em consideração tudo o que vê, e
      * não só uma caixinha virtual pequena a sua frente.
      */
-    void FillVisionMatrix(Robot *pRobot, Matrix& matrix, bool deteccao) {
+    void FillVisionMatrix(Robot *pRobot, bool deteccao) {
         int col = 0, row = 0; //x e y estão em unidades de caixas
         double rangeX, rangeY; //unidade: metros
         double rangeX_max, rangeY_max, rangeY_min; //unidade: metros
         int nfives = 0; //contador pra checar o tamanho do Prof.
 
-        matrix.Clean();
+        pRobot->GetVisionMatrix().Clean();
 
         /* seta os limites da visão do robô. Se for detecção, enxerga
          * um retângulo pequeno, caso contrário tem visão total. */
@@ -57,29 +56,33 @@ namespace ToolBox {
              * pois fazem parte do que deve ser enxergado pelo robô */
 
             if (deteccao) { //marca tudo com 5
-                if (matrix.get(row, col) != 5) {
-                    matrix(row, col) = 5;
+                if (pRobot->GetVisionMatrix().get(row, col) != 5) {
+                    pRobot->GetVisionMatrix()(row, col) = 5;
                     pRobot->IncreaseProfSizeOnMatrix();
                 }
             } else { //marca com -1 e compara com as 2 visões (atual e anterior) pra decidir se é o Prof ou não
-                if (matrix.get(row, col) == 5) //se for um 5 já detectado, não faz nada
+                if (pRobot->GetVisionMatrix().get(row, col) == 5) //se for um 5 já detectado, não faz nada
                     continue;
                 else { //verifica se este ponto será um 5 ou um -1
                     if ((isNextToFives(pRobot->GetPreviousVisionMatrix(), row, col) ||
                             isNextToFives(pRobot->GetVisionMatrix(), row, col)) &&
                             nfives < pRobot->GetProfSizeOnMatrix()) {//se estiver perto de outros 5's, é 5.
-                        matrix(row, col) = 5;
+                        pRobot->GetVisionMatrix()(row, col) = 5;
                         nfives++;
                     } else //se não estiver perto de outros 5's, é -1
-                        matrix(row, col) = -1;
+                        pRobot->GetVisionMatrix()(row, col) = -1;
                 }
             }
         }
-        PRINT(GetNumberOfFives(matrix));
+
+#ifdef DEBUG
+        PRINT(GetNumberOfFives(pRobot->GetVisionMatrix()));
         PRINT(pRobot->GetProfSizeOnMatrix());
-        //        matrix.Print();
-        //        cout << endl;
+        cout << endl;
+        //matrix.Print();
         //ShowVisionMatrix(pRobot->GetCurrentVisionMatrix()) //versão de matrix.Print() só que em OpenCV
+#endif
+
     }
 
     /**
@@ -120,10 +123,8 @@ namespace ToolBox {
      * @return a distância entre o robô e o Professor, em metros.
      */
     double GetProfDistance(Matrix& matrix) {
-        Point<int> PCentro(0, 0);
         Point<int> CMOfFives = GetCMOfFives(matrix, REFERENCIAL_ROBOT);
-
-        return (Point<int>::GetDistance(PCentro, CMOfFives) * BOXSIZE);
+        return (CMOfFives.module() * BOXSIZE);
     }
 
     /**
@@ -131,8 +132,8 @@ namespace ToolBox {
      * referência podendo ser, ou no começo da matriz (posição (1,1)), ou no centro da
      * matriz (visão do Robô).
      * @param matrix matriz de visão do robô
-     * @param ref indica se é pra retornar o ponto com relação ao referencial Global
-     * REFERENCIAL_MATRIX, ou ao referencial local do Robô (referencial centrado na matriz)
+     * @param ref indica se é pra retornar o ponto com relação ao referencial
+     * Global (REFERENCIAL_MATRIX), ou ao referencial do Robô (REFERENCIAL_ROBOT)
      * @return centro de massa dos 5's na matriz (CM do Professor)
      */
     Point<int> GetCMOfFives(Matrix& matrix, Referencial ref) {
@@ -170,6 +171,6 @@ namespace ToolBox {
 
         //não é pra chegar aqui. Se chegar, deu erro.
         exit(-1);
-        return *(new Point<int>(-1, -1));
+        return *(new Point<int>(0,0));
     }
 }

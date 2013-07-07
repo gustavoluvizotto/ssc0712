@@ -15,7 +15,7 @@ using std::endl;
 using std::list;
 
 namespace ToolBox {
-    extern void FillVisionMatrix(Robot* pRobot, Matrix& matrix, bool deteccao=false);
+    extern void FillVisionMatrix(Robot* pRobot, bool deteccao=false);
     extern bool isNextToFives(Matrix& matrix, int row, int col);
     extern int GetNumberOfFives(Matrix& matrix);
     extern double GetProfDistance(Matrix& matrix);

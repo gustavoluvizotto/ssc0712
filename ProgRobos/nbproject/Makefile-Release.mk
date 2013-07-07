@@ -36,11 +36,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/CollisionAvoidance.o \
-	${OBJECTDIR}/MotionDetection.o \
 	${OBJECTDIR}/RobotStates.o \
 	${OBJECTDIR}/S_CollisionAvoidance.o \
 	${OBJECTDIR}/S_Global.o \
 	${OBJECTDIR}/S_InitialSetup.o \
+	${OBJECTDIR}/S_LostTrack.o \
 	${OBJECTDIR}/S_Tracking.o \
 	${OBJECTDIR}/ToolBox.o \
 	${OBJECTDIR}/main.o
@@ -83,11 +83,6 @@ ${OBJECTDIR}/CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk CollisionAv
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp
 
-${OBJECTDIR}/MotionDetection.o: nbproject/Makefile-${CND_CONF}.mk MotionDetection.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp
-
 ${OBJECTDIR}/RobotStates.o: nbproject/Makefile-${CND_CONF}.mk RobotStates.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -107,6 +102,11 @@ ${OBJECTDIR}/S_InitialSetup.o: nbproject/Makefile-${CND_CONF}.mk S_InitialSetup.
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup.o S_InitialSetup.cpp
+
+${OBJECTDIR}/S_LostTrack.o: nbproject/Makefile-${CND_CONF}.mk S_LostTrack.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_LostTrack.o S_LostTrack.cpp
 
 ${OBJECTDIR}/S_Tracking.o: nbproject/Makefile-${CND_CONF}.mk S_Tracking.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -172,19 +172,6 @@ ${OBJECTDIR}/CollisionAvoidance_nomain.o: ${OBJECTDIR}/CollisionAvoidance.o Coll
 	    ${CP} ${OBJECTDIR}/CollisionAvoidance.o ${OBJECTDIR}/CollisionAvoidance_nomain.o;\
 	fi
 
-${OBJECTDIR}/MotionDetection_nomain.o: ${OBJECTDIR}/MotionDetection.o MotionDetection.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/MotionDetection.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -I. -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/MotionDetection_nomain.o MotionDetection.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/MotionDetection.o ${OBJECTDIR}/MotionDetection_nomain.o;\
-	fi
-
 ${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/RobotStates.o`; \
@@ -235,6 +222,19 @@ ${OBJECTDIR}/S_InitialSetup_nomain.o: ${OBJECTDIR}/S_InitialSetup.o S_InitialSet
 	    $(COMPILE.cc) -O2 -I. -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_InitialSetup_nomain.o S_InitialSetup.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/S_InitialSetup.o ${OBJECTDIR}/S_InitialSetup_nomain.o;\
+	fi
+
+${OBJECTDIR}/S_LostTrack_nomain.o: ${OBJECTDIR}/S_LostTrack.o S_LostTrack.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/S_LostTrack.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 -I. -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/S_LostTrack_nomain.o S_LostTrack.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/S_LostTrack.o ${OBJECTDIR}/S_LostTrack_nomain.o;\
 	fi
 
 ${OBJECTDIR}/S_Tracking_nomain.o: ${OBJECTDIR}/S_Tracking.o S_Tracking.cpp 
