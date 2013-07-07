@@ -186,7 +186,7 @@ namespace ToolBox {
 
         for (int i = LASER_FIRST; i <= LASER_LAST; i++) {
             Range = pRobot->GetRange(i);
-            if (Range <= 0.6) {
+            if (Range <= COLLISION_THRESHOLD) {
                 col = (int) (BOXES_COLUMNS / 2) + floor((Range * cos(RADIAN(i))) / BOXSIZE);
                 row = (int) (BOXES_ROWS / 2) - floor((Range * sin(RADIAN(i))) / BOXSIZE);
                 if (pRobot->GetVisionMatrix().get(row, col) == -1)

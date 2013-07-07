@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cassert>
 #include <iostream>
+#include <list>
 #include <algorithm> //necessário para o "find" de list funcionar
 
 using std::cout;
