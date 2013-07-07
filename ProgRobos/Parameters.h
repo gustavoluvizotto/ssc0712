@@ -1,9 +1,16 @@
 #ifndef PARAMETERS_H
 #define	PARAMETERS_H
 
+/* se definido, mostra informações na tela durante a execução do programa */
 #define DEBUG
-#define HOKUYO_SIMULADO  //se estiver usando o HOKUYO SIMULADO
+
+/* habilitar somente 1 dos dois: ou HOKUYO, ou SICK */
+#define HOKUYO  //se estiver usando o HOKUYO
 //#define SICK  //se estiver usando o SICK
+
+/* habilitar somente 1 dos dois: ou ROBO_SIMULADO, ou ROBO_REAL */
+//#define ROBO_SIMULADO        //se estiver usando o ambiente simulado
+#define ROBO_REAL          //se estiver usando o ambiente real
 
 #ifdef SICK
 #define LASERNAME               "SICK"
@@ -12,8 +19,8 @@
 #define NOMINALRANGE            8.0                                             //8 metros de alcance
 #endif
 
-#ifdef HOKUYO_SIMULADO
-#define LASERNAME               "HOKUYO_SIMULADO"
+#ifdef HOKUYO
+#define LASERNAME               "HOKUYO"
 #define FOV                     (682*360/1024.0)                                //239.765625 (tirado do datasheet do Hokuyo)
 #define SAMPLES                 683
 #define NOMINALRANGE            4.0                                             //4.0 metros de alcance
@@ -27,7 +34,7 @@
 #define DETECTIONBOX_WIDTH      1.5                                             //largura de detecão
 #define DETECTION_DISTANCE      1.3                                             //a partir de que distância começa a perseguir (usado na transição S_InitialSetup -> S_Tracking)
 #define BOXSIZE                 0.08                                            //precisão da visão do robô. É o tamanho da aresta da caixa de visão
-//TODO: mudar BOXSIZE para 0.05
+#define COLLISION_THRESHOLD     0.4                                             //distância, em metros, que o robô considera como uma possível colisão com obstáculos
 
 /* Estamos sendo "gastadores". Dá pra diminuir a matriz
  * de visão um pouco mais. Assumimos que o robô enxerga
@@ -45,9 +52,9 @@
 #define RADIAN(feixe)           DTOR(DEGREE(feixe))
 #define LASER_W_DEG(d)          ((int)(LASER_0DEG + d/ANGULAR_RESOLUTION))      //laser number with degree d
 #define PRINT(x)                std::cout << #x << ": " << x << std::endl;
+#define COUT(x)                 std::cout << x << std::endl;
 
-
-#define LASER_INFO \
+#define LASER_INFO                                                             \
     do { std::cout                                                             \
              << "\nLASER in use: " << LASERNAME                                \
              << "\nFOV: " << FOV                                               \
@@ -61,9 +68,13 @@
              << "\nRADIAN(0): " << RADIAN(0)                                   \
              << "\nDETECTIONBOX_LENGTH: " << DETECTIONBOX_LENGTH               \
              << "\nDETECTIONBOX_WIDTH: " << DETECTIONBOX_WIDTH                 \
+             << "\nBOXSIZE: " << BOXSIZE                                       \
+             << "\nDETECTION_DISTANCE: " << DETECTION_DISTANCE                 \
+             << "\nCOLLISION_THRESHOLD: " << COLLISION_THRESHOLD               \
+             << "\nXSPEED_LIMIT: " << XSPEED_LIMIT                             \
+             << "\nYAWSPEED_LIMIT: " << YAWSPEED_LIMIT                         \
              << "\nMAXRANGE: " << MAXRANGE                                     \
              << "\nMINRANGE: " << MINRANGE                                     \
-             << "\nBOXSIZE: " << BOXSIZE                                       \
              << "\nBOXES_ROWS: " << BOXES_ROWS                                 \
              << "\nBOXES_COLUMNS: " << BOXES_COLUMNS                           \
              << "\n\n" << std::endl;                                           \
@@ -71,7 +82,7 @@
 
 enum Referencial {
     REFERENCIAL_MATRIX, //referencial na posição (1,1) da matriz de visão
-    REFERENCIAL_ROBOT   //referencial no centro da matriz de visão
+    REFERENCIAL_ROBOT //referencial no centro da matriz de visão
 };
 
 #endif	/* PARAMETERS_H */

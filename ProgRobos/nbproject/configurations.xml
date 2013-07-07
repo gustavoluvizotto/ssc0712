@@ -89,8 +89,8 @@
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f4</output>
           <linkerLibItems>
-            <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs playerc++`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs playerc`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
