@@ -142,52 +142,6 @@ public:
 
 /*----------------------------------------------------------------------------*/
 
-class S_Andando : public State<Robot> {
-private:
-
-    S_Andando() {
-    }
-
-    virtual ~S_Andando() {
-    }
-
-public:
-
-    static S_Andando* Instance() {
-        static S_Andando instance;
-        return &instance;
-    }
-
-    virtual void Enter(Robot* pRobot);
-    virtual void Execute(Robot* pRobot);
-    virtual void Exit(Robot* pRobot);
-};
-
-/*----------------------------------------------------------------------------*/
-
-class S_Desviando : public State<Robot> {
-private:
-
-    S_Desviando() {
-    }
-
-    virtual ~S_Desviando() {
-    }
-
-public:
-
-    static S_Desviando* Instance() {
-        static S_Desviando instance;
-        return &instance;
-    }
-
-    virtual void Enter(Robot* pRobot);
-    virtual void Execute(Robot* pRobot);
-    virtual void Exit(Robot* pRobot);
-};
-
-/*----------------------------------------------------------------------------*/
-
 class S_LostTrack : public State<Robot> {
 private:
 

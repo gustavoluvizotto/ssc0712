@@ -171,6 +171,31 @@ namespace ToolBox {
 
         //não é pra chegar aqui. Se chegar, deu erro.
         exit(-1);
-        return *(new Point<int>(0,0));
+        return *(new Point<int>(0, 0));
+    }
+
+    /**
+     * Retorna true se está perto de bater.
+     * @param pRobot ponteiro para o robô
+     * @return true se está perto de bater. false caso contrário
+     */
+    bool WillHitOnObstacle(Robot* pRobot) {
+        double Range;
+        int row, col;
+        int count = 0;
+
+        for (int i = LASER_FIRST; i <= LASER_LAST; i++) {
+            Range = pRobot->GetRange(i);
+            if (Range <= 0.6) {
+                col = (int) (BOXES_COLUMNS / 2) + floor((Range * cos(RADIAN(i))) / BOXSIZE);
+                row = (int) (BOXES_ROWS / 2) - floor((Range * sin(RADIAN(i))) / BOXSIZE);
+                if (pRobot->GetVisionMatrix().get(row, col) == -1)
+                    count++;
+                if (count >= 20)
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

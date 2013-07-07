@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>CollisionAvoidance.h</itemPath>
       <itemPath>Matrix.h</itemPath>
       <itemPath>Parameters.h</itemPath>
       <itemPath>Point.h</itemPath>
@@ -22,8 +21,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>CollisionAvoidance.cpp</itemPath>
-      <itemPath>RobotStates.cpp</itemPath>
       <itemPath>S_CollisionAvoidance.cpp</itemPath>
       <itemPath>S_Global.cpp</itemPath>
       <itemPath>S_InitialSetup.cpp</itemPath>
@@ -213,10 +210,6 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </compileType>
-      <item path="CollisionAvoidance.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="CollisionAvoidance.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Hokuyo info" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Matrix.h" ex="false" tool="3" flavor2="0">
@@ -226,8 +219,6 @@
       <item path="Point.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Robot.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="RobotStates.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="RobotStates.h" ex="false" tool="3" flavor2="0">
       </item>

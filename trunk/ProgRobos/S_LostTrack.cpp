@@ -15,6 +15,8 @@ void S_LostTrack::Execute(Robot* pRobot) {
 #ifdef DEBUG
     cout << "\nExecutando a S_LostTrack" << endl;
 #endif
+    pRobot->GetFSM()->SetGlobalState(NULL);
+    pRobot->GetFSM()->ChangeToState(S_InitialSetup::Instance());
 }
 
 void S_LostTrack::Exit(Robot* pRobot) {

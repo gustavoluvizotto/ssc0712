@@ -35,8 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/CollisionAvoidance.o \
-	${OBJECTDIR}/RobotStates.o \
 	${OBJECTDIR}/S_CollisionAvoidance.o \
 	${OBJECTDIR}/S_Global.o \
 	${OBJECTDIR}/S_InitialSetup.o \
@@ -77,16 +75,6 @@ LDLIBSOPTIONS=
 ${TESTDIR}/TestFiles/f4: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc} -o ${TESTDIR}/TestFiles/f4 ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp
-
-${OBJECTDIR}/RobotStates.o: nbproject/Makefile-${CND_CONF}.mk RobotStates.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates.o RobotStates.cpp
 
 ${OBJECTDIR}/S_CollisionAvoidance.o: nbproject/Makefile-${CND_CONF}.mk S_CollisionAvoidance.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -158,32 +146,6 @@ ${TESTDIR}/tests/PointTest.o: tests/PointTest.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I. -I. -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/PointTest.o tests/PointTest.cpp
 
-
-${OBJECTDIR}/CollisionAvoidance_nomain.o: ${OBJECTDIR}/CollisionAvoidance.o CollisionAvoidance.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/CollisionAvoidance.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -I. -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/CollisionAvoidance_nomain.o CollisionAvoidance.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/CollisionAvoidance.o ${OBJECTDIR}/CollisionAvoidance_nomain.o;\
-	fi
-
-${OBJECTDIR}/RobotStates_nomain.o: ${OBJECTDIR}/RobotStates.o RobotStates.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/RobotStates.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} $@.d;\
-	    $(COMPILE.cc) -O2 -I. -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/RobotStates_nomain.o RobotStates.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/RobotStates.o ${OBJECTDIR}/RobotStates_nomain.o;\
-	fi
 
 ${OBJECTDIR}/S_CollisionAvoidance_nomain.o: ${OBJECTDIR}/S_CollisionAvoidance.o S_CollisionAvoidance.cpp 
 	${MKDIR} -p ${OBJECTDIR}
