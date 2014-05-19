@@ -1,7 +1,6 @@
 /* Simple C++ Test
  * Para testar e ver as funcionalidades da Classe Matrix */
 
-
 #include <stdlib.h>
 #include "Matrix.h"
 #include <iostream>
