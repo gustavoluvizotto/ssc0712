@@ -1,0 +1,1 @@
+Implementar um robo seguidor. Primeiro passo é desenvolvê-lo em um mapa aberto. Em seguida, num mapa com blocos. E por último, num mapa mais complexo, evitando colisões.
